@@ -22,7 +22,7 @@ var (
 // bookCmd represents the book command
 var bookCmd = &cobra.Command{
 	Use:   "book",
-	Short: "Generate @book bibtex",
+	Short: "Generate @book bibtex entry",
 	Long: `This will generate an @book bibtex entry e.g.
 	
 	@book{CitekeyBook,
