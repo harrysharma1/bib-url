@@ -6,6 +6,8 @@ package cmd
 import (
 	"bibcli/helper"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 	"golang.design/x/clipboard"
@@ -43,7 +45,33 @@ var articleCmd = &cobra.Command{
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages)
-		clipboard.Write(clipboard.FmtText, []byte(bibtex))
+		if articleUrl != "" {
+
+		}
+		if copy {
+			fmt.Println("copied bibtex entry to cliplboard!!!")
+			clipboard.Write(clipboard.FmtText, []byte(bibtex))
+		}
+		if save != "" {
+			if filepath.Ext(save) == ".bib" {
+				f, err := os.OpenFile(save, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				if err != nil {
+					return fmt.Errorf("error opening file")
+				}
+				defer f.Close()
+				bibtex += "\n"
+				_, err = f.WriteString(bibtex)
+				if err != nil {
+					return fmt.Errorf("error writing to file")
+				}
+				fmt.Printf("saved bibtex entry to `%s`!!!\n", save)
+				fmt.Println(bibtex[:len(bibtex)-1])
+				return nil
+			} else {
+				return fmt.Errorf("error file type not .bib did not write entry")
+			}
+		}
+
 		fmt.Println(bibtex)
 		return nil
 	},

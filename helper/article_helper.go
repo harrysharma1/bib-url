@@ -11,13 +11,16 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 	var ret_string string
 	ret_string += "@article{"
 
+	if articleCiteKey == "uuid.uuid4()" {
+		articleCiteKey = ""
+	}
+
 	// CitationArticle
 	if articleCiteKey != "" {
 		ret_string += articleCiteKey + ",\n"
 	} else {
-		key := uuid.New()
-		fmt.Println("Generated UUID:", key.String())
-		ret_string += fmt.Sprintf("%s,\n", key.String())
+		key := uuid.NewString()
+		ret_string += fmt.Sprintf("%s,\n", key)
 	}
 
 	// author

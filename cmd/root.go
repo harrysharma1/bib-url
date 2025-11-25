@@ -9,6 +9,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	copy bool
+	save string
+)
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "bibcli",
@@ -34,7 +39,8 @@ func init() {
 	// will be global for your application.
 
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.bibcli.yaml)")
-
+	rootCmd.PersistentFlags().BoolVar(&copy, "copy", false, "copy generated bibtex entry to clipboard")
+	rootCmd.PersistentFlags().StringVar(&save, "save", "", "save generated bibtex entry to file")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 
