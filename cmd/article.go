@@ -10,32 +10,34 @@ import (
 )
 
 var (
-	url     string
-	citeKey string
-	author  string
-	title   string
-	journal string
-	year    int
-	volume  string
-	number  string
-	pages   string
+	articleUrl     string
+	articleCiteKey string
+	articleAuthor  string
+	articleTitle   string
+	articleJournal string
+	articleYear    int
+	articleVolume  string
+	articleNumber  string
+	articlePages   string
 )
 
 // articleCmd represents the article command
 var articleCmd = &cobra.Command{
 	Use:   "article",
-	Short: "Generate article bibtex entry",
-	Long: `This will generate an @article bibtex entry with the following:
+	Short: "Generate @article bibtex entry",
+	Long: `This will generate an @article bibtex entry e.g.
 	
-	@article{CitekeyArticle
-		author = "",
-		title = "",
-		journal = "",
-		year = "",
-		volume = "",
-		number = "",
-		pages = "",
+	@article{CitekeyArticle,
+  		author   = "P. J. Cohen",
+  		title    = "The independence of the continuum hypothesis",
+  		journal  = "Proceedings of the National Academy of Sciences",
+ 	 	year     = 1963,
+  		volume   = "50",
+  		number   = "6",
+  		pages    = "1143--1148",
 	}
+	
+
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("article called")
@@ -54,13 +56,13 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	articleCmd.Flags().StringVarP(&url, "url", "u", "https://example.com", "url for online entry to autogenerate entry")
-	articleCmd.Flags().StringVarP(&citeKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
-	articleCmd.Flags().StringVarP(&author, "author", "a", "Surname, Forename", "author name(s) for article")
-	articleCmd.Flags().StringVarP(&title, "title", "t", "Title", "title name for article")
-	articleCmd.Flags().StringVarP(&journal, "journal", "j", "Journal", "journal the article was published in")
-	articleCmd.Flags().IntVarP(&year, "year", "y", 2002, "year the article was published in")
-	articleCmd.Flags().StringVarP(&volume, "volume", "v", "1", "volume of journal")
-	articleCmd.Flags().StringVarP(&number, "number", "n", "1", "issue of journal")
-	articleCmd.Flags().StringVarP(&pages, "pages", "p", "1--10", "pages within the journal")
+	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "https://example.com", "url for online article to auto-generate entry")
+	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
+	articleCmd.Flags().StringVarP(&articleAuthor, "author", "a", "Surname, Forename", "author name(s) for article")
+	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "Title", "title of article")
+	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "Journal", "journal the article was published in")
+	articleCmd.Flags().IntVarP(&articleYear, "year", "y", 2002, "year the article was published in")
+	articleCmd.Flags().StringVarP(&articleVolume, "volume", "v", "1", "volume of journal")
+	articleCmd.Flags().StringVarP(&articleNumber, "number", "n", "1", "issue of journal")
+	articleCmd.Flags().StringVarP(&articlePages, "pages", "p", "1--10", "pages within the journal")
 }
