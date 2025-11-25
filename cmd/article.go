@@ -14,7 +14,7 @@ import (
 var (
 	articleUrl     string
 	articleCiteKey string
-	articleAuthor  string
+	articleAuthors []string
 	articleTitle   string
 	articleJournal string
 	articleYear    int
@@ -42,7 +42,7 @@ var articleCmd = &cobra.Command{
 
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthor, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages)
+		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages)
 		clipboard.Write(clipboard.FmtText, []byte(bibtex))
 		fmt.Println(bibtex)
 		return nil
@@ -63,7 +63,7 @@ func init() {
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "https://example.com", "url for online article to auto-generate entry")
 	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
-	articleCmd.Flags().StringVarP(&articleAuthor, "author", "a", "Surname, Forename", "author name(s) for article")
+	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{"P. J. Cohen"}, "author name(s) for article")
 	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "Title", "title of article")
 	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "Journal", "journal the article was published in")
 	articleCmd.Flags().IntVarP(&articleYear, "year", "y", 2002, "year the article was published in")

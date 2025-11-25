@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func FormatArticleBibtex(articleCiteKey string, articleAuthor string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string) string {
+func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string) string {
 	var ret_string string
 	ret_string += "@article{"
 
@@ -21,8 +21,15 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthor string, articleTit
 	}
 
 	// author
-	if articleAuthor != "" {
-		ret_string += `	author   = "` + articleAuthor + `"` + ",\n"
+	if len(articleAuthors) > 0 {
+		ret_string += `	author   = "`
+		for i, articleAuthor := range articleAuthors {
+			ret_string += articleAuthor
+			if i < len(articleAuthors)-1 {
+				ret_string += " and "
+			}
+		}
+		ret_string += `"` + "\n"
 	} else {
 		ret_string += `	author   = "<Lastname>, <FirstName>"` + ",\n"
 	}
