@@ -81,3 +81,7 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 	ret_string += "}"
 	return ret_string
 }
+
+func GetArticleDataFromUrl(articleUrl string) error {
+	return nil
+}
