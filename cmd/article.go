@@ -4,9 +4,11 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/helper"
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"golang.design/x/clipboard"
 )
 
 var (
@@ -39,8 +41,11 @@ var articleCmd = &cobra.Command{
 	
 
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("article called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthor, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages)
+		clipboard.Write(clipboard.FmtText, []byte(bibtex))
+		fmt.Println(bibtex)
+		return nil
 	},
 }
 
