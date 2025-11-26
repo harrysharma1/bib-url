@@ -2,16 +2,13 @@ package helper
 
 import (
 	"fmt"
-	"net/http"
 	"strconv"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/google/uuid"
 )
 
 func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string) string {
-	var ret_string string
-	ret_string += "@article{"
+	var ret_string = "@article{"
 
 	if articleCiteKey == "uuid.uuid4()" {
 		articleCiteKey = ""
@@ -82,36 +79,4 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 	}
 	ret_string += "}"
 	return ret_string
-}
-
-func GetArticleDataFromUrl(articleUrl string) error {
-	res, err := http.Get(articleUrl)
-	if err != nil {
-		return fmt.Errorf("error fetching %s", articleUrl)
-	}
-	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		return fmt.Errorf("error status code %s", res.Status)
-	}
-
-	doc, err := goquery.NewDocumentFromReader(res.Body)
-	if err != nil {
-		return fmt.Errorf("error scraping web page")
-	}
-	// author
-	author, authorExists := doc.Find("meta[name='author']").Attr("content")
-	if authorExists {
-		fmt.Println(author)
-	} else {
-		fmt.Println("NOT FOUND")
-	}
-
-	// title
-	title, titleExists := doc.Find("meta[property='og:title']").Attr("content")
-	if titleExists {
-		fmt.Println(title)
-	} else {
-		fmt.Println("NOT FOUND")
-	}
-	return nil
 }

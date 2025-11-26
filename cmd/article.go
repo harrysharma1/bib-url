@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"golang.design/x/clipboard"
 )
 
 var (
@@ -43,12 +42,8 @@ var articleCmd = &cobra.Command{
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages)
-		if articleUrl != "" {
-			helper.GetArticleDataFromUrl(articleUrl)
-		}
+
 		if copy {
-			fmt.Println("copied bibtex entry to cliplboard!!!")
-			clipboard.Write(clipboard.FmtText, []byte(bibtex))
 			helper.Copy(bibtex)
 		}
 		if save != "" {
