@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/helper"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -13,7 +14,7 @@ var (
 	bookletUrl          string
 	bookletCiteKey      string
 	bookletTitle        string
-	bookletAuthor       string
+	bookletAuthors      []string
 	bookletHowPublished string
 	bookletMonth        string
 	bookletYear         int
@@ -31,10 +32,18 @@ var bookletCmd = &cobra.Command{
   		howpublished = "Distributed at the Stockholm Tourist Office",
   		month        = jul,
   		year         = 2015
-}
+	}
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("booklet called")
+		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, articleYear)
+		if copy {
+			helper.Copy(bibtex)
+		}
+
+		if save != "" {
+			helper.Save(save, bibtex)
+		}
+		fmt.Println(bibtex)
 	},
 }
 
@@ -53,7 +62,7 @@ func init() {
 	bookletCmd.Flags().StringVarP(&bookletUrl, "url", "u", "https://example.com", "url for online booklet to auto-generate entry")
 	bookletCmd.Flags().StringVarP(&bookletCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
 	bookletCmd.Flags().StringVarP(&bookletTitle, "title", "t", "Title", "title of booklet")
-	bookletCmd.Flags().StringVarP(&bookletAuthor, "author", "a", "Surname, Forname", "author name(s) for book")
+	bookletCmd.Flags().StringArrayVarP(&bookletAuthors, "author", "a", []string{"Maria Swetla"}, "author name(s) for book")
 	bookletCmd.Flags().StringVarP(&bookletHowPublished, "published", "p", "Distributed at the Stockholm Tourist Office", "how the booklet was published")
 	bookletCmd.Flags().StringVarP(&bookletMonth, "month", "m", "jul", "month the booklet was released")
 	bookletCmd.Flags().IntVarP(&bookletYear, "year", "y", 2002, "year the booklet was released")
