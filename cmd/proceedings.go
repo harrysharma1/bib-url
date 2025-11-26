@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -13,13 +12,19 @@ import (
 // proceedingsCmd represents the proceedings command
 var proceedingsCmd = &cobra.Command{
 	Use:   "proceedings",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate @proceedings bibtex entry",
+	Long: `This will generate an @proceedings entry e.g.
+	
+	@proceedings{CitekeyProceedings,
+  		editor    = "Susan Stepney and Sergey Verlan",
+  		title     = "Proceedings of the 17th International Conference on Computation and Natural Computation, Fontainebleau, France",
+  		series    = "Lecture Notes in Computer Science",
+  		volume    = "10867",
+  		publisher = "Springer",
+  		address   = "Cham, Switzerland",
+  		year      = 2018
+	}
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("proceedings called")
 	},

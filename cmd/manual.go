@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -13,13 +12,17 @@ import (
 // manualCmd represents the manual command
 var manualCmd = &cobra.Command{
 	Use:   "manual",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate @manual bibtex entry",
+	Long: `This will generate an @manual bibtex entry e.g.
+	
+	@manual{CitekeyManual,
+  		title        = "{R}: A Language and Environment for Statistical Computing",
+  		author       = "{R Core Team}",
+  		organization = "R Foundation for Statistical Computing",
+  		address      = "Vienna, Austria",
+  		year         = 2018
+	}
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("manual called")
 	},

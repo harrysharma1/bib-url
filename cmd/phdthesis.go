@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -13,13 +12,18 @@ import (
 // phdthesisCmd represents the phdthesis command
 var phdthesisCmd = &cobra.Command{
 	Use:   "phdthesis",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate @phdthesis bibtex entry",
+	Long: `This will generate an @phdthesis bibtex entry e.g.
+	
+	@phdthesis{CitekeyPhdthesis,
+  		author  = "Rempel, Robert Charles",
+  		title   = "Relaxation Effects for Coupled Nuclear Spins",
+  		school  = "Stanford University",
+  		address = "Stanford, CA",
+  		year    = 1956,
+  		month   = jun
+	}
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("phdthesis called")
 	},

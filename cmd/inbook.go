@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -13,13 +12,19 @@ import (
 // inbookCmd represents the inbook command
 var inbookCmd = &cobra.Command{
 	Use:   "inbook",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate @inbook bibtex entry",
+	Long: `This will generate an @inbook bibtex entry e.g.
+	
+	@inbook{CitekeyInbook,
+  		author    = "Lisa A. Urry and Michael L. Cain and Steven A. Wasserman and Peter V. Minorsky and Jane B. Reece",
+  		title     = "Photosynthesis",
+  		booktitle = "Campbell Biology",
+  		year      = "2016",
+  		publisher = "Pearson",
+  		address   = "New York, NY",
+  		pages     = "187--221"
+	}
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("inbook called")
 	},
