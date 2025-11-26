@@ -9,6 +9,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	inbookUrl       string
+	inbookCiteKey   string
+	inbookAuthor    []string
+	inbookBookTitle string
+	inbookYear      string
+	inbookPublisher string
+	inbookAddress   string
+	inbookPages     string
+)
+
 // inbookCmd represents the inbook command
 var inbookCmd = &cobra.Command{
 	Use:   "inbook",
