@@ -2,8 +2,10 @@ package helper
 
 import (
 	"fmt"
+	"net/http"
 	"strconv"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/google/uuid"
 )
 
@@ -83,5 +85,33 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 }
 
 func GetArticleDataFromUrl(articleUrl string) error {
+	res, err := http.Get(articleUrl)
+	if err != nil {
+		return fmt.Errorf("error fetching %s", articleUrl)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		return fmt.Errorf("error status code %s", res.Status)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		return fmt.Errorf("error scraping web page")
+	}
+	// author
+	author, authorExists := doc.Find("meta[name='author']").Attr("content")
+	if authorExists {
+		fmt.Println(author)
+	} else {
+		fmt.Println("NOT FOUND")
+	}
+
+	// title
+	title, titleExists := doc.Find("meta[property='og:title']").Attr("content")
+	if titleExists {
+		fmt.Println(title)
+	} else {
+		fmt.Println("NOT FOUND")
+	}
 	return nil
 }

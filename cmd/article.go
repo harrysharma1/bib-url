@@ -74,7 +74,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "https://example.com", "url for online article to auto-generate entry")
+	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "", "url for online article to auto-generate entry")
 	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
 	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{"P. J. Cohen"}, "author name(s) for article")
 	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "Title", "title of article")
