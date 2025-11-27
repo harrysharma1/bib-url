@@ -35,7 +35,7 @@ var bookletCmd = &cobra.Command{
 	}
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, articleYear)
+		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, bookletYear)
 		if copy {
 			helper.Copy(bibtex)
 		}

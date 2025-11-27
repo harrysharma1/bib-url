@@ -16,7 +16,7 @@ var (
 	articleAuthors []string
 	articleTitle   string
 	articleJournal string
-	articleYear    int
+	articleYear    string
 	articleVolume  string
 	articleNumber  string
 	articlePages   string
@@ -70,12 +70,12 @@ func init() {
 	// is called directly, e.g.:
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "", "url for online article to auto-generate entry")
-	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
-	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{"P. J. Cohen"}, "author name(s) for article")
-	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "Title", "title of article")
-	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "Journal", "journal the article was published in")
-	articleCmd.Flags().IntVarP(&articleYear, "year", "y", 2002, "year the article was published in")
-	articleCmd.Flags().StringVarP(&articleVolume, "volume", "v", "1", "volume of journal")
-	articleCmd.Flags().StringVarP(&articleNumber, "number", "n", "1", "issue of journal")
-	articleCmd.Flags().StringVarP(&articlePages, "pages", "p", "1--10", "pages within the journal")
+	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "", "citation key for bibtex entry")
+	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{}, "author name(s) for article")
+	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "", "title of article")
+	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "", "journal the article was published in")
+	articleCmd.Flags().StringVarP(&articleYear, "year", "y", "", "year the article was published in")
+	articleCmd.Flags().StringVarP(&articleVolume, "volume", "v", "", "volume of journal")
+	articleCmd.Flags().StringVarP(&articleNumber, "number", "n", "", "issue of journal")
+	articleCmd.Flags().StringVarP(&articlePages, "pages", "p", "", "pages within the journal")
 }

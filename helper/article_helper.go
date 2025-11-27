@@ -2,12 +2,11 @@ package helper
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/google/uuid"
 )
 
-func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string, braces bool) string {
+func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear string, articleVolume string, articleNumber string, articlePages string, braces bool) string {
 	var ret_string = "@article{"
 
 	if articleCiteKey == "uuid.uuid4()" {
@@ -42,9 +41,9 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	author   = %s<Lastname>, <FirstName>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf(" author   = %s<Lastname>, <FirstName>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", speechmarks, speechmarks)
 		}
 	}
 
@@ -57,7 +56,7 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	title    =% s<Example Title: Please Change>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
 		} else {
 			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
 		}
@@ -75,22 +74,22 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		if braces {
 			ret_string += fmt.Sprintf("	journal  = %s<Example Journal: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf(" journal  = %s<Example Journal: Please Change>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	journal  = %s<Example Journal: Please Change>%s,\n", speechmarks, speechmarks)
 		}
 	}
 
 	// year
-	if strconv.Itoa(articleYear) != "" {
+	if articleYear != "" {
 		if braces {
-			ret_string += fmt.Sprintf("	year     = %s%d%s,\n", braces_open, articleYear, braces_close)
+			ret_string += fmt.Sprintf("	year     = %s%s%s,\n", braces_open, articleYear, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	year     = %d,\n", articleYear)
+			ret_string += fmt.Sprintf("	year     = %s,\n", articleYear)
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	year     = %s2002%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	year     = %s<2002: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += "	year     = 2002,\n"
+			ret_string += "	year     = <2002: Please Change>,\n"
 		}
 	}
 
@@ -103,9 +102,9 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	volume   = %s1%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	volume   = %s<1: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	volume  = %s1%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	volume   = %s<1: Please Change>%s,\n", speechmarks, speechmarks)
 		}
 	}
 
@@ -118,9 +117,9 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	number   = %s1%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	number   = %s<1: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	number   = %s1%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	number   = %s<1: Please Change>%s,\n", speechmarks, speechmarks)
 		}
 	}
 
@@ -133,11 +132,10 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	pages    = %s1--10%s\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	pages    = %s<1--10: Please Change>%s\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	pages    = %s1--10%s\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	pages    = %s<1--10: Please Change>%s\n", speechmarks, speechmarks)
 		}
-		ret_string += `	pages    = "1--10"` + "\n"
 	}
 	ret_string += "}"
 	return ret_string

@@ -17,7 +17,7 @@ var (
 	bookTitle     string
 	bookPublisher string
 	bookAddress   string
-	bookYear      int
+	bookYear      string
 )
 
 // bookCmd represents the book command
@@ -35,7 +35,7 @@ var bookCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear)
+		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -64,11 +64,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bookCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	bookCmd.Flags().StringVarP(&bookUrl, "url", "u", "https://example.com", "url for online book to auto-generate entry")
-	bookCmd.Flags().StringVarP(&bookCiteKey, "key", "k", "uuid.uuid4()", "citation key for bibtex entry")
-	bookCmd.Flags().StringArrayVarP(&bookAuthors, "author", "a", []string{"Leonard Susskind", "George Hrabovsky"}, "author name(s) for book")
-	bookCmd.Flags().StringVarP(&bookTitle, "title", "t", "Title", "title of book")
-	bookCmd.Flags().StringVarP(&bookPublisher, "publisher", "p", "Penguin Random House", "publisher that released the book")
-	bookCmd.Flags().StringVarP(&bookAddress, "address", "l", "New York, NY", "address of publisher")
-	bookCmd.Flags().IntVarP(&bookYear, "year", "y", 2002, "year the book was published")
+	bookCmd.Flags().StringVarP(&bookUrl, "url", "u", "", "url for online book to auto-generate entry")
+	bookCmd.Flags().StringVarP(&bookCiteKey, "key", "k", "", "citation key for bibtex entry")
+	bookCmd.Flags().StringArrayVarP(&bookAuthors, "author", "a", []string{}, "author name(s) for book")
+	bookCmd.Flags().StringVarP(&bookTitle, "title", "t", "", "title of book")
+	bookCmd.Flags().StringVarP(&bookPublisher, "publisher", "p", "", "publisher that released the book")
+	bookCmd.Flags().StringVarP(&bookAddress, "address", "l", "", "address of publisher")
+	bookCmd.Flags().StringVarP(&bookYear, "year", "y", "", "year the book was published")
+
 }
