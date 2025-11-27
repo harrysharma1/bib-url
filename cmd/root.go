@@ -10,8 +10,9 @@ import (
 )
 
 var (
-	copy bool
-	save string
+	copy   bool
+	save   string
+	braces bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -40,6 +41,7 @@ func init() {
 
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.bibcli.yaml)")
 	rootCmd.PersistentFlags().BoolVar(&copy, "copy", false, "copy generated bibtex entry to clipboard")
+	rootCmd.PersistentFlags().BoolVar(&braces, "braces", false, `replaces "" delimeter with {}`)
 	rootCmd.PersistentFlags().StringVar(&save, "save", "", "save generated bibtex entry to file")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

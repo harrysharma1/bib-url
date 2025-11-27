@@ -8,6 +8,12 @@ import (
 	"golang.design/x/clipboard"
 )
 
+var (
+	braces_open  = "{"
+	braces_close = "}"
+	speechmarks  = `"`
+)
+
 func Copy(bibtex string) {
 	fmt.Println("copied bibtex entry to cliplboard!!!")
 	clipboard.Write(clipboard.FmtText, []byte(bibtex))

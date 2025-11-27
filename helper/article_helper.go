@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string) string {
+func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear int, articleVolume string, articleNumber string, articlePages string, braces bool) string {
 	var ret_string = "@article{"
 
 	if articleCiteKey == "uuid.uuid4()" {
@@ -24,57 +24,119 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 
 	// author
 	if len(articleAuthors) > 0 {
-		ret_string += `	author   = "`
+		if braces {
+			ret_string += fmt.Sprintf("	author   = %s", braces_open)
+		} else {
+			ret_string += fmt.Sprintf("	author   = %s", speechmarks)
+		}
 		for i, articleAuthor := range articleAuthors {
 			ret_string += articleAuthor
 			if i < len(articleAuthors)-1 {
 				ret_string += " and "
 			}
 		}
-		ret_string += `"` + "\n"
+		if braces {
+			ret_string += fmt.Sprintf("%s,\n", braces_close)
+		} else {
+			ret_string += fmt.Sprintf("%s,\n", speechmarks)
+		}
 	} else {
-		ret_string += `	author   = "<Lastname>, <FirstName>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	author   = %s<Lastname>, <FirstName>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf(" author   = %s<Lastname>, <FirstName>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// title
 	if articleTitle != "" {
-		ret_string += `	title    = "` + articleTitle + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", braces_open, articleTitle, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", speechmarks, articleTitle, speechmarks)
+		}
 	} else {
-		ret_string += `	title    = "<Example Title: Please Change>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	title    =% s<Example Title: Please Change>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// journal
 	if articleJournal != "" {
-		ret_string += `	journal  = "` + articleJournal + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	journal  = %s%s%s,\n", braces_open, articleJournal, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	journal  = %s%s%s,\n", speechmarks, articleJournal, speechmarks)
+		}
+
 	} else {
-		ret_string += `	journal  = "<Example Journal>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	journal  = %s<Example Journal: Please Change>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf(" journal  = %s<Example Journal: Please Change>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// year
 	if strconv.Itoa(articleYear) != "" {
-		ret_string += `	year     = ` + strconv.Itoa(articleYear) + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	year     = %s%d%s,\n", braces_open, articleYear, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	year     = %d,\n", articleYear)
+		}
 	} else {
-		ret_string += `	year     = 2002` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	year     = %s2002%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += "	year     = 2002,\n"
+		}
 	}
 
 	// volume
 	if articleVolume != "" {
-		ret_string += `	volume   = "` + articleVolume + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	volume   = %s%s%s,\n", braces_open, articleVolume, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	volume   = %s%s%s,\n", speechmarks, articleVolume, speechmarks)
+		}
 	} else {
-		ret_string += `	volume   = "1"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	volume   = %s1%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	volume  = %s1%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// number
 	if articleNumber != "" {
-		ret_string += `	number   = "` + articleNumber + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	number   = %s%s%s,\n", braces_open, articleNumber, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	number   = %s%s%s,\n", speechmarks, articleNumber, speechmarks)
+		}
 	} else {
-		ret_string += `	number   = "1"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	number   = %s1%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	number   = %s1%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// pages
 	if articlePages != "" {
-		ret_string += `	pages    = "` + articlePages + `"` + "\n"
+		if braces {
+			ret_string += fmt.Sprintf("	pages    = %s%s%s\n", braces_open, articlePages, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	pages    = %s%s%s\n", speechmarks, articlePages, speechmarks)
+		}
 	} else {
+		if braces {
+			ret_string += fmt.Sprintf("	pages    = %s1--10%s\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	pages    = %s1--10%s\n", speechmarks, speechmarks)
+		}
 		ret_string += `	pages    = "1--10"` + "\n"
 	}
 	ret_string += "}"
