@@ -53,4 +53,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// inbookCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	inbookCmd.Flags().StringVarP(&inbookUrl, "url", "u", "", "url for online inbook to auto-generate entry")
+	inbookCmd.Flags().StringVarP(&inbookCiteKey, "key", "k", "", "citation key for bibtex entry")
+	inbookCmd.Flags().StringArrayVarP(&inbookAuthors, "author", "a", []string{}, "author name(s) for inbook")
+	inbookCmd.Flags().StringVarP(&inbookBookTitle, "title", "t", "", "title of inbook")
+	inbookCmd.Flags().StringVarP(&inbookYear, "year", "y", "", "year the inbook was released")
+	inbookCmd.Flags().StringVarP(&inbookPublisher, "publisher", "p", "", "who published the inbook")
+	inbookCmd.Flags().StringVarP(&inbookAddress, "address", "l", "", "address of publisher")
+	inbookCmd.Flags().StringVarP(&inbookPages, "pages", "f", "", "pages within the inbook")
 }

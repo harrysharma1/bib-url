@@ -4,9 +4,11 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
 var (
@@ -34,6 +36,13 @@ func Execute() {
 	}
 }
 
+func GenerateDocs() {
+	err := doc.GenMarkdownTree(rootCmd, "./docs")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
@@ -45,5 +54,9 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&save, "save", "", "save generated bibtex entry to file")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
+	err := doc.GenMarkdownTree(rootCmd, "./docs")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
