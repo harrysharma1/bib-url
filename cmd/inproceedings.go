@@ -16,7 +16,7 @@ var (
 	inproceedingsTitle     string
 	inproceedingsBooktitle string
 	inproceedingsSeries    string
-	inproceedingsYear      int
+	inproceedingsYear      string
 	inproceedingsPages     string
 	inproceedingsPublisher string
 	inproceedingsAddress   string
@@ -56,4 +56,14 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// inproceedingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsUrl, "url", "u", "", "url for online inproceedings to auto-generate entry")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
+	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsAuthors, "author", "a", []string{}, "author name(s) for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsTitle, "title", "t", "", "title for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsBooktitle, "booktitle", "b", "", "book title for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsSeries, "series", "s", "", "series of inproceedings.")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsYear, "year", "y", "", "year the inproceedings was released")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsPages, "pages", "f", "", "pages where citation is")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsPublisher, "publisher", "p", "", "publisher of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsAddress, "address", "l", "", "address of publisher")
 }
