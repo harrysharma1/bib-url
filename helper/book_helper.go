@@ -37,9 +37,9 @@ func FormatBookBibtex(bookCiteKey string, bookAuthors []string, bookTitle string
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	author    = %s<Lastname>, <FirstName>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	author    = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	author    = %s<Lastname>, <FirstName>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	author    = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
 		}
 	}
 

@@ -2,17 +2,12 @@ package helper
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/google/uuid"
 )
 
-func FormatBookletBibtex(bookletCiteKey string, bookletTitle string, bookletAuthors []string, bookletHowPublished string, bookletMonth string, bookletYear int) string {
+func FormatBookletBibtex(bookletCiteKey string, bookletTitle string, bookletAuthors []string, bookletHowPublished string, bookletMonth string, bookletYear string, braces bool) string {
 	var ret_string = "@booklet{"
-
-	if bookletCiteKey == "uuid.uuid4()" {
-		bookletCiteKey = ""
-	}
 
 	// CitationBooklet
 	if bookletCiteKey != "" {
@@ -24,44 +19,88 @@ func FormatBookletBibtex(bookletCiteKey string, bookletTitle string, bookletAuth
 
 	// title
 	if bookletTitle != "" {
-		ret_string += `	title        = "` + bookletTitle + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", braces_open, bookletTitle, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", speechmarks, bookletTitle, speechmarks)
+		}
 	} else {
-		ret_string += `	title        = "<Example Title: Please Change>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// author
 	if len(bookletAuthors) > 0 {
-		ret_string += `	author       = "`
+		if braces {
+			ret_string += fmt.Sprintf("	author       = %s", braces_open)
+		} else {
+			ret_string += fmt.Sprintf("	author       = %s", speechmarks)
+		}
 		for i, bookletAuthor := range bookletAuthors {
 			ret_string += bookletAuthor
 			if i < len(bookletAuthors)-1 {
 				ret_string += " and "
 			}
 		}
-		ret_string += `"` + "\n"
+		if braces {
+			ret_string += fmt.Sprintf("%s,\n", braces_close)
+		} else {
+			ret_string += fmt.Sprintf("%s,\n", speechmarks)
+		}
 	} else {
-		ret_string += `	author       = "<Lastname>, <FirstName>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// howpublished
 	if bookletHowPublished != "" {
-		ret_string += `	howpublished = "` + bookletHowPublished + `"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", braces_open, bookletHowPublished, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", speechmarks, bookletHowPublished, speechmarks)
+		}
 	} else {
-		ret_string += `	howpublished = "<Example How Published: Please Change>"` + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", speechmarks, speechmarks)
+		}
 	}
 
 	// month
 	if bookletMonth != "" {
-		ret_string += `	month        = ` + bookletMonth + ",\n"
+		if braces {
+			ret_string += fmt.Sprintf("	month        = %s%s%s,\n", braces_open, bookletMonth, braces_close)
+		} else {
+			ret_string += fmt.Sprintf(" month        = %s,\n", bookletMonth)
+		}
 	} else {
-		ret_string += `	month        = sep`
+		if braces {
+			ret_string += fmt.Sprintf("	month        = %s<sep: Please Change>%s,\n", braces_open, braces_close)
+		} else {
+			ret_string += "	month        = <sep: Please Change>,\n"
+		}
 	}
 
 	// year
-	if strconv.Itoa(bookletYear) != "" {
-		ret_string += `	year         = ` + strconv.Itoa(bookletYear) + "\n"
+	if bookletYear != "" {
+		if braces {
+			ret_string += fmt.Sprintf("	year         = %s%s%s\n", braces_open, bookletYear, braces_close)
+		} else {
+			ret_string += fmt.Sprintf("	year         = %s%s%s\n", speechmarks, bookletYear, speechmarks)
+		}
 	} else {
-		ret_string += `	year         = 2002` + "\n"
+		if braces {
+			ret_string += fmt.Sprintf("	year         = %s<2002: Please Change>%s\n", braces_open, braces_close)
+		} else {
+			ret_string += "	year         = <2002: Please Change>\n"
+		}
 	}
 
 	ret_string += "}"
