@@ -12,7 +12,7 @@ import (
 var (
 	inbookUrl       string
 	inbookCiteKey   string
-	inbookAuthor    []string
+	inbookAuthors   []string
 	inbookBookTitle string
 	inbookYear      string
 	inbookPublisher string

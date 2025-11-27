@@ -9,6 +9,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	miscUrl          string
+	miscCiteKey      string
+	miscAuthors      []string
+	miscHowPublished string
+	miscNote         string
+)
+
 // miscCmd represents the misc command
 var miscCmd = &cobra.Command{
 	Use:   "misc",

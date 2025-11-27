@@ -9,6 +9,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	inproceedingsUrl       string
+	inproceedingsCiteKey   string
+	inproceedingsAuthors   []string
+	inproceedingsTitle     string
+	inproceedingsBooktitle string
+	inproceedingsSeries    string
+	inproceedingsYear      int
+	inproceedingsPages     string
+	inproceedingsPublisher string
+	inproceedingsAddress   string
+)
+
 // inproceedingsCmd represents the inproceedings command
 var inproceedingsCmd = &cobra.Command{
 	Use:   "inproceedings",

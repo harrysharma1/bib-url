@@ -9,6 +9,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	proceedingsUrl       string
+	proceedingsCiteKey   string
+	proceedingsEditors   []string
+	proceedingsTitle     string
+	proceedingsSeries    string
+	proceedingsVolume    string
+	proceedingsPublisher string
+	proceedingsAddress   string
+	proceedingsYear      int
+)
+
 // proceedingsCmd represents the proceedings command
 var proceedingsCmd = &cobra.Command{
 	Use:   "proceedings",

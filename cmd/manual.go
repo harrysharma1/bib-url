@@ -9,6 +9,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	manualUrl          string
+	manualCiteKey      string
+	manualTitle        string
+	manualAuthors      []string
+	manualOrganisation string
+	manualAddress      string
+	manualYear         int
+)
+
 // manualCmd represents the manual command
 var manualCmd = &cobra.Command{
 	Use:   "manual",
@@ -18,7 +28,7 @@ var manualCmd = &cobra.Command{
 	@manual{CitekeyManual,
   		title        = "{R}: A Language and Environment for Statistical Computing",
   		author       = "{R Core Team}",
-  		organization = "R Foundation for Statistical Computing",
+  		organisation = "R Foundation for Statistical Computing",
   		address      = "Vienna, Austria",
   		year         = 2018
 	}

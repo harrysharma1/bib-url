@@ -9,6 +9,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	mastersthesisUrl     string
+	mastersthesisCiteKey string
+	mastersthesisAuthors []string
+	mastersthesisTitle   string
+	mastersthesisSchool  string
+	mastersthesisYear    int
+	mastersthesisAddress string
+	mastersthesisMonth   string
+)
+
 // mastersthesisCmd represents the mastersthesis command
 var mastersthesisCmd = &cobra.Command{
 	Use:   "mastersthesis",

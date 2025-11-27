@@ -9,6 +9,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	techreportUrl         string
+	techreportCiteKey     string
+	techreportTitle       string
+	techreportAuthors     []string
+	techreportInstitution string
+	techreportAddress     string
+	techreportNumber      string
+	techreportYear        int
+	techreportMonth       string
+)
+
 // techreportCmd represents the techreport command
 var techreportCmd = &cobra.Command{
 	Use:   "techreport",

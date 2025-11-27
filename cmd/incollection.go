@@ -9,6 +9,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	incollectionUrl       string
+	incollectionCiteKey   string
+	incollectionAuthors   []string
+	incollectionEditor    string
+	incollectionTitle     string
+	incollectionBookTitle string
+	incollectionYear      int
+	incollectionPublisher string
+	incollectionAddress   string
+	incollectionPages     string
+)
+
 // incollectionCmd represents the incollection command
 var incollectionCmd = &cobra.Command{
 	Use:   "incollection",

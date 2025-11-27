@@ -9,6 +9,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	unpublishedUrl     string
+	unpublishedCiteKey string
+	unpublishedAuthors []string
+	unpublishedTitle   string
+	unpublishedYear    string
+)
+
 // unpublishedCmd represents the unpublished command
 var unpublishedCmd = &cobra.Command{
 	Use:   "unpublished",
