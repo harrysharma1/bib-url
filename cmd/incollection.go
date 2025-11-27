@@ -16,7 +16,7 @@ var (
 	incollectionEditor    string
 	incollectionTitle     string
 	incollectionBookTitle string
-	incollectionYear      int
+	incollectionYear      string
 	incollectionPublisher string
 	incollectionAddress   string
 	incollectionPages     string
@@ -56,4 +56,14 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// incollectionCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	incollectionCmd.Flags().StringVarP(&incollectionUrl, "url", "u", "", "url for online incollection to auto-generate entry")
+	incollectionCmd.Flags().StringVarP(&incollectionCiteKey, "key", "k", "", "citation key for bibtex entry")
+	incollectionCmd.Flags().StringArrayVarP(&incollectionAuthors, "author", "a", []string{}, "author name(s) for incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionEditor, "editor", "e", "", "editor name(s) for incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionTitle, "title", "t", "", "title for incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionBookTitle, "booktitle", "b", "", "book title for incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionYear, "year", "y", "", "year the incollection was released")
+	incollectionCmd.Flags().StringVarP(&incollectionPublisher, "publisher", "p", "", "publisher of incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionAddress, "address", "l", "", "address of publisher")
+	incollectionCmd.Flags().StringVarP(&incollectionPages, "pages", "f", "", "pages where citation is")
 }

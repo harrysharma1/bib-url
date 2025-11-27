@@ -54,9 +54,4 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&save, "save", "", "save generated bibtex entry to file")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	err := doc.GenMarkdownTree(rootCmd, "./docs")
-	if err != nil {
-		log.Fatal(err)
-	}
-
 }
