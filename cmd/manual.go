@@ -16,7 +16,7 @@ var (
 	manualAuthors      []string
 	manualOrganisation string
 	manualAddress      string
-	manualYear         int
+	manualYear         string
 )
 
 // manualCmd represents the manual command
@@ -50,4 +50,11 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// manualCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	manualCmd.Flags().StringVarP(&manualUrl, "url", "u", "", "url for online manual to auto-generate entry")
+	manualCmd.Flags().StringVarP(&manualCiteKey, "key", "k", "", "citation key for bibtex entry")
+	manualCmd.Flags().StringVarP(&manualTitle, "title", "t", "", "title for manual")
+	manualCmd.Flags().StringArrayVarP(&manualAuthors, "author", "a", []string{}, "author name(s) for manual")
+	manualCmd.Flags().StringVarP(&manualOrganisation, "organisation", "o", "", "organisation that released the manual")
+	manualCmd.Flags().StringVarP(&manualAddress, "address", "l", "", "address of organisation")
+	manualCmd.Flags().StringVarP(&manualYear, "year", "y", "", "year the manual was released")
 }
