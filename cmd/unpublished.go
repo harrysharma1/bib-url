@@ -46,4 +46,9 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// unpublishedCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	unpublishedCmd.Flags().StringVarP(&unpublishedUrl, "url", "u", "", "url for online unpublished work to auto-generate entry")
+	unpublishedCmd.Flags().StringVarP(&unpublishedCiteKey, "key", "k", "", "citation key for bibtex entry")
+	unpublishedCmd.Flags().StringArrayVarP(&unpublishedAuthors, "author", "a", []string{}, "author name(s) for unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublishedTitle, "title", "t", "", "title of unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublishedYear, "year", "y", "", "year unpublished work was created")
 }
