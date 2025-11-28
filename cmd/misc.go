@@ -12,8 +12,10 @@ import (
 var (
 	miscUrl          string
 	miscCiteKey      string
+	miscTitle        string
 	miscAuthors      []string
 	miscHowPublished string
+	miscYear         string
 	miscNote         string
 )
 
@@ -48,4 +50,11 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// miscCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	miscCmd.Flags().StringVarP(&miscUrl, "url", "u", "", "url for online masters thesis to auto-generate entry")
+	miscCmd.Flags().StringVarP(&miscCiteKey, "key", "k", "", "citation key for bibtex entry")
+	miscCmd.Flags().StringVarP(&miscTitle, "title", "t", "", "title for misc entry")
+	miscCmd.Flags().StringArrayVarP(&miscAuthors, "authors", "a", []string{}, "author name(s) for misc")
+	miscCmd.Flags().StringVarP(&miscHowPublished, "published", "p", "", "how misc was published")
+	miscCmd.Flags().StringVarP(&miscYear, "year", "y", "", "year misc entry was created")
+	miscCmd.Flags().StringVarP(&miscNote, "note", "n", "", "note, usually when last accessed")
 }

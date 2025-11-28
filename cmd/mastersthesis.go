@@ -15,7 +15,7 @@ var (
 	mastersthesisAuthors []string
 	mastersthesisTitle   string
 	mastersthesisSchool  string
-	mastersthesisYear    int
+	mastersthesisYear    string
 	mastersthesisAddress string
 	mastersthesisMonth   string
 )
@@ -52,4 +52,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// mastersthesisCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisUrl, "url", "u", "", "url for online masters thesis to auto-generate entry")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisCiteKey, "key", "k", "", "citation key for bibtex entry")
+	mastersthesisCmd.Flags().StringArrayVarP(&mastersthesisAuthors, "author", "a", []string{}, "author name(s) for masters thesis")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisTitle, "title", "t", "", "title of masters thesis")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisSchool, "school", "s", "", "school where the masters thesis came from")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisYear, "year", "y", "", "year the masters thesis was released")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisAddress, "address", "l", "", "address of academic institution")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisMonth, "month", "m", "", "month the masters thesis was released")
 }
