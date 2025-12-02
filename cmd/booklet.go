@@ -34,8 +34,9 @@ var bookletCmd = &cobra.Command{
   		year         = 2015
 	}
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, bookletYear, braces)
+
 		if copy {
 			helper.Copy(bibtex)
 		}
@@ -43,7 +44,9 @@ var bookletCmd = &cobra.Command{
 		if save != "" {
 			helper.Save(save, bibtex)
 		}
+
 		fmt.Println(bibtex)
+		return nil
 	},
 }
 

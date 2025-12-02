@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/helper"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -37,8 +38,18 @@ var techreportCmd = &cobra.Command{
   		month       = sep
 	}
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("techreport called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var bibtex = helper.FormatTechReportBibtex()
+
+		if copy {
+			helper.Copy(bibtex)
+		}
+
+		if save != "" {
+			helper.Save(save, bibtex)
+		}
+		fmt.Println(bibtex)
+		return nil
 	},
 }
 

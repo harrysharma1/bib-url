@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/helper"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -36,8 +37,18 @@ var inbookCmd = &cobra.Command{
   		pages     = "187--221"
 	}
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("inbook called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var bibtex = helper.FormatInbookBibtex()
+
+		if copy {
+			helper.Copy(bibtex)
+		}
+
+		if save != "" {
+			helper.Save(save, bibtex)
+		}
+		fmt.Println(bibtex)
+		return nil
 	},
 }
 

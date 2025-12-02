@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/helper"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -39,8 +40,18 @@ var incollectionCmd = &cobra.Command{
   		pages     = "1--10"
 	}
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("incollection called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var bibtex = helper.FormatIncollectionBibtex()
+
+		if copy {
+			helper.Copy(bibtex)
+		}
+
+		if save != "" {
+			helper.Save(save, bibtex)
+		}
+		fmt.Println(bibtex)
+		return nil
 	},
 }
 
