@@ -18,7 +18,7 @@ var (
 	proceedingsVolume    string
 	proceedingsPublisher string
 	proceedingsAddress   string
-	proceedingsYear      int
+	proceedingsYear      string
 )
 
 // proceedingsCmd represents the proceedings command
@@ -54,4 +54,14 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// proceedingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	proceedingsCmd.Flags().StringVarP(&proceedingsUrl, "url", "u", "", "url for online proceedings to auto-generate entry")
+	proceedingsCmd.Flags().StringVarP(&proceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
+	proceedingsCmd.Flags().StringArrayVarP(&proceedingsEditors, "editors", "e", []string{}, "editor name(s) for proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedingsTitle, "title", "t", "", "title of proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedingsSeries, "series", "s", "", "series where proceedings was published")
+	proceedingsCmd.Flags().StringVarP(&proceedingsVolume, "volume", "v", "", "volume where proceedings was published")
+	proceedingsCmd.Flags().StringVarP(&proceedingsPublisher, "publisher", "p", "", "the group that published proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedingsAddress, "address", "l", "", "location of publisher")
+	proceedingsCmd.Flags().StringVarP(&proceedingsYear, "year", "y", "", "year proceedings was published")
 }

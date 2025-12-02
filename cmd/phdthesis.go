@@ -16,7 +16,7 @@ var (
 	phdthesisTitle   string
 	phdthesisSchool  string
 	phdthesisAddress string
-	phdthesisYear    int
+	phdthesisYear    string
 	phdthesisMonth   string
 )
 
@@ -52,4 +52,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// phdthesisCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	phdthesisCmd.Flags().StringVarP(&phdthesisUrl, "url", "u", "", "url for online PhD thesis to auto-generate entry")
+	phdthesisCmd.Flags().StringVarP(&phdthesisCiteKey, "key", "k", "", "citation key for bibtex entry")
+	phdthesisCmd.Flags().StringArrayVarP(&phdthesisAuthors, "author", "a", []string{}, "author name(s) for PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesisTitle, "title", "t", "", "title of PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesisSchool, "school", "s", "", "school where PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesisAddress, "address", "l", "", "location of school")
+	phdthesisCmd.Flags().StringVarP(&phdthesisYear, "year", "y", "", "year PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesisMonth, "month", "m", "", "month PhD thesis was published")
 }
