@@ -24,8 +24,8 @@ func FormatUnpublishedBibtex(unpublishedCiteKey string, unpublishedAuthors []str
 		} else {
 			ret_string += fmt.Sprintf("	author   = %s", speechmarks)
 		}
-		for i, unpubunpublishedAuthor := range unpublishedAuthors {
-			ret_string += unpubunpublishedAuthor
+		for i, unpublishedAuthor := range unpublishedAuthors {
+			ret_string += unpublishedAuthor
 			if i < len(unpublishedAuthors)-1 {
 				ret_string += " and "
 			}
