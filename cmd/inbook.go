@@ -38,7 +38,7 @@ var inbookCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatInbookBibtex()
+		var bibtex = helper.FormatInbookBibtex(inbookCiteKey, inbookAuthors, inbookBookTitle, inbookYear, inbookPublisher, inbookAddress, inbookPages)
 
 		if copy {
 			helper.Copy(bibtex)

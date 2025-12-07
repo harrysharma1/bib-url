@@ -14,7 +14,7 @@ var (
 	incollectionUrl       string
 	incollectionCiteKey   string
 	incollectionAuthors   []string
-	incollectionEditor    string
+	incollectionEditors   []string
 	incollectionTitle     string
 	incollectionBookTitle string
 	incollectionYear      string
@@ -41,7 +41,7 @@ var incollectionCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatIncollectionBibtex()
+		var bibtex = helper.FormatIncollectionBibtex(incollectionCiteKey, incollectionAuthors, incollectionEditors, incollectionTitle, incollectionBookTitle, incollectionYear, incollectionPublisher, incollectionAddress, incollectionPages)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -70,7 +70,7 @@ func init() {
 	incollectionCmd.Flags().StringVarP(&incollectionUrl, "url", "u", "", "url for online incollection to auto-generate entry")
 	incollectionCmd.Flags().StringVarP(&incollectionCiteKey, "key", "k", "", "citation key for bibtex entry")
 	incollectionCmd.Flags().StringArrayVarP(&incollectionAuthors, "author", "a", []string{}, "author name(s) for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionEditor, "editor", "e", "", "editor name(s) for incollection")
+	incollectionCmd.Flags().StringArrayVarP(&incollectionEditors, "editor", "e", []string{}, "editor name(s) for incollection")
 	incollectionCmd.Flags().StringVarP(&incollectionTitle, "title", "t", "", "title for incollection")
 	incollectionCmd.Flags().StringVarP(&incollectionBookTitle, "booktitle", "b", "", "book title for incollection")
 	incollectionCmd.Flags().StringVarP(&incollectionYear, "year", "y", "", "year the incollection was released")

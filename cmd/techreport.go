@@ -39,7 +39,7 @@ var techreportCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatTechReportBibtex()
+		var bibtex = helper.FormatTechReportBibtex(techreportCiteKey, techreportTitle, techreportAuthors, techreportInstitution, techreportAddress, techreportNumber, techreportYear, techreportMonth)
 
 		if copy {
 			helper.Copy(bibtex)

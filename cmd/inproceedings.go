@@ -15,7 +15,7 @@ var (
 	inproceedingsCiteKey   string
 	inproceedingsAuthors   []string
 	inproceedingsTitle     string
-	inproceedingsBooktitle string
+	inproceedingsBookTitle string
 	inproceedingsSeries    string
 	inproceedingsYear      string
 	inproceedingsPages     string
@@ -41,7 +41,7 @@ var inproceedingsCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatIncollectionBibtex()
+		var bibtex = helper.FormatInproceedingsBibtex(inproceedingsCiteKey, inproceedingsAuthors, inproceedingsTitle, inproceedingsBookTitle, inproceedingsSeries, inproceedingsYear, inproceedingsPages, inproceedingsPublisher, inproceedingsAddress)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -71,7 +71,7 @@ func init() {
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
 	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsAuthors, "author", "a", []string{}, "author name(s) for inproceedings")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsTitle, "title", "t", "", "title for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsBooktitle, "booktitle", "b", "", "book title for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsBookTitle, "booktitle", "b", "", "book title for inproceedings")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsSeries, "series", "s", "", "series of inproceedings.")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsYear, "year", "y", "", "year the inproceedings was released")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsPages, "pages", "f", "", "pages where citation is")

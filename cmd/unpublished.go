@@ -31,7 +31,7 @@ var unpublishedCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatUnpublishedBibtex()
+		var bibtex = helper.FormatUnpublishedBibtex(unpublishedCiteKey, unpublishedAuthors, unpublishedTitle, unpublishedYear)
 
 		if copy {
 			helper.Copy(bibtex)

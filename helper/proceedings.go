@@ -1,5 +1,5 @@
 package helper
 
-func FormatProceedingsBibtex() string {
+func FormatProceedingsBibtex(proceedingsCiteKey string, proceedingsEditors []string, proceedingsTitle string, proceedingsSeries string, proceedingsVolume string, proceedingsPublisher string, proceedingsAddress string, proceedingsYear string) string {
 	return ""
 }

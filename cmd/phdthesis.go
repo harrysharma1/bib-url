@@ -37,7 +37,7 @@ var phdthesisCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatPhDThesisBibtex()
+		var bibtex = helper.FormatPhDThesisBibtex(phdthesisCiteKey, phdthesisAuthors, phdthesisTitle, phdthesisSchool, phdthesisAddress, phdthesisYear, phdthesisMonth)
 
 		if copy {
 			helper.Copy(bibtex)

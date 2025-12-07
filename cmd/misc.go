@@ -35,7 +35,7 @@ var miscCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatMiscBibtex()
+		var bibtex = helper.FormatMiscBibtex(miscCiteKey, miscTitle, miscAuthors, miscHowPublished, miscYear, miscNote)
 
 		if copy {
 			helper.Copy(bibtex)

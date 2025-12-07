@@ -1,5 +1,5 @@
 package helper
 
-func FormatUnpublishedBibtex() string {
+func FormatUnpublishedBibtex(unpublishedCiteKey string, unpublishedAuthors []string, unpublishedTitle string, unpublishedYear string) string {
 	return ""
 }
