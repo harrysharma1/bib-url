@@ -1,5 +1,6 @@
 package helper
 
 func FormatManualBibtex(manualCiteKey string, manualTitle string, manualAuthors []string, manualOrganisation string, manualAddress string, manualYear string) string {
-	return ""
+	var ret_string = "@manual{"
+	return ret_string
 }
