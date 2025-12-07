@@ -41,7 +41,7 @@ var incollectionCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatIncollectionBibtex(incollectionCiteKey, incollectionAuthors, incollectionEditors, incollectionTitle, incollectionBookTitle, incollectionYear, incollectionPublisher, incollectionAddress, incollectionPages)
+		var bibtex = helper.FormatIncollectionBibtex(incollectionCiteKey, incollectionAuthors, incollectionEditors, incollectionTitle, incollectionBookTitle, incollectionYear, incollectionPublisher, incollectionAddress, incollectionPages, braces)
 
 		if copy {
 			helper.Copy(bibtex)
