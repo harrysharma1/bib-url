@@ -147,15 +147,15 @@ func FormatIncollectionBibtex(incollectionCiteKey string, incollectionAuthors []
 	// pages
 	if incollectionPages != "" {
 		if braces {
-			ret_string += fmt.Sprintf("	pages     = %s%s%s,\n", braces_open, incollectionPages, braces_close)
+			ret_string += fmt.Sprintf("	pages     = %s%s%s\n", braces_open, incollectionPages, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	pages     = %s%s%s,\n", speechmarks, incollectionPages, speechmarks)
+			ret_string += fmt.Sprintf("	pages     = %s%s%s\n", speechmarks, incollectionPages, speechmarks)
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s\n", speechmarks, speechmarks)
 		}
 	}
 	ret_string += "}"

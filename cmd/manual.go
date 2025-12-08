@@ -35,7 +35,7 @@ var manualCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatManualBibtex(manualCiteKey, manualTitle, manualAuthors, manualOrganisation, manualAddress, manualYear)
+		var bibtex = helper.FormatManualBibtex(manualCiteKey, manualTitle, manualAuthors, manualOrganisation, manualAddress, manualYear, braces)
 
 		if copy {
 			helper.Copy(bibtex)

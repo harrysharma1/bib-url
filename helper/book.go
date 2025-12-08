@@ -84,7 +84,7 @@ func FormatBookBibtex(bookCiteKey string, bookAuthors []string, bookTitle string
 		if braces {
 			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf(" address   = %s<Example Address: Please Change>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s,\n", speechmarks, speechmarks)
 		}
 	}
 
@@ -99,7 +99,7 @@ func FormatBookBibtex(bookCiteKey string, bookAuthors []string, bookTitle string
 		if braces {
 			ret_string += fmt.Sprintf("	year      = %s<2002: Please Change>%s\n", braces_open, braces_close)
 		} else {
-			ret_string += "	year      = <2002: Please Change>,\n"
+			ret_string += "	year      = <2002: Please Change>\n"
 		}
 	}
 	ret_string += "}"

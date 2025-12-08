@@ -78,13 +78,13 @@ func FormatInbookBibtex(inbookCiteKey string, inbookAuthors []string, inbookTitl
 		if braces {
 			ret_string += fmt.Sprintf("	year      = %s%s%s\n", braces_open, inbookYear, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	year      = %s%s%s\n", speechmarks, inbookYear, speechmarks)
+			ret_string += fmt.Sprintf("	year      = %s\n", inbookYear)
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	year      = %s<2002: Please Change>%s\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	year      = %s<2002: Please Change>%s,\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	year      = %s<2002: Please Change>%s\n", speechmarks, speechmarks)
+			ret_string += "	year      = <2002: Please Change>,\n"
 		}
 	}
 
@@ -121,15 +121,15 @@ func FormatInbookBibtex(inbookCiteKey string, inbookAuthors []string, inbookTitl
 	// pages
 	if inbookPages != "" {
 		if braces {
-			ret_string += fmt.Sprintf("	pages     = %s%s%s,\n", braces_open, inbookPages, braces_close)
+			ret_string += fmt.Sprintf("	pages     = %s%s%s\n", braces_open, inbookPages, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	pages     = %s%s%s,\n", speechmarks, inbookPages, speechmarks)
+			ret_string += fmt.Sprintf("	pages     = %s%s%s\n", speechmarks, inbookPages, speechmarks)
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	pages     = %s<Example How Published: Please Change>%s\n", speechmarks, speechmarks)
 		}
 	}
 	ret_string += "}"

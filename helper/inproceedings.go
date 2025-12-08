@@ -135,15 +135,15 @@ func FormatInproceedingsBibtex(inproceedingsCiteKey string, inproceedingsAuthors
 	// address
 	if inproceedingsAddress != "" {
 		if braces {
-			ret_string += fmt.Sprintf("	address   = %s%s%s,\n", braces_open, inproceedingsAddress, braces_close)
+			ret_string += fmt.Sprintf("	address   = %s%s%s\n", braces_open, inproceedingsAddress, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	address   = %s%s%s,\n", speechmarks, inproceedingsAddress, speechmarks)
+			ret_string += fmt.Sprintf("	address   = %s%s%s\n", speechmarks, inproceedingsAddress, speechmarks)
 		}
 	} else {
 		if braces {
-			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s,\n", braces_open, braces_close)
+			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s\n", braces_open, braces_close)
 		} else {
-			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s,\n", speechmarks, speechmarks)
+			ret_string += fmt.Sprintf("	address   = %s<Example Address: Please Change>%s\n", speechmarks, speechmarks)
 		}
 	}
 
