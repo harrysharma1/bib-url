@@ -140,3 +140,7 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 	ret_string += "}"
 	return ret_string
 }
+
+func ScrapeArticle(url string) {
+
+}

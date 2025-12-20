@@ -41,6 +41,12 @@ var articleCmd = &cobra.Command{
 
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if helper.IsValidUrl(articleUrl) {
+			helper.ScrapeArticle(articleUrl)
+		} else {
+			return fmt.Errorf("%s is not a valid URL", articleUrl)
+		}
+
 		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, braces)
 
 		if copy {
