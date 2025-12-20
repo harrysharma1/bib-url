@@ -28,7 +28,7 @@ var phdthesisCmd = &cobra.Command{
 	Long: `This will generate an @phdthesis bibtex entry e.g.
 	
 	@phdthesis{CitekeyPhdthesis,
-  		author  = "Rempel, Robert Charles",
+  		author  = "Rempel and Robert Charles",
   		title   = "Relaxation Effects for Coupled Nuclear Spins",
   		school  = "Stanford University",
   		address = "Stanford, CA",
@@ -37,7 +37,7 @@ var phdthesisCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatPhDThesisBibtex(phdthesisCiteKey, phdthesisAuthors, phdthesisTitle, phdthesisSchool, phdthesisAddress, phdthesisYear, phdthesisMonth)
+		var bibtex = helper.FormatPhDThesisBibtex(phdthesisCiteKey, phdthesisAuthors, phdthesisTitle, phdthesisSchool, phdthesisAddress, phdthesisYear, phdthesisMonth, braces)
 
 		if copy {
 			helper.Copy(bibtex)
