@@ -106,3 +106,7 @@ func FormatBookBibtex(bookCiteKey string, bookAuthors []string, bookTitle string
 	return ret_string
 
 }
+
+func BookFromISBN(isbn string) {
+
+}

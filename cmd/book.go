@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	bookUrl       string
+	bookISBN      string
 	bookCiteKey   string
 	bookAuthors   []string
 	bookTitle     string
@@ -35,6 +35,9 @@ var bookCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if bookISBN != "" {
+
+		}
 		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
 
 		if copy {
@@ -64,7 +67,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bookCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	bookCmd.Flags().StringVarP(&bookUrl, "url", "u", "", "url for online book to auto-generate entry")
+	bookCmd.Flags().StringVarP(&bookISBN, "isbn", "i", "", "isbn for online book to auto-generate entry")
 	bookCmd.Flags().StringVarP(&bookCiteKey, "key", "k", "", "citation key for bibtex entry")
 	bookCmd.Flags().StringArrayVarP(&bookAuthors, "author", "a", []string{}, "author name(s) for book")
 	bookCmd.Flags().StringVarP(&bookTitle, "title", "t", "", "title of book")
