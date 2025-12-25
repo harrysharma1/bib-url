@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	articleUrl     string
+	articleDOI     string
 	articleCiteKey string
 	articleAuthors []string
 	articleTitle   string
@@ -41,10 +41,13 @@ var articleCmd = &cobra.Command{
 
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if helper.IsValidUrl(articleUrl) {
-			helper.ScrapeArticle(articleUrl)
-		} else {
-			return fmt.Errorf("%s is not a valid URL", articleUrl)
+		var err error
+
+		if articleDOI != "" {
+			articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, err = helper.ArticleFromDOI(articleDOI)
+			if err != nil {
+				return err
+			}
 		}
 
 		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, braces)
@@ -52,8 +55,9 @@ var articleCmd = &cobra.Command{
 		if copy {
 			helper.Copy(bibtex)
 		}
+
 		if save != "" {
-			if err := helper.Save(save, bibtex); err != nil {
+			if err = helper.Save(save, bibtex); err != nil {
 				return err
 			}
 		}
@@ -75,7 +79,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	articleCmd.Flags().StringVarP(&articleUrl, "url", "u", "", "url for online article to auto-generate entry")
+	articleCmd.Flags().StringVarP(&articleDOI, "doi", "d", "", "doi identifier for online article to auto-generate entry")
 	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "", "citation key for bibtex entry")
 	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{}, "author name(s) for article")
 	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "", "title of article")

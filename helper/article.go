@@ -1,7 +1,12 @@
 package helper
 
 import (
+	"bibcli/models"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/google/uuid"
 )
@@ -141,6 +146,43 @@ func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, article
 	return ret_string
 }
 
-func ScrapeArticle(url string) {
+func ArticleFromDOI(doi string) ([]string, string, string, string, string, string, error) {
+	var (
+		authors []string
+		title   string
+		journal string
+		year    string
+		volume  string
+		number  string
+	)
 
+	baseUrl := `https://api.crossref.org/works`
+
+	res, err := http.Get(fmt.Sprintf("%s/%s", baseUrl, doi))
+	if err != nil {
+		return []string{}, "", "", "", "", "", err
+	}
+
+	if res.StatusCode == 404 {
+		return []string{}, "", "", "", "", "", errors.New("work identified does not exist")
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return []string{}, "", "", "", "", "", err
+	}
+
+	var work models.Works
+	json.Unmarshal(body, &work)
+	for i := range len(work.Message.Author) {
+		authors = append(authors, fmt.Sprintf("%s %s", work.Message.Author[i].Given, work.Message.Author[i].Family))
+	}
+
+	title += work.Message.Title[0]
+	journal += work.Message.ContainerTitle[0]
+	year += fmt.Sprintf("%d", work.Message.Created.DateParts[0][0])
+	volume += work.Message.Volume
+	number += work.Message.Issue
+
+	return authors, title, journal, year, volume, number, nil
 }
