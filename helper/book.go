@@ -1,7 +1,12 @@
 package helper
 
 import (
+	"bibcli/models"
+	"encoding/json"
 	"fmt"
+	"io"
+	"log"
+	"net/http"
 
 	"github.com/google/uuid"
 )
@@ -108,5 +113,41 @@ func FormatBookBibtex(bookCiteKey string, bookAuthors []string, bookTitle string
 }
 
 func BookFromISBN(isbn string) {
+	openlibrary := fmt.Sprintf("https://openlibrary.org/isbn/%s.json", isbn)
+
+	res, err := http.Get(openlibrary)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.StatusCode == 404 {
+		log.Fatal("not found")
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var bookInfo models.BookInfo
+	json.Unmarshal(body, &bookInfo)
+	for i := range bookInfo.Authors {
+		authorUrl := fmt.Sprintf("https://openlibrary.org%s.json", bookInfo.Authors[i].Key)
+		r, err := http.Get(authorUrl)
+		if err != nil {
+			continue
+		}
+		b, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Panicf("could not read response author body for: %s", bookInfo.Authors[i])
+			continue
+		}
+		var author models.Author
+		json.Unmarshal(b, &author)
+		fmt.Println("Author: ", author.Name)
+	}
+	fmt.Println("Title: ", bookInfo.FullTitle)
+	fmt.Println("Publisher: ", bookInfo.Publishers[0])
+	fmt.Println("Address: ")
+	fmt.Println("Year: ", bookInfo.PublishDate)
 
 }

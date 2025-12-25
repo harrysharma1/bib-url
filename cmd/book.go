@@ -36,7 +36,7 @@ var bookCmd = &cobra.Command{
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if bookISBN != "" {
-
+			helper.BookFromISBN(bookISBN)
 		}
 		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
 
