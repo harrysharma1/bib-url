@@ -35,8 +35,13 @@ var bookCmd = &cobra.Command{
 	}
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		var err error
+
 		if bookISBN != "" {
-			helper.BookFromISBN(bookISBN)
+			bookAuthors, bookTitle, bookPublisher, bookYear, err = helper.BookFromISBN(bookISBN)
+			if err != nil {
+				return err
+			}
 		}
 		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
 
@@ -45,7 +50,7 @@ var bookCmd = &cobra.Command{
 		}
 
 		if save != "" {
-			if err := helper.Save(save, bibtex); err != nil {
+			if err = helper.Save(save, bibtex); err != nil {
 				return err
 			}
 		}
