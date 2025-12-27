@@ -1,7 +1,6 @@
-package cmd
+package helper
 
 import (
-	"bibcli/helper"
 	"strings"
 	"testing"
 )
@@ -20,7 +19,7 @@ func TestArticleFormatDefaultNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -37,7 +36,7 @@ func TestArticleFormatDefaultBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -57,7 +56,7 @@ func TestArticleFormatCustomAuthorNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"John Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -74,7 +73,7 @@ func TestArticleFormatCustomAuthorBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"John Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -91,7 +90,7 @@ func TestArticleFormatCustomAuthorsNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"John Doe", "Jane Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"John Doe", "Jane Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -108,7 +107,7 @@ func TestArticleFormatCustomAuthorsBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"John Doe", "Jane Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"John Doe", "Jane Doe"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -126,7 +125,7 @@ func TestArticleFormatCustomTitleNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "The independence of the continuum hypothesis", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "The independence of the continuum hypothesis", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -143,7 +142,7 @@ func TestArticleFormatCustomTitleBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "The independence of the continuum hypothesis", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "The independence of the continuum hypothesis", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -161,7 +160,7 @@ func TestArticleFormatCustomJournalNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "Proceedings of the National Academy of Sciences", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "Proceedings of the National Academy of Sciences", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -178,7 +177,7 @@ func TestArticleFormatCustomJournalBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "Proceedings of the National Academy of Sciences", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "Proceedings of the National Academy of Sciences", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -196,7 +195,7 @@ func TestArticleFormatCustomYearNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "1963", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "1963", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -213,7 +212,7 @@ func TestArticleFormatCustomYearBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "1963", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "1963", "<1: Please Change>", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -231,7 +230,7 @@ func TestArticleFormatCustomVolumeNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "50", "<1: Please Change>", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "50", "<1: Please Change>", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -248,7 +247,7 @@ func TestArticleFormatCustomVolumeBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "50", "<1: Please Change>", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "50", "<1: Please Change>", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -266,7 +265,7 @@ func TestArticleFormatCustomNumberNoBraces(t *testing.T) {
 	pages    = "<1--10: Please Change>"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "6", "<1--10: Please Change>", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "6", "<1--10: Please Change>", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -283,7 +282,7 @@ func TestArticleFormatCustomNumberBraces(t *testing.T) {
 	pages    = {<1--10: Please Change>}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "6", "<1--10: Please Change>", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "6", "<1--10: Please Change>", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -301,7 +300,7 @@ func TestArticleFormatCustomPagesNoBraces(t *testing.T) {
 	pages    = "1143--1148"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "1143--1148", false)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "1143--1148", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -318,7 +317,7 @@ func TestArticleFormatCustomPagesBraces(t *testing.T) {
 	pages    = {1143--1148}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "1143--1148", true)
+	have := FormatArticleBibtex("test", []string{"<Lastname, FirstName>"}, "<Example Title: Please Change>", "<Example Journal: Please Change>", "<2002: Please Change>", "<1: Please Change>", "<1: Please Change>", "1143--1148", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -336,7 +335,7 @@ func TestArticleFormatCustomNoBraces(t *testing.T) {
 	pages    = "1143--1148"
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"P. J. Cohen"}, "The independence of the continuum hypothesis", "Proceedings of the National Academy of Sciences", "1963", "50", "6", "1143--1148", false)
+	have := FormatArticleBibtex("test", []string{"P. J. Cohen"}, "The independence of the continuum hypothesis", "Proceedings of the National Academy of Sciences", "1963", "50", "6", "1143--1148", false)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -353,7 +352,7 @@ func TestArticleFormatCustomBraces(t *testing.T) {
 	pages    = {1143--1148}
 }
 `
-	have := helper.FormatArticleBibtex("test", []string{"P. J. Cohen"}, "The independence of the continuum hypothesis", "Proceedings of the National Academy of Sciences", "1963", "50", "6", "1143--1148", true)
+	have := FormatArticleBibtex("test", []string{"P. J. Cohen"}, "The independence of the continuum hypothesis", "Proceedings of the National Academy of Sciences", "1963", "50", "6", "1143--1148", true)
 	if strings.TrimSpace(want) != strings.TrimSpace(have) {
 		t.Errorf("return value incorrect, either change test to reflect this change or fix article formatting:\nWant\n%s\nHave:\n%s", want, have)
 	}
@@ -372,7 +371,7 @@ func TestArticleDOIValid(t *testing.T) {
 	wantVolume := "10"
 	wantNumber := "21"
 
-	haveAuthors, haveTitle, haveJournal, haveYear, haveVolume, haveNumber, err := helper.ArticleFromDOI(doi)
+	haveAuthors, haveTitle, haveJournal, haveYear, haveVolume, haveNumber, err := ArticleFromDOI(doi)
 
 	if err != nil {
 		t.Errorf("error ocurred in ArticleFromDOI() function call: %e", err)
@@ -418,7 +417,7 @@ func TestArticleDOIValid(t *testing.T) {
 
 func TestArticleDOIInvalid(t *testing.T) {
 	doi := "cafbawiefkhapoucwoefhewkjfnfs"
-	_, _, _, _, _, _, err := helper.ArticleFromDOI(doi)
+	_, _, _, _, _, _, err := ArticleFromDOI(doi)
 	if err != nil {
 		if err.Error() != "work identified does not exist" {
 			t.Errorf("returned error did not indicate that article does not exist")
