@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 )
@@ -155,7 +156,13 @@ func BookFromISBN(isbn string) ([]string, string, string, string, error) {
 
 	title += bookInfo.FullTitle
 	publisher += bookInfo.Publishers[0]
-	year += bookInfo.PublishDate
+	if !strings.Contains(bookInfo.PublishDate, ",") {
+		year += bookInfo.PublishDate
+	} else {
+		tmpYear := strings.Split(bookInfo.PublishDate, ",")[1]
+
+		year += strings.TrimPrefix(tmpYear, " ")
+	}
 	return authors, title, publisher, year, nil
 
 }

@@ -420,7 +420,7 @@ func TestArticleDOIInvalid(t *testing.T) {
 	_, _, _, _, _, _, err := ArticleFromDOI(doi)
 	if err != nil {
 		if err.Error() != "work identified does not exist" {
-			t.Errorf("returned error did not indicate that article does not exist")
+			t.Error("returned error did not indicate that the article does not exist")
 		}
 	}
 }
