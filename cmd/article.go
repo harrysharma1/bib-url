@@ -44,12 +44,38 @@ var articleCmd = &cobra.Command{
 		var err error
 
 		if articleDOI != "" {
-			articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, err = helper.ArticleFromDOI(articleDOI)
+			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := helper.ArticleFromDOI(articleDOI)
 			if err != nil {
 				return err
 			}
-		}
 
+			if len(articleAuthors) == 0 {
+				articleAuthors = doiAuthors
+			} else {
+				articleAuthors = append(articleAuthors, doiAuthors...)
+			}
+
+			if articleTitle == "" {
+				articleTitle = doiTitle
+			}
+
+			if articleJournal == "" {
+				articleJournal = doiJournal
+			}
+
+			if articleYear == "" {
+				articleYear = doiYear
+			}
+
+			if doiVolume == "" {
+				articleVolume = doiVolume
+			}
+
+			if doiNumber == "" {
+				articleNumber = doiNumber
+			}
+		}
+		fmt.Println(articleTitle)
 		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, braces)
 
 		if copy {

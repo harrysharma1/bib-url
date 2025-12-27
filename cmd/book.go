@@ -38,10 +38,29 @@ var bookCmd = &cobra.Command{
 		var err error
 
 		if bookISBN != "" {
-			bookAuthors, bookTitle, bookPublisher, bookYear, err = helper.BookFromISBN(bookISBN)
+			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := helper.BookFromISBN(bookISBN)
 			if err != nil {
 				return err
 			}
+
+			if len(bookAuthors) == 0 {
+				bookAuthors = isbnAuthors
+			} else {
+				bookAuthors = append(bookAuthors, isbnAuthors...)
+			}
+
+			if bookTitle == "" {
+				bookTitle = isbnTitle
+			}
+
+			if bookPublisher == "" {
+				bookPublisher = isbnPublisher
+			}
+
+			if bookYear == "" {
+				bookYear = isbnYear
+			}
+
 		}
 		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
 
