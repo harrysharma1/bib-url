@@ -28,16 +28,41 @@ var inbookCmd = &cobra.Command{
 	Short: "Generate @inbook bibtex entry",
 	Long: `This will generate an @inbook bibtex entry e.g.
 	
-	@inbook{CitekeyInbook,
-  		author    = "Lisa A. Urry and Michael L. Cain and Steven A. Wasserman and Peter V. Minorsky and Jane B. Reece",
-  		title     = "Photosynthesis",
-  		booktitle = "Campbell Biology",
-  		year      = "2016",
-  		publisher = "Pearson",
-  		address   = "New York, NY",
-  		pages     = "187--221"
-	}
-	`,
+@inbook{CitekeyInbook,
+	author    = "<Lastname, Firstname>",
+	title     = "<Title>",
+	booktitle = "<Book Title>",
+	publisher = "<Publisher>",
+	year 	  = <2002>,
+	editor	  = "<Lastname, Firstname>",
+	volume	  = "<50>",
+	number	  = "<1>",
+	series	  = "<Series>",
+	address   = "<Address>",
+	edition	  = "<2nd>",
+	month	  = <jul>,
+	pages     = "<10--100>",
+	note	  = "<Note>",
+}
+
+Required:
+	- author
+	- title
+	- booktitle
+	- publisher
+	- year
+Optional:
+	- editor
+	- volume
+	- number
+	- series
+	- address
+	- edition
+	- month
+	- pages
+	- note
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatInbookBibtex(inbookCiteKey, inbookAuthors, inbookTitle, inbookBookTitle, inbookYear, inbookPublisher, inbookAddress, inbookPages, braces)
 

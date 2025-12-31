@@ -24,12 +24,22 @@ var unpublishedCmd = &cobra.Command{
 	Short: "Generate @unpublished bibtex entry",
 	Long: `This will generate an @unpublished bibtex entry e.g.
 	
-	@unpublished{CitekeyUnpublished,
-  		author = "Mohinder Suresh",
-  		title  = "Evolution: a revised theory",
- 		year   = 2006
-	}
-	`,
+@unpublished{CitekeyUnpublished,
+	author = "<Lastname, Firstname>",
+	title  = "<Title>",
+	institution = "<Institution>",
+	year   = <2002>
+}
+
+Required:
+	- author
+	- title
+	- instituion
+	- year
+Optional:
+	- *
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatUnpublishedBibtex(unpublishedCiteKey, unpublishedAuthors, unpublishedTitle, unpublishedYear, braces)
 

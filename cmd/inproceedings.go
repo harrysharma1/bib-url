@@ -29,17 +29,39 @@ var inproceedingsCmd = &cobra.Command{
 	Short: "Generate @inproceedings bibtex entry",
 	Long: `This will generate an @inproceedings bibtex entry e.g.
 	
-	@inproceedings{CitekeyInproceedings,
-  		author    = "Holleis, Paul and Wagner, Matthias and Koolwaaij, Johan",
-  		title     = "Studying mobile context-aware social services in the wild",
-  		booktitle = "Proc. of the 6th Nordic Conf. on Human-Computer Interaction",
-  		series    = "NordiCHI",
-  		year      = 2010,
-  		pages     = "207--216",
-  		publisher = "ACM",
-  		address   = "New York, NY"
-	}
-	`,
+@inproceedings{CitekeyInproceedings,
+	author       = "<Lastname, Firstname",
+	title        = "<Title>",
+	booktitle    = "<Booktitle>",	
+	year         = <2002>,
+	editor	     = "<Lastname, Firstname>",
+	volume	     = "<2>",
+	number	     = "<50>",
+	series	     = "<Series>",
+	pages        = "1--10",
+	address   	 = "<Address>",
+	month	  	 = <jul>,
+	organisation = "<Organisation>",
+	publisher    = "<Publusher>",
+}
+
+Required:
+	- author
+	- title
+	- booktitle
+	- year
+Optional:
+	- editor
+	- volume
+	- number
+	- series
+	- pages
+	- address
+	- month
+	- organisation
+	- publisher
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatInproceedingsBibtex(inproceedingsCiteKey, inproceedingsAuthors, inproceedingsTitle, inproceedingsBookTitle, inproceedingsSeries, inproceedingsYear, inproceedingsPages, inproceedingsPublisher, inproceedingsAddress, braces)
 

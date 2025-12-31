@@ -29,16 +29,36 @@ var incollectionCmd = &cobra.Command{
 	Short: "Generate @incollection bibtex entry",
 	Long: `This will generate an @incollection bibtex entry e.g.
 	
-	@incollection{CitekeyIncollection,
-  		author    = "Shapiro, Howard M.",
-  		editor    = "Hawley, Teresa S. and Hawley, Robert G.",
-  		title     = "Flow Cytometry: The Glass Is Half Full",
-  		booktitle = "Flow Cytometry Protocols",
-  		year      = 2018,
- 	 	publisher = "Springer",
-  		address   = "New York, NY",
-  		pages     = "1--10"
-	}
+@incollection{CitekeyIncollection,
+	author    = "<Lastname, Firstname>",
+	title     = "<Title>",
+	booktitle = "<Book Title>",
+	publisher = "<Publisher>",
+	year	  = <2002>,
+	editor	  = "<Lastname, Firstname>",
+	volume	  = "<2>",
+	number	  = "<50>",
+	series	  = "<Series>",
+	pages     = "<1--10>",
+	address	  = "<Address>",
+	month	  = <jul>
+}
+
+Required:
+	- author
+	- title
+	- booktitle
+	- publisher
+	- year
+Optional:
+	- editor
+	- volume
+	- number
+	- series
+	- pages
+	- address
+	- month
+<>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatIncollectionBibtex(incollectionCiteKey, incollectionAuthors, incollectionEditors, incollectionTitle, incollectionBookTitle, incollectionYear, incollectionPublisher, incollectionAddress, incollectionPages, braces)

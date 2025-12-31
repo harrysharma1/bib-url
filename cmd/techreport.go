@@ -28,15 +28,27 @@ var techreportCmd = &cobra.Command{
 	Short: "Generate @techreport bibtex entry",
 	Long: `This will generate an @techreport bibtex entry e.g.
 	
-	@techreport{CitekeyTechreport,
-  		title       = "{W}asatch {S}olar {P}roject Final Report",
-  		author      = "Bennett, Vicki and Bowman, Kate and Wright, Sarah",
-  		institution = "Salt Lake City Corporation",
-  		address     = "Salt Lake City, UT",
-  		number      = "DOE-SLC-6903-1",
-  		year        = 2018,
-  		month       = sep
-	}
+@techreport{CitekeyTechreport,
+	title       = "<Title>",
+	author      = "<Lastname, Firstname>",
+	institution = "<Institution",
+	address     = "<Address>",
+	number      = "<50>",
+	year        = <2002>,
+	month       = <jul>
+}
+
+Required:
+	- title
+	- author
+	- institution
+	- address
+	- number
+	- year
+	- month
+Optional:
+	- !*
+<>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatTechReportBibtex(techreportCiteKey, techreportTitle, techreportAuthors, techreportInstitution, techreportAddress, techreportNumber, techreportYear, techreportMonth, braces)

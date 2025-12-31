@@ -26,14 +26,37 @@ var bookletCmd = &cobra.Command{
 	Short: "Generate @booklet bibtex entry",
 	Long: `This will generate an @booklet bibtex entry e.g.
 	
-	@booklet{CitekeyBooklet,
- 		title        = "Canoe tours in {S}weden",
-  		author       = "Maria Swetla", 
-  		howpublished = "Distributed at the Stockholm Tourist Office",
-  		month        = jul,
-  		year         = 2015
-	}
-	`,
+@booklet{CitekeyBooklet,
+	title        = "<Title>",
+	author       = "<Lastname, Firstname>", 
+	howpublished = "<How Published>",
+	address 	 = "<Address>",
+	year         = <2002>,
+	editor		 = "<Lastname, Firstname>",
+	volume		 = "<50>",
+	number		 = "<1>",
+	series		 = "<Series>",
+	organisation = "<Organisation>",
+	month		 = <September>,
+	note		 = "<Note>"
+}
+
+Required:
+	- title
+	- author
+	- howpublished
+	- address
+	- year
+Optional:
+	- editor
+	- volume
+	- number
+	- series
+	- organisation
+	- month
+	- note
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, bookletYear, braces)
 

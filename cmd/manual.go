@@ -26,13 +26,28 @@ var manualCmd = &cobra.Command{
 	Short: "Generate @manual bibtex entry",
 	Long: `This will generate an @manual bibtex entry e.g.
 	
-	@manual{CitekeyManual,
-  		title        = "{R}: A Language and Environment for Statistical Computing",
-  		author       = "{R Core Team}",
-  		organisation = "R Foundation for Statistical Computing",
-  		address      = "Vienna, Austria",
-  		year         = 2018
-	}
+@manual{CitekeyManual,
+	title        = "<Title>",
+	year		 = <2002>,
+	author       = "<Lastname, Firstname>",
+	organisation = "<Organisation",
+	address      = "<Address>",
+	edition		 = "<2nd>",
+	month		 = <jul>,
+	note		 = "<Note>
+}
+
+Required:
+	- title
+	- year
+Optional:
+	- author
+	- organisation
+	- address
+	- edition
+	- month
+	- note
+<>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatManualBibtex(manualCiteKey, manualTitle, manualAuthors, manualOrganisation, manualAddress, manualYear, braces)

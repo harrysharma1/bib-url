@@ -28,16 +28,31 @@ var proceedingsCmd = &cobra.Command{
 	Short: "Generate @proceedings bibtex entry",
 	Long: `This will generate an @proceedings entry e.g.
 	
-	@proceedings{CitekeyProceedings,
-  		editor    = "Susan Stepney and Sergey Verlan",
-  		title     = "Proceedings of the 17th International Conference on Computation and Natural Computation, Fontainebleau, France",
-  		series    = "Lecture Notes in Computer Science",
-  		volume    = "10867",
-  		publisher = "Springer",
-  		address   = "Cham, Switzerland",
-  		year      = 2018
-	}
-	`,
+@proceedings{CitekeyProceedings,
+	title     = "Proceedings of the 17th International Conference on Computation and Natural Computation, Fontainebleau, France",
+	year	  = <2002>,
+	editor	  = "<Lastname, Firstname>",
+	volume    = "10867",
+	number	  = "<50>",
+	series	  = "<Series>,
+	address   = "Cham, Switzerland",
+	month	  = <jul>,
+	publisher = "<Publisher>"
+}
+
+Required:
+	- title
+	- year
+Optional:
+	- editor
+	- volume
+	- number
+	- series
+	- address
+	- month
+	- publisher
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatProceedingsBibtex(proceedingsCiteKey, proceedingsEditors, proceedingsTitle, proceedingsSeries, proceedingsVolume, proceedingsPublisher, proceedingsAddress, proceedingsYear)
 

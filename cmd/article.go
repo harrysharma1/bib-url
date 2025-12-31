@@ -28,18 +28,31 @@ var articleCmd = &cobra.Command{
 	Short: "Generate @article bibtex entry",
 	Long: `This will generate an @article bibtex entry e.g.
 	
-	@article{CitekeyArticle,
-  		author   = "P. J. Cohen",
-  		title    = "The independence of the continuum hypothesis",
-  		journal  = "Proceedings of the National Academy of Sciences",
- 	 	year     = 1963,
-  		volume   = "50",
-  		number   = "6",
-  		pages    = "1143--1148",
-	}
-	
+@article{CitekeyArticle,
+	author   = "<Lastname, FirstName>",
+	title    = "<Title>",
+	journal  = "<Journal>",
+	year     = <1999>,
+	volume   = "<50>",
+	number   = "<1>",
+	pages    = "<1--10>",
+	month	 = "<January>",
+	note	 = "<Note>"
+}
 
-	`,
+Required:
+	- author
+	- title
+	- journal
+	- year
+Optional:
+	- volume
+	- number
+	- pages
+	- month
+	- note
+<>: indicates that it is a example value and should be changed.	
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 

@@ -26,14 +26,22 @@ var bookCmd = &cobra.Command{
 	Short: "Generate @book bibtex entry",
 	Long: `This will generate an @book bibtex entry e.g.
 	
-	@book{CitekeyBook,
-  		author    = "Leonard Susskind and George Hrabovsky",
-  		title     = "Classical mechanics: the theoretical minimum",
-  		publisher = "Penguin Random House",
-  		address   = "New York, NY",
-  		year      = 2014
-	}
-	`,
+@book{CitekeyBook,
+	author    = "<Lastname, Firstname>",
+	title     = "<Title>",
+	publisher = "<Publisher>",
+	address   = "<Address>",
+	year      = <2002>
+}
+
+Required:
+	- author
+	- title
+	- publisher
+	- address
+	- year
+<>: indicates that it is a example value and should be changed.
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 

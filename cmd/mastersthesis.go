@@ -27,14 +27,28 @@ var mastersthesisCmd = &cobra.Command{
 	Short: "Generate @mastersthesis bibtex entry",
 	Long: `This will generate an @mastersthesis bibtex entry e.g.
 	
-	@mastersthesis{CitekeyMastersthesis,
-  		author  = "Jian Tang",
-  		title   = "Spin structure of the nucleon in the asymptotic limit",
-  		school  = "Massachusetts Institute of Technology",
-  		year    = 1996,
-  		address = "Cambridge, MA",
-  		month   = sep
-	}
+@mastersthesis{CitekeyMastersthesis,
+	author  = "<Lastname, Firstname>",
+	title   = "<Title>",
+	school  = "<School>",
+	year    = <2002>,
+	type	= "<Type>",
+	address = "<Address>",
+	month   = <jul>,
+	note	= "<Note>"
+}
+
+Required:
+	- author
+	- title
+	- school
+	- year
+Optional:
+	- type
+	- address
+	- month
+	- note
+<>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatMastersThesisBibtex(mastersthesisCiteKey, mastersthesisAuthors, mastersthesisTitle, mastersthesisSchool, mastersthesisYear, mastersthesisAddress, mastersthesisMonth, braces)

@@ -26,13 +26,19 @@ var miscCmd = &cobra.Command{
 	Short: "Generate @misc bibtex entry",
 	Long: `This will generate an @misc bibtex entry e.g.
 	
-	@misc{CitekeyMisc,
-  		title        = "Pluto: The 'Other' Red Planet",
-  		author       = "{NASA}",
-  		howpublished = "\url{https://www.nasa.gov/nh/pluto-the-other-red-planet}",
-  		year         = 2015,
-  		note         = "Accessed: 2018-12-06"
-	}
+@misc{CitekeyMisc,
+	title        = "<Title",
+	author       = "<Lastname, Firstname>",
+	howpublished = "<How published>",
+	year         = <2002>,
+	note         = "<Note>"
+}
+
+Required:
+	- !*
+Optional:
+	- *
+<>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatMiscBibtex(miscCiteKey, miscTitle, miscAuthors, miscHowPublished, miscYear, miscNote, braces)
