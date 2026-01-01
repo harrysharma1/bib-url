@@ -16,9 +16,11 @@ var (
 	phdthesisAuthors []string
 	phdthesisTitle   string
 	phdthesisSchool  string
-	phdthesisAddress string
 	phdthesisYear    string
+	phdthesisType    string
+	phdthesisAddress string
 	phdthesisMonth   string
+	phdthesisNote    string
 )
 
 // phdthesisCmd represents the phdthesis command
@@ -51,8 +53,17 @@ Optional
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatPhDThesisBibtex(phdthesisCiteKey, phdthesisAuthors, phdthesisTitle, phdthesisSchool, phdthesisAddress, phdthesisYear, phdthesisMonth, braces)
-
+		var bibtex = helper.FormatPhDThesisBibtex(
+			phdthesisCiteKey,
+			phdthesisAuthors,
+			phdthesisTitle,
+			phdthesisSchool,
+			phdthesisYear,
+			phdthesisType,
+			phdthesisAddress,
+			phdthesisMonth,
+			phdthesisNote,
+			braces)
 		if copy {
 			helper.Copy(bibtex)
 		}
@@ -82,7 +93,9 @@ func init() {
 	phdthesisCmd.Flags().StringArrayVarP(&phdthesisAuthors, "author", "a", []string{}, "author name(s) for PhD thesis")
 	phdthesisCmd.Flags().StringVarP(&phdthesisTitle, "title", "t", "", "title of PhD thesis")
 	phdthesisCmd.Flags().StringVarP(&phdthesisSchool, "school", "s", "", "school where PhD thesis was published")
-	phdthesisCmd.Flags().StringVarP(&phdthesisAddress, "address", "l", "", "location of school")
 	phdthesisCmd.Flags().StringVarP(&phdthesisYear, "year", "y", "", "year PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesisType, "type", "g", "", "type of PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesisAddress, "address", "l", "", "location of school")
 	phdthesisCmd.Flags().StringVarP(&phdthesisMonth, "month", "m", "", "month PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesisNote, "note", "n", "", "additional notes for PhD thesis")
 }

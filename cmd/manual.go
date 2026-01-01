@@ -14,10 +14,13 @@ var (
 	manualUrl          string
 	manualCiteKey      string
 	manualTitle        string
+	manualYear         string
 	manualAuthors      []string
 	manualOrganisation string
 	manualAddress      string
-	manualYear         string
+	manualEdition      string
+	manualMonth        string
+	manualNote         string
 )
 
 // manualCmd represents the manual command
@@ -50,8 +53,17 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatManualBibtex(manualCiteKey, manualTitle, manualAuthors, manualOrganisation, manualAddress, manualYear, braces)
-
+		var bibtex = helper.FormatManualBibtex(
+			manualCiteKey,
+			manualTitle,
+			manualYear,
+			manualAuthors,
+			manualOrganisation,
+			manualAddress,
+			manualEdition,
+			manualMonth,
+			manualNote,
+			braces)
 		if copy {
 			helper.Copy(bibtex)
 		}
@@ -79,8 +91,11 @@ func init() {
 	manualCmd.Flags().StringVarP(&manualUrl, "url", "u", "", "url for online manual to auto-generate entry")
 	manualCmd.Flags().StringVarP(&manualCiteKey, "key", "k", "", "citation key for bibtex entry")
 	manualCmd.Flags().StringVarP(&manualTitle, "title", "t", "", "title for manual")
+	manualCmd.Flags().StringVarP(&manualYear, "year", "y", "", "year the manual was released")
 	manualCmd.Flags().StringArrayVarP(&manualAuthors, "author", "a", []string{}, "author name(s) for manual")
 	manualCmd.Flags().StringVarP(&manualOrganisation, "organisation", "o", "", "organisation that released the manual")
 	manualCmd.Flags().StringVarP(&manualAddress, "address", "l", "", "address of organisation")
-	manualCmd.Flags().StringVarP(&manualYear, "year", "y", "", "year the manual was released")
+	manualCmd.Flags().StringVarP(&manualEdition, "edition", "e", "", "edition of manual publication")
+	manualCmd.Flags().StringVarP(&manualMonth, "month", "m", "", "month the manual was released")
+	manualCmd.Flags().StringVarP(&manualNote, "note", "n", "", "additional notes for manual")
 }

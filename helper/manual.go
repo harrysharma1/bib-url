@@ -2,107 +2,80 @@ package helper
 
 import (
 	"fmt"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatManualBibtex(manualCiteKey string, manualTitle string, manualAuthors []string, manualOrganisation string, manualAddress string, manualYear string, braces bool) string {
-	var ret_string = "@manual{"
+func FormatManualBibtex(
+	manualCiteKey string,
+	manualTitle string,
+	manualYear string,
+	manualAuthors []string,
+	manualOrganisation string,
+	manualAddress string,
+	manualEdition string,
+	manualMonth string,
+	manualNote string,
+	braces bool) string {
+	var sb strings.Builder
+	sb.WriteString("@manual{")
 
-	// CitationManual
 	if manualCiteKey != "" {
-		ret_string += fmt.Sprintf("%s,\n", manualCiteKey)
+		sb.WriteString(manualCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
+	}
+	sb.WriteString(",\n")
+	fields := []string{}
+
+	wrap := func(s string) string {
+		if braces {
+			return "{" + s + "}"
+		}
+
+		if slices.Contains(months, s) {
+			return s
+		}
+
+		if _, err := strconv.Atoi(s); err == nil {
+			return s
+		}
+
+		return `"` + s + `"`
+
 	}
 
-	// title
-	if manualTitle != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", braces_open, manualTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", speechmarks, manualTitle, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
-
-	// author
+	// REQUIRED
+	fields = append(fields, fmt.Sprintf("\ttitle        = %s", wrap(defaultIfEmpty(manualTitle, "<Title>"))))
+	fields = append(fields, fmt.Sprintf("\tyear         = %s", wrap(defaultIfEmpty(manualYear, "<2002>"))))
+	// OPTIONAL
 	if len(manualAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s", speechmarks)
-		}
-		for i, manualAuthor := range manualAuthors {
-			ret_string += manualAuthor
-			if i < len(manualAuthors)-1 {
-				ret_string += " and "
-			}
-		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap(strings.Join(manualAuthors, " and "))))
 	}
 
-	// organisation
 	if manualOrganisation != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	organisation = %s%s%s,\n", braces_open, manualOrganisation, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	organisation = %s%s%s,\n", speechmarks, manualOrganisation, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	organisation = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	organisation = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\torganisation = %s", wrap(manualOrganisation)))
 	}
 
-	// address
 	if manualAddress != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	address      = %s%s%s,\n", braces_open, manualAddress, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	address      = %s%s%s,\n", speechmarks, manualAddress, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	address      = %s<Example Address: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	address      = %s<Example Address: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\taddress      = %s", wrap(manualAddress)))
 	}
 
-	// year
-	if manualYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s%s%s\n", braces_open, manualYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year         = %s\n", manualYear)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s<2002: Please Change>%s\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year         = <2002: Please Change>\n"
-		}
+	if manualEdition != "" {
+		fields = append(fields, fmt.Sprintf("\tedition      = %s", wrap(manualEdition)))
 	}
-	ret_string += "}"
 
-	return ret_string
+	if manualMonth != "" {
+		fields = append(fields, fmt.Sprintf("\tmonth        = %s", wrap(manualMonth)))
+	}
+
+	if manualNote != "" {
+		fields = append(fields, fmt.Sprintf("\tnote         = %s", wrap(manualNote)))
+	}
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
+	return sb.String()
 }

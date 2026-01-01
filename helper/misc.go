@@ -2,106 +2,69 @@ package helper
 
 import (
 	"fmt"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatMiscBibtex(miscCiteKey string, miscTitle string, miscAuthors []string, miscHowPublished string, miscYear string, miscNote string, braces bool) string {
-	var ret_string = "@misc{"
-
-	// CitationMisc
+func FormatMiscBibtex(
+	miscCiteKey string,
+	miscFields []string,
+	braces bool) string {
+	var sb strings.Builder
+	sb.WriteString("@misc{")
 	if miscCiteKey != "" {
-		ret_string += fmt.Sprintf("%s,\n", miscCiteKey)
+		sb.WriteString(miscCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
 	}
+	sb.WriteString(",\n")
+	customFieldMap := parseFields(miscFields)
+	fields := []string{}
+	wrap := func(field string, s string) string {
+		if braces {
+			return "{" + s + "}"
+		}
 
-	// title
-	if miscTitle != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", braces_open, miscTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", speechmarks, miscTitle, speechmarks)
+		if slices.Contains(months, s) {
+			return s
 		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
-
-	// author
-	if len(miscAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s", speechmarks)
-		}
-		for i, miscAuthor := range miscAuthors {
-			ret_string += miscAuthor
-			if i < len(miscAuthors)-1 {
-				ret_string += " and "
+		if field == "year" {
+			if _, err := strconv.Atoi(s); err == nil {
+				return s
 			}
 		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
-		}
+
+		return `"` + s + `"`
+
 	}
 
-	// howpublished
-	if miscHowPublished != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", braces_open, miscHowPublished, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", speechmarks, miscHowPublished, speechmarks)
+	// Largest key
+	keys := []string{}
+	for key := range customFieldMap {
+		keys = append(keys, key)
+	}
+	maxKeyLength := largestFieldInt(keys)
+
+	for key, val := range customFieldMap {
+		var tmpValue string
+		switch key {
+		case "author":
+			tmpValue = wrap(key, strings.Join(val, " and "))
+		case "year":
+			// Decided to pick first only
+			tmpValue = wrap(key, val[0])
+		default:
+			tmpValue = wrap(key, strings.Join(val, " "))
 		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields,
+			fmt.Sprintf("\t%-*s = %s", maxKeyLength, key, tmpValue),
+		)
 	}
 
-	// year
-	if miscYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s%s%s,\n", braces_open, miscYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year         = %s,\n", miscYear)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s<2002: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year         = <2002: Please Change>,\n"
-		}
-	}
-
-	// note
-	if miscNote != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	note         = %s%s%s,\n", braces_open, miscNote, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	note         = %s%s%s,\n", speechmarks, miscNote, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	note         = %s<Example Note: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	note         = %s<Example NOte: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
-	ret_string += "}"
-	return ret_string
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
+	return sb.String()
 }

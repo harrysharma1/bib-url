@@ -17,8 +17,10 @@ var (
 	mastersthesisTitle   string
 	mastersthesisSchool  string
 	mastersthesisYear    string
+	mastersthesisType    string
 	mastersthesisAddress string
 	mastersthesisMonth   string
+	mastersthesisNote    string
 )
 
 // mastersthesisCmd represents the mastersthesis command
@@ -51,8 +53,17 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatMastersThesisBibtex(mastersthesisCiteKey, mastersthesisAuthors, mastersthesisTitle, mastersthesisSchool, mastersthesisYear, mastersthesisAddress, mastersthesisMonth, braces)
-
+		var bibtex = helper.FormatMastersThesisBibtex(
+			mastersthesisCiteKey,
+			mastersthesisAuthors,
+			mastersthesisTitle,
+			mastersthesisSchool,
+			mastersthesisYear,
+			mastersthesisType,
+			mastersthesisAddress,
+			mastersthesisMonth,
+			mastersthesisNote,
+			braces)
 		if copy {
 			helper.Copy(bibtex)
 		}
@@ -83,6 +94,8 @@ func init() {
 	mastersthesisCmd.Flags().StringVarP(&mastersthesisTitle, "title", "t", "", "title of masters thesis")
 	mastersthesisCmd.Flags().StringVarP(&mastersthesisSchool, "school", "s", "", "school where the masters thesis came from")
 	mastersthesisCmd.Flags().StringVarP(&mastersthesisYear, "year", "y", "", "year the masters thesis was released")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisType, "type", "g", "", "type of masters thesis")
 	mastersthesisCmd.Flags().StringVarP(&mastersthesisAddress, "address", "l", "", "address of academic institution")
 	mastersthesisCmd.Flags().StringVarP(&mastersthesisMonth, "month", "m", "", "month the masters thesis was released")
+	mastersthesisCmd.Flags().StringVarP(&mastersthesisNote, "note", "n", "", "additional notes for masters thesis")
 }

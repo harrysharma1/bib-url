@@ -2,121 +2,74 @@ package helper
 
 import (
 	"fmt"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatPhDThesisBibtex(phdthesisCiteKey string, phdthesisAuthors []string, phdthesisTitle string, phdthesisSchool string, phdthesisAddress string, phdthesisYear string, phdthesisMonth string, braces bool) string {
-	var ret_string = "@phdthesis{"
+func FormatPhDThesisBibtex(
+	phdthesisCiteKey string,
+	phdthesisAuthors []string,
+	phdthesisTitle string,
+	phdthesisSchool string,
+	phdthesisYear string,
+	phdthesisType string,
+	phdthesisAddress string,
+	phdthesisMonth string,
+	phdthesisNote string,
+	braces bool) string {
+	var sb strings.Builder
+	sb.WriteString("@phdthesis{")
 
-	// CitationPhDThesis
 	if phdthesisCiteKey != "" {
-		ret_string += fmt.Sprintf("%s,\n", phdthesisCiteKey)
+		sb.WriteString(phdthesisCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
+	}
+	sb.WriteString(",\n")
+	fields := []string{}
+	wrap := func(s string) string {
+		if braces {
+			return "{" + s + "}"
+		}
+
+		if slices.Contains(months, s) {
+			return s
+		}
+
+		if _, err := strconv.Atoi(s); err == nil {
+			return s
+		}
+
+		return `"` + s + `"`
 	}
 
-	// authors
+	// REQUIRED
 	if len(phdthesisAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author  = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author  = %s", speechmarks)
-		}
-		for i, phdthesisAuthor := range phdthesisAuthors {
-			ret_string += phdthesisAuthor
-			if i < len(phdthesisAuthors)-1 {
-				ret_string += " and "
-			}
-		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor  = %s", wrap(strings.Join(phdthesisAuthors, " and "))))
 	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author  = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author  = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
-		}
-	}
+		fields = append(fields, fmt.Sprintf("\tauthor  = %s", wrap("<Lastname, Firstname>")))
 
-	// title
-	if phdthesisTitle != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	title   = %s%s%s,\n", braces_open, phdthesisTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title   = %s%s%s,\n", speechmarks, phdthesisTitle, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title   = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title   = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
 	}
-
-	// school
-	if phdthesisSchool != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	school  = %s%s%s,\n", braces_open, phdthesisSchool, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	school  = %s%s%s,\n", speechmarks, phdthesisSchool, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	school  = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	school  = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+	fields = append(fields, fmt.Sprintf("\ttitle   = %s", wrap(defaultIfEmpty(phdthesisTitle, "<Title>"))))
+	fields = append(fields, fmt.Sprintf("\tschool  = %s", wrap(defaultIfEmpty(phdthesisSchool, "<School>"))))
+	fields = append(fields, fmt.Sprintf("\tyear    = %s", wrap(defaultIfEmpty(phdthesisYear, "<2002>"))))
+	// OPTIONAL
+	if phdthesisType != "" {
+		fields = append(fields, fmt.Sprintf("\ttype    = %s", wrap(phdthesisType)))
 	}
-
-	// address
 	if phdthesisAddress != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	address = %s%s%s,\n", braces_open, phdthesisAddress, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	address = %s%s%s,\n", speechmarks, phdthesisAddress, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	address = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	address = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\taddress = %s", wrap(phdthesisAddress)))
 	}
-
-	// year
-	if phdthesisYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year    = %s%s%s\n", braces_open, phdthesisYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year    = %s\n", phdthesisYear)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year    = %s<2002: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year    = <2002: Please Change>,\n"
-		}
-	}
-
-	// month
 	if phdthesisMonth != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	month   = %s%s%s\n", braces_open, phdthesisMonth, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	month   = %s\n", phdthesisMonth)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	month   = %s<month: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	month   = <sep: Please Change>,\n"
-		}
+		fields = append(fields, fmt.Sprintf("\tmonth   = %s", wrap(phdthesisMonth)))
 	}
-	ret_string += "}"
-	return ret_string
+	if phdthesisNote != "" {
+		fields = append(fields, fmt.Sprintf("\tnote    = %s", wrap(phdthesisNote)))
+	}
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
+	return sb.String()
 }
