@@ -16,8 +16,15 @@ var (
 	bookletTitle        string
 	bookletAuthors      []string
 	bookletHowPublished string
-	bookletMonth        string
+	bookletAddress      string
 	bookletYear         string
+	bookletEditors      []string
+	bookletVolume       string
+	bookletNumber       string
+	bookletSeries       string
+	bookletOrganisation string
+	bookletMonth        string
+	bookletNote         string
 )
 
 // bookletCmd represents the booklet command
@@ -58,7 +65,7 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookletHowPublished, bookletMonth, bookletYear, braces)
+		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookAddress, bookletHowPublished, bookletYear, bookletEditors, bookletVolume, bookletNumber, bookletSeries, bookletOrganisation, bookletMonth, bookletNote, braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -88,8 +95,14 @@ func init() {
 	bookletCmd.Flags().StringVarP(&bookletUrl, "url", "u", "", "url for online booklet to auto-generate entry")
 	bookletCmd.Flags().StringVarP(&bookletCiteKey, "key", "k", "", "citation key for bibtex entry")
 	bookletCmd.Flags().StringVarP(&bookletTitle, "title", "t", "", "title of booklet")
-	bookletCmd.Flags().StringArrayVarP(&bookletAuthors, "author", "a", []string{}, "author name(s) for book")
+	bookletCmd.Flags().StringArrayVarP(&bookletAuthors, "author", "a", []string{}, "author name(s) for booklet")
 	bookletCmd.Flags().StringVarP(&bookletHowPublished, "published", "p", "", "how the booklet was published")
-	bookletCmd.Flags().StringVarP(&bookletMonth, "month", "m", "", "month the booklet was released")
 	bookletCmd.Flags().StringVarP(&bookletYear, "year", "y", "", "year the booklet was released")
+	bookletCmd.Flags().StringArrayVarP(&bookletEditors, "editor", "e", []string{}, "editor name(s) for booklet")
+	bookletCmd.Flags().StringVarP(&bookletVolume, "volume", "v", "", "volume of booklet")
+	bookletCmd.Flags().StringVarP(&bookletNumber, "number", "i", "", "number of booklet")
+	bookletCmd.Flags().StringVarP(&bookletSeries, "series", "s", "", "series the booklet is in")
+	bookletCmd.Flags().StringVarP(&bookletOrganisation, "organisation", "o", "", "organisation that published booklet")
+	bookletCmd.Flags().StringVarP(&bookletMonth, "month", "m", "", "month the booklet was released")
+	bookletCmd.Flags().StringVarP(&bookletNote, "note", "n", "", "additional notes for booklet")
 }

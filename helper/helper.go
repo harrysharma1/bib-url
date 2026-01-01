@@ -12,6 +12,7 @@ var (
 	braces_open  = "{"
 	braces_close = "}"
 	speechmarks  = `"`
+	months       = []string{"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"}
 )
 
 func Copy(bibtex string) {
@@ -38,4 +39,11 @@ func Save(save string, bibtex string) error {
 		return fmt.Errorf("error file type not .bib did not write entry")
 	}
 
+}
+
+func defaultIfEmpty(val, def string) string {
+	if val == "" {
+		return def
+	}
+	return val
 }

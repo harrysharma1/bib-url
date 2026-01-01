@@ -11,16 +11,21 @@ import (
 )
 
 var (
-	inproceedingsUrl       string
-	inproceedingsCiteKey   string
-	inproceedingsAuthors   []string
-	inproceedingsTitle     string
-	inproceedingsBookTitle string
-	inproceedingsSeries    string
-	inproceedingsYear      string
-	inproceedingsPages     string
-	inproceedingsPublisher string
-	inproceedingsAddress   string
+	inproceedingsUrl          string
+	inproceedingsCiteKey      string
+	inproceedingsAuthors      []string
+	inproceedingsTitle        string
+	inproceedingsBooktTitle   string
+	inproceedingsYear         string
+	inproceedingsEditors      []string
+	inproceedingsVolume       string
+	inproceedingsNumber       string
+	inproceedingsSeries       string
+	inproceedingsPages        string
+	inproceedingsAddress      string
+	inprocceddingsMonth       string
+	inproceedingsOrganisation string
+	inproceedingsPublisher    string
 )
 
 // inproceedingsCmd represents the inproceedings command
@@ -34,13 +39,13 @@ var inproceedingsCmd = &cobra.Command{
 	title        = "<Title>",
 	booktitle    = "<Booktitle>",	
 	year         = <2002>,
-	editor	     = "<Lastname, Firstname>",
-	volume	     = "<2>",
-	number	     = "<50>",
-	series	     = "<Series>",
+	editor       = "<Lastname, Firstname>",
+	volume       = "<2>",
+	number       = "<50>",
+	series       = "<Series>",
 	pages        = "1--10",
-	address   	 = "<Address>",
-	month	  	 = <jul>,
+	address      = "<Address>",
+	month        = <jul>,
 	organisation = "<Organisation>",
 	publisher    = "<Publusher>",
 }
@@ -63,7 +68,22 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatInproceedingsBibtex(inproceedingsCiteKey, inproceedingsAuthors, inproceedingsTitle, inproceedingsBookTitle, inproceedingsSeries, inproceedingsYear, inproceedingsPages, inproceedingsPublisher, inproceedingsAddress, braces)
+		var bibtex = helper.FormatInproceedingsBibtex(
+			inproceedingsCiteKey,
+			inproceedingsAuthors,
+			inproceedingsTitle,
+			inproceedingsBooktTitle,
+			inproceedingsYear,
+			inproceedingsEditors,
+			inproceedingsVolume,
+			inproceedingsNumber,
+			inproceedingsSeries,
+			inproceedingsPages,
+			inproceedingsAddress,
+			inprocceddingsMonth,
+			inproceedingsOrganisation,
+			inproceedingsPublisher,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -93,10 +113,15 @@ func init() {
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
 	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsAuthors, "author", "a", []string{}, "author name(s) for inproceedings")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsTitle, "title", "t", "", "title for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsBookTitle, "booktitle", "b", "", "book title for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsSeries, "series", "s", "", "series of inproceedings.")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsBooktTitle, "booktitle", "b", "", "book title for inproceedings")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsYear, "year", "y", "", "year the inproceedings was released")
+	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsEditors, "editor", "e", []string{}, "editor name(s) for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsVolume, "volume", "v", "", "volume of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsNumber, "number", "i", "", "number of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsSeries, "series", "s", "", "series of inproceedings.")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsPages, "pages", "f", "", "pages where citation is")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsPublisher, "publisher", "p", "", "publisher of inproceedings")
 	inproceedingsCmd.Flags().StringVarP(&inproceedingsAddress, "address", "l", "", "address of publisher")
+	inproceedingsCmd.Flags().StringVarP(&inprocceddingsMonth, "month", "m", "", "month the inproceedings was released")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsOrganisation, "organisation", "o", "", "organisation that released inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedingsPublisher, "publisher", "p", "", "publisher of inproceedings")
 }

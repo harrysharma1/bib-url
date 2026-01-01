@@ -7,143 +7,86 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatArticleBibtex(articleCiteKey string, articleAuthors []string, articleTitle string, articleJournal string, articleYear string, articleVolume string, articleNumber string, articlePages string, braces bool) string {
-	var ret_string = "@article{"
+func FormatArticleBibtex(
+	articleCiteKey string,
+	articleAuthors []string,
+	articleTitle string,
+	articleJournal string,
+	articleYear string,
+	articleVolume string,
+	articleNumber string,
+	articlePages string,
+	articleMonth string,
+	articleNote string,
+	braces bool) string {
+	var sb strings.Builder
+	sb.WriteString("@article{")
 
-	if articleCiteKey == "uuid.uuid4()" {
-		articleCiteKey = ""
-	}
-
-	// CitationArticle
 	if articleCiteKey != "" {
-		ret_string += articleCiteKey + ",\n"
+		sb.WriteString(articleCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
+	}
+	sb.WriteString(",\n")
+
+	fields := []string{}
+
+	wrap := func(s string) string {
+		if braces {
+			return "{" + s + "}"
+		}
+		if slices.Contains(months, s) {
+			return s
+		}
+		if _, err := strconv.Atoi(s); err == nil {
+			return s
+		}
+		return `"` + s + `"`
+
 	}
 
-	// author
+	// REQUIRED
 	if len(articleAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author   = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author   = %s", speechmarks)
-		}
-		for i, articleAuthor := range articleAuthors {
-			ret_string += articleAuthor
-			if i < len(articleAuthors)-1 {
-				ret_string += " and "
-			}
-		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor   = %s", wrap(strings.Join(articleAuthors, " and "))))
 	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor   = %s", wrap("<Lastname, Firstname>")))
 	}
+	fields = append(fields, fmt.Sprintf("\ttitle    = %s", wrap(defaultIfEmpty(articleTitle, "<Title>"))))
 
-	// title
-	if articleTitle != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", braces_open, articleTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", speechmarks, articleTitle, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
+	fields = append(fields, fmt.Sprintf("\tjournal  = %s", wrap(defaultIfEmpty(articleJournal, "<Journal>"))))
 
-	// journal
-	if articleJournal != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	journal  = %s%s%s,\n", braces_open, articleJournal, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	journal  = %s%s%s,\n", speechmarks, articleJournal, speechmarks)
-		}
+	fields = append(fields, fmt.Sprintf("\tyear     = %s", wrap(defaultIfEmpty(articleYear, "<2002>"))))
 
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	journal  = %s<Example Journal: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	journal  = %s<Example Journal: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
-
-	// year
-	if articleYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year     = %s%s%s,\n", braces_open, articleYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year     = %s,\n", articleYear)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year     = %s<2002: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year     = <2002: Please Change>,\n"
-		}
-	}
-
-	// volume
+	// OPTIONAL
 	if articleVolume != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	volume   = %s%s%s,\n", braces_open, articleVolume, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	volume   = %s%s%s,\n", speechmarks, articleVolume, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	volume   = %s<1: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	volume   = %s<1: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tvolume   = %s", wrap(articleVolume)))
 	}
 
-	// number
 	if articleNumber != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	number   = %s%s%s,\n", braces_open, articleNumber, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	number   = %s%s%s,\n", speechmarks, articleNumber, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	number   = %s<1: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	number   = %s<1: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tnumber   = %s", wrap(articleNumber)))
 	}
 
-	// pages
 	if articlePages != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	pages    = %s%s%s\n", braces_open, articlePages, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	pages    = %s%s%s\n", speechmarks, articlePages, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	pages    = %s<1--10: Please Change>%s\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	pages    = %s<1--10: Please Change>%s\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tpages    = %s", wrap(articlePages)))
 	}
-	ret_string += "}"
-	return ret_string
+
+	if articleMonth != "" {
+		fields = append(fields, fmt.Sprintf("\tmonth    = %s", wrap(articleMonth)))
+	}
+
+	if articleNote != "" {
+		fields = append(fields, fmt.Sprintf("\tnote     = %s", wrap(articleNote)))
+	}
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
+	return sb.String()
 }
 
 func ArticleFromDOI(doi string) ([]string, string, string, string, string, string, error) {

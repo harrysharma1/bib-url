@@ -14,13 +14,17 @@ var (
 	incollectionUrl       string
 	incollectionCiteKey   string
 	incollectionAuthors   []string
-	incollectionEditors   []string
 	incollectionTitle     string
 	incollectionBookTitle string
-	incollectionYear      string
 	incollectionPublisher string
-	incollectionAddress   string
+	incollectionYear      string
+	incollectionEditors   []string
+	incollectionVolume    string
+	incollectionNumber    string
+	incollectionSeries    string
 	incollectionPages     string
+	incollectionAddress   string
+	incollectionMonth     string
 )
 
 // incollectionCmd represents the incollection command
@@ -34,14 +38,14 @@ var incollectionCmd = &cobra.Command{
 	title     = "<Title>",
 	booktitle = "<Book Title>",
 	publisher = "<Publisher>",
-	year	  = <2002>,
-	editor	  = "<Lastname, Firstname>",
-	volume	  = "<2>",
-	number	  = "<50>",
-	series	  = "<Series>",
+	year      = <2002>,
+	editor    = "<Lastname, Firstname>",
+	volume    = "<2>",
+	number    = "<50>",
+	series    = "<Series>",
 	pages     = "<1--10>",
-	address	  = "<Address>",
-	month	  = <jul>
+	address   = "<Address>",
+	month     = <jul>
 }
 
 Required:
@@ -61,7 +65,21 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatIncollectionBibtex(incollectionCiteKey, incollectionAuthors, incollectionEditors, incollectionTitle, incollectionBookTitle, incollectionYear, incollectionPublisher, incollectionAddress, incollectionPages, braces)
+		var bibtex = helper.FormatIncollectionBibtex(
+			incollectionCiteKey,
+			incollectionAuthors,
+			incollectionTitle,
+			incollectionBookTitle,
+			incollectionPublisher,
+			incollectionYear,
+			incollectionEditors,
+			incollectionVolume,
+			incollectionNumber,
+			incollectionSeries,
+			incollectionPages,
+			incollectionAddress,
+			incollectionMonth,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -90,11 +108,15 @@ func init() {
 	incollectionCmd.Flags().StringVarP(&incollectionUrl, "url", "u", "", "url for online incollection to auto-generate entry")
 	incollectionCmd.Flags().StringVarP(&incollectionCiteKey, "key", "k", "", "citation key for bibtex entry")
 	incollectionCmd.Flags().StringArrayVarP(&incollectionAuthors, "author", "a", []string{}, "author name(s) for incollection")
-	incollectionCmd.Flags().StringArrayVarP(&incollectionEditors, "editor", "e", []string{}, "editor name(s) for incollection")
 	incollectionCmd.Flags().StringVarP(&incollectionTitle, "title", "t", "", "title for incollection")
 	incollectionCmd.Flags().StringVarP(&incollectionBookTitle, "booktitle", "b", "", "book title for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionYear, "year", "y", "", "year the incollection was released")
 	incollectionCmd.Flags().StringVarP(&incollectionPublisher, "publisher", "p", "", "publisher of incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionAddress, "address", "l", "", "address of publisher")
+	incollectionCmd.Flags().StringVarP(&incollectionYear, "year", "y", "", "year the incollection was released")
+	incollectionCmd.Flags().StringArrayVarP(&incollectionEditors, "editor", "e", []string{}, "editor name(s) for incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionVolume, "volume", "v", "", "volume of incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionNumber, "number", "i", "", "number of incollection")
+	incollectionCmd.Flags().StringVarP(&incollectionSeries, "series", "s", "", "series incollection was published in")
 	incollectionCmd.Flags().StringVarP(&incollectionPages, "pages", "f", "", "pages where citation is")
+	incollectionCmd.Flags().StringVarP(&incollectionAddress, "address", "l", "", "address of publisher")
+	incollectionCmd.Flags().StringVarP(&incollectionMonth, "month", "m", "", "month the incollection was released")
 }

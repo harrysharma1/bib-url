@@ -2,107 +2,89 @@ package helper
 
 import (
 	"fmt"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatBookletBibtex(bookletCiteKey string, bookletTitle string, bookletAuthors []string, bookletHowPublished string, bookletMonth string, bookletYear string, braces bool) string {
-	var ret_string = "@booklet{"
+func FormatBookletBibtex(
+	bookletCiteKey string,
+	bookletTitle string,
+	bookletAuthors []string,
+	bookletHowPublished string,
+	bookletAddress string,
+	bookletYear string,
+	bookletEditors []string,
+	bookletVolume string,
+	bookletNumber string,
+	bookletSeries string,
+	bookletOrganisation string,
+	bookletMonth string,
+	bookletNote string,
+	braces bool) string {
+	var sb strings.Builder
+	sb.WriteString("@booklet{")
 
-	// CitationBooklet
 	if bookletCiteKey != "" {
-		ret_string += bookletCiteKey + ",\n"
+		sb.WriteString(bookletCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
 	}
+	sb.WriteString(",\n")
+	fields := []string{}
 
-	// title
-	if bookletTitle != "" {
+	wrap := func(s string) string {
 		if braces {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", braces_open, bookletTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s%s%s,\n", speechmarks, bookletTitle, speechmarks)
+			return "{" + s + "}"
 		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title        = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
+		if slices.Contains(months, s) {
+			return s
 		}
+		if _, err := strconv.Atoi(s); err == nil {
+			return s
+		}
+		return `"` + s + `"`
+
 	}
-
-	// author
+	// REQUIRED
+	fields = append(fields, fmt.Sprintf("\ttitle = %s", wrap(defaultIfEmpty(bookletTitle, "<Title>"))))
 	if len(bookletAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s", speechmarks)
-		}
-		for i, bookletAuthor := range bookletAuthors {
-			ret_string += bookletAuthor
-			if i < len(bookletAuthors)-1 {
-				ret_string += " and "
-			}
-		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor = %s", wrap(strings.Join(bookletAuthors, " and "))))
 	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author       = %s<Lastname, Firstname>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor = %s", wrap("<Lastname, Firstname>")))
 	}
+	fields = append(fields, fmt.Sprintf("\thowpublished = %s", wrap(defaultIfEmpty(bookletHowPublished, "<How Published>"))))
+	fields = append(fields, fmt.Sprintf("\taddress = %s", wrap(defaultIfEmpty(bookletAddress, "<Address>"))))
+	fields = append(fields, fmt.Sprintf("\tyear = %s", wrap(defaultIfEmpty(bookletYear, "2002"))))
 
-	// howpublished
-	if bookletHowPublished != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", braces_open, bookletHowPublished, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	howpublished = %s%s%s,\n", speechmarks, bookletHowPublished, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	howpublished = %s<Example How Published: Please Change>%s,\n", speechmarks, speechmarks)
-		}
+	// OPTIONAL
+	if len(bookletEditors) > 0 {
+		fields = append(fields, fmt.Sprintf("\teditor = %s", wrap(strings.Join(bookletEditors, " and "))))
 	}
-
-	// month
+	if bookletVolume != "" {
+		fields = append(fields, fmt.Sprintf("\tvolume = %s", wrap(bookletVolume)))
+	}
+	if bookletNumber != "" {
+		fields = append(fields, fmt.Sprintf("\tnumber = %s", wrap(bookletNumber)))
+	}
+	if bookletSeries != "" {
+		fields = append(fields, fmt.Sprintf("\tseries = %s", wrap(bookletSeries)))
+	}
+	if bookletOrganisation != "" {
+		fields = append(fields, fmt.Sprintf("\torganisation = %s", wrap(bookletOrganisation)))
+	}
 	if bookletMonth != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	month        = %s%s%s,\n", braces_open, bookletMonth, braces_close)
-		} else {
-			ret_string += fmt.Sprintf(" month        = %s,\n", bookletMonth)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	month        = %s<sep: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	month        = <sep: Please Change>,\n"
-		}
+		fields = append(fields, fmt.Sprintf("\tmonth = %s", wrap(bookletMonth)))
+	}
+	if bookletNote != "" {
+		fields = append(fields, fmt.Sprintf("\tnote = %s", wrap(bookletNote)))
 	}
 
-	// year
-	if bookletYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s%s%s\n", braces_open, bookletYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year         = %s%s%s\n", speechmarks, bookletYear, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year         = %s<2002: Please Change>%s\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year         = <2002: Please Change>\n"
-		}
-	}
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
 
-	ret_string += "}"
-	return ret_string
+	return sb.String()
+
 }

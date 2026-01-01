@@ -16,10 +16,17 @@ var (
 	inbookAuthors   []string
 	inbookTitle     string
 	inbookBookTitle string
-	inbookYear      string
 	inbookPublisher string
+	inbookYear      string
+	inbookEditors   []string
+	inbookVolume    string
+	inbookNumber    string
+	inbookSeries    string
 	inbookAddress   string
+	inbookEdition   string
+	inboookMonth    string
 	inbookPages     string
+	inbookNote      string
 )
 
 // inbookCmd represents the inbook command
@@ -64,7 +71,23 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatInbookBibtex(inbookCiteKey, inbookAuthors, inbookTitle, inbookBookTitle, inbookYear, inbookPublisher, inbookAddress, inbookPages, braces)
+		var bibtex = helper.FormatInbookBibtex(
+			inbookCiteKey,
+			inbookAuthors,
+			inbookTitle,
+			inbookBookTitle,
+			inbookPublisher,
+			inbookYear,
+			inbookEditors,
+			inbookVolume,
+			inbookNumber,
+			inbookSeries,
+			inbookAddress,
+			inbookEdition,
+			inboookMonth,
+			inbookPages,
+			inbookNote,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -94,9 +117,16 @@ func init() {
 	inbookCmd.Flags().StringVarP(&inbookCiteKey, "key", "k", "", "citation key for bibtex entry")
 	inbookCmd.Flags().StringArrayVarP(&inbookAuthors, "author", "a", []string{}, "author name(s) for inbook")
 	inbookCmd.Flags().StringVarP(&inbookTitle, "title", "t", "", "title of inbook")
-	inbookCmd.Flags().StringVarP(&inbookBookTitle, "book", "b", "", "book title of inbook")
-	inbookCmd.Flags().StringVarP(&inbookYear, "year", "y", "", "year the inbook was released")
+	inbookCmd.Flags().StringVarP(&inbookBookTitle, "booktitle", "b", "", "book title of inbook")
 	inbookCmd.Flags().StringVarP(&inbookPublisher, "publisher", "p", "", "who published the inbook")
+	inbookCmd.Flags().StringVarP(&inbookYear, "year", "y", "", "year the inbook was released")
+	inbookCmd.Flags().StringArrayVarP(&inbookEditors, "editor", "e", []string{}, "editor name(s) for inbook")
+	inbookCmd.Flags().StringVarP(&inbookVolume, "volume", "v", "", "volume of inbook")
+	inbookCmd.Flags().StringVarP(&inbookNumber, "number", "i", "", "number of inbook")
+	inbookCmd.Flags().StringVarP(&inbookSeries, "series", "s", "", "series where inbook was published")
 	inbookCmd.Flags().StringVarP(&inbookAddress, "address", "l", "", "address of publisher")
+	inbookCmd.Flags().StringVarP(&inbookEdition, "edition", "r", "", "edition of publication inbook was published in")
+	inbookCmd.Flags().StringVarP(&inboookMonth, "month", "m", "", "month the inbook was released")
 	inbookCmd.Flags().StringVarP(&inbookPages, "pages", "f", "", "pages within the inbook")
+	inbookCmd.Flags().StringVarP(&inbookNote, "note", "n", "", "additional notes for inbook")
 }

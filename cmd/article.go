@@ -20,6 +20,8 @@ var (
 	articleVolume  string
 	articleNumber  string
 	articlePages   string
+	articleMonth   string
+	articleNote    string
 )
 
 // articleCmd represents the article command
@@ -32,11 +34,11 @@ var articleCmd = &cobra.Command{
 	author   = "<Lastname, FirstName>",
 	title    = "<Title>",
 	journal  = "<Journal>",
-	year     = <1999>,
+	year     = <2002>,
 	volume   = "<50>",
 	number   = "<1>",
 	pages    = "<1--10>",
-	month	 = "<January>",
+	month	 = <jul>,
 	note	 = "<Note>"
 }
 
@@ -88,8 +90,7 @@ Optional:
 				articleNumber = doiNumber
 			}
 		}
-		fmt.Println(articleTitle)
-		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, braces)
+		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, articleMonth, articleNote, braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -125,6 +126,8 @@ func init() {
 	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "", "journal the article was published in")
 	articleCmd.Flags().StringVarP(&articleYear, "year", "y", "", "year the article was published in")
 	articleCmd.Flags().StringVarP(&articleVolume, "volume", "v", "", "volume of journal")
-	articleCmd.Flags().StringVarP(&articleNumber, "number", "n", "", "issue of journal")
+	articleCmd.Flags().StringVarP(&articleNumber, "number", "i", "", "issue of journal")
 	articleCmd.Flags().StringVarP(&articlePages, "pages", "p", "", "pages within the journal")
+	articleCmd.Flags().StringVarP(&articleMonth, "month", "m", "", "month the article was published")
+	articleCmd.Flags().StringVarP(&articleNote, "note", "n", "", "additional notes for article")
 }
