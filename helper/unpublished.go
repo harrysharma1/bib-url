@@ -2,77 +2,56 @@ package helper
 
 import (
 	"fmt"
+	"slices"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
-func FormatUnpublishedBibtex(unpublishedCiteKey string, unpublishedAuthors []string, unpublishedTitle string, unpublishedYear string, braces bool) string {
-	var ret_string = "@unpublished{"
+func FormatUnpublishedBibtex(
+	unpublishedCiteKey string,
+	unpublishedAuthors []string,
+	unpublishedtTitle string,
+	unpublishedInstitution string,
+	unpublishedYear string,
+	braces bool) string {
 
-	// CitationUnpublished
+	var sb strings.Builder
+	sb.WriteString("@unpublished{")
 	if unpublishedCiteKey != "" {
-		ret_string += unpublishedCiteKey + ",\n"
+		sb.WriteString(unpublishedCiteKey)
 	} else {
-		key := uuid.NewString()
-		ret_string += fmt.Sprintf("%s,\n", key)
+		sb.WriteString(uuid.NewString())
+	}
+	sb.WriteString(",\n")
+	fields := []string{}
+	wrap := func(s string) string {
+		if braces {
+			return "{" + s + "}"
+		}
+
+		if slices.Contains(months, s) {
+			return s
+		}
+
+		if _, err := strconv.Atoi(s); err == nil {
+			return s
+		}
+
+		return `"` + s + `"`
 	}
 
-	// author
+	// REQUIRED
 	if len(unpublishedAuthors) > 0 {
-		if braces {
-			ret_string += fmt.Sprintf("	author   = %s", braces_open)
-		} else {
-			ret_string += fmt.Sprintf("	author   = %s", speechmarks)
-		}
-		for i, unpublishedAuthor := range unpublishedAuthors {
-			ret_string += unpublishedAuthor
-			if i < len(unpublishedAuthors)-1 {
-				ret_string += " and "
-			}
-		}
-		if braces {
-			ret_string += fmt.Sprintf("%s,\n", braces_close)
-		} else {
-			ret_string += fmt.Sprintf("%s,\n", speechmarks)
-		}
-
+		fields = append(fields, fmt.Sprintf("\tauthor      = %s", wrap(strings.Join(unpublishedAuthors, " and "))))
 	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	author   = %s<Lastname, FirstName>%s,\n", speechmarks, speechmarks)
-		}
+		fields = append(fields, fmt.Sprintf("\tauthor      = %s", wrap("<Lastname, Firstname")))
 	}
-
-	// title
-	if unpublishedTitle != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", braces_open, unpublishedTitle, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title    = %s%s%s,\n", speechmarks, unpublishedTitle, speechmarks)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	title    = %s<Example Title: Please Change>%s,\n", speechmarks, speechmarks)
-		}
-	}
-
-	// year
-	if unpublishedYear != "" {
-		if braces {
-			ret_string += fmt.Sprintf("	year     = %s%s%s,\n", braces_open, unpublishedYear, braces_close)
-		} else {
-			ret_string += fmt.Sprintf("	year     = %s,\n", unpublishedYear)
-		}
-	} else {
-		if braces {
-			ret_string += fmt.Sprintf("	year     = %s<2002: Please Change>%s,\n", braces_open, braces_close)
-		} else {
-			ret_string += "	year     = <2002: Please Change>,\n"
-		}
-	}
-	ret_string += "}"
-	return ret_string
+	fields = append(fields, fmt.Sprintf("\ttitle       = %s", wrap(defaultIfEmpty(unpublishedtTitle, "<Title>"))))
+	fields = append(fields, fmt.Sprintf("\tinstitution = %s", wrap(defaultIfEmpty(unpublishedInstitution, "<Institution>"))))
+	fields = append(fields, fmt.Sprintf("\tyear        = %s", wrap(defaultIfEmpty(unpublishedYear, "<Year>"))))
+	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString("\n}")
+	return sb.String()
 }

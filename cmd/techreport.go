@@ -51,7 +51,16 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatTechReportBibtex(techreportCiteKey, techreportTitle, techreportAuthors, techreportInstitution, techreportAddress, techreportNumber, techreportYear, techreportMonth, braces)
+		var bibtex = helper.FormatTechReportBibtex(
+			techreportCiteKey,
+			techreportTitle,
+			techreportAuthors,
+			techreportInstitution,
+			techreportAddress,
+			techreportNumber,
+			techreportYear,
+			techreportMonth,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)

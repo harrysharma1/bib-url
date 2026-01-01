@@ -11,11 +11,12 @@ import (
 )
 
 var (
-	unpublishedUrl     string
-	unpublishedCiteKey string
-	unpublishedAuthors []string
-	unpublishedTitle   string
-	unpublishedYear    string
+	unpublishedUrl         string
+	unpublishedCiteKey     string
+	unpublishedAuthors     []string
+	unpublishedtTitle      string
+	unpublishedInstitution string
+	unpublishedYear        string
 )
 
 // unpublishedCmd represents the unpublished command
@@ -37,11 +38,17 @@ Required:
 	- instituion
 	- year
 Optional:
-	- *
+	- !*
 <>: indicates that it is a example value and should be changed.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatUnpublishedBibtex(unpublishedCiteKey, unpublishedAuthors, unpublishedTitle, unpublishedYear, braces)
+		var bibtex = helper.FormatUnpublishedBibtex(
+			unpublishedCiteKey,
+			unpublishedAuthors,
+			unpublishedtTitle,
+			unpublishedInstitution,
+			unpublishedYear,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -70,6 +77,7 @@ func init() {
 	unpublishedCmd.Flags().StringVarP(&unpublishedUrl, "url", "u", "", "url for online unpublished work to auto-generate entry")
 	unpublishedCmd.Flags().StringVarP(&unpublishedCiteKey, "key", "k", "", "citation key for bibtex entry")
 	unpublishedCmd.Flags().StringArrayVarP(&unpublishedAuthors, "author", "a", []string{}, "author name(s) for unpublished work")
-	unpublishedCmd.Flags().StringVarP(&unpublishedTitle, "title", "t", "", "title of unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublishedtTitle, "title", "t", "", "title of unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublishedInstitution, "institution", "i", "", "institution that holds this unpublished work")
 	unpublishedCmd.Flags().StringVarP(&unpublishedYear, "year", "y", "", "year unpublished work was created")
 }
