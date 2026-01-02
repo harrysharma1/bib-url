@@ -4,7 +4,35 @@ import "testing"
 
 // Formatting
 // --------------------------------------------------//
-// return value
+func TestBookRequiredValues(t *testing.T) {
+	want := `@book{test,
+	author    = "Frank Herbert",
+	title     = "Dune",
+	publisher = "Chilton Books",
+	address   = "Sparkford, Yeovil, Somerset",
+	year      = 1965
+}`
+	have := FormatBookBibtex("test", []string{"Frank Herbert"}, "Dune", "Chilton Books", "Sparkford, Yeovil, Somerset", "1965", false)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+
+}
+
+func TestBookRequiredValuesBraces(t *testing.T) {
+	want := `@book{test,
+	author    = {Frank Herbert},
+	title     = {Dune},
+	publisher = {Chilton Books},
+	address   = {Sparkford, Yeovil, Somerset},
+	year      = {1965}
+}`
+	have := FormatBookBibtex("test", []string{"Frank Herbert"}, "Dune", "Chilton Books", "Sparkford, Yeovil, Somerset", "1965", true)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+
+}
 
 // --------------------------------------------------//
 

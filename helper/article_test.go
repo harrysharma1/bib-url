@@ -6,6 +6,70 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+func TestArticleRequiredValues(t *testing.T) {
+	want := `@article{test,
+	author   = "John Doe",
+	title    = "Test Title",
+	journal  = "Test Journal",
+	year     = 2002
+}`
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", false)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+}
+
+func TestArticleRequiredValuesBraces(t *testing.T) {
+	want := `@article{test,
+	author   = {John Doe},
+	title    = {Test Title},
+	journal  = {Test Journal},
+	year     = {2002}
+}`
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", true)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+}
+
+func TestArticleOptionalValues(t *testing.T) {
+	want := `@article{test,
+	author   = "John Doe",
+	title    = "Test Title",
+	journal  = "Test Journal",
+	year     = 2002,
+	volume   = "50",
+	number   = "1",
+	pages    = "1--10",
+	month    = jul,
+	note     = "Test Note"
+}`
+
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", false)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+}
+func TestArticleOptionalValuesBraces(t *testing.T) {
+	want := `@article{test,
+	author   = {John Doe},
+	title    = {Test Title},
+	journal  = {Test Journal},
+	year     = {2002},
+	volume   = {50},
+	number   = {1},
+	pages    = {1--10},
+	month    = {jul},
+	note     = {Test Note}
+}`
+
+	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", true)
+	if want != have {
+		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
+	}
+}
+
 //--------------------------------------------------//
 
 // DOI
