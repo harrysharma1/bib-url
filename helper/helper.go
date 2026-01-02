@@ -9,12 +9,7 @@ import (
 	"golang.design/x/clipboard"
 )
 
-var (
-	braces_open  = "{"
-	braces_close = "}"
-	speechmarks  = `"`
-	months       = []string{"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"}
-)
+var months = []string{"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"}
 
 func Copy(bibtex string) {
 	fmt.Println("copied bibtex entry to cliplboard!!!")
