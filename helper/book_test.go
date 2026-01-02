@@ -1,6 +1,11 @@
 package helper
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 // Formatting
 // --------------------------------------------------//
@@ -13,9 +18,7 @@ func TestBookRequiredValues(t *testing.T) {
 	year      = 1965
 }`
 	have := FormatBookBibtex("test", []string{"Frank Herbert"}, "Dune", "Chilton Books", "Sparkford, Yeovil, Somerset", "1965", false)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 
 }
 
@@ -28,9 +31,7 @@ func TestBookRequiredValuesBraces(t *testing.T) {
 	year      = {1965}
 }`
 	have := FormatBookBibtex("test", []string{"Frank Herbert"}, "Dune", "Chilton Books", "Sparkford, Yeovil, Somerset", "1965", true)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 
 }
 
@@ -45,44 +46,30 @@ func TestBookISBNValid(t *testing.T) {
 	wantPublisher := "Hodder Paperback"
 	wantYear := "2015"
 	haveAuthors, haveTitle, havePublisher, haveYear, err := BookFromISBN(isbn)
-	if err != nil {
-		t.Errorf("error ocurred in BookFromISBN() function call: %e", err)
-	}
+	assert.Nil(t, err, "BookFromISBN(isbn) failed")
+
 	// authors
+	assert.Equal(t, len(wantAuthors), len(haveAuthors), "author lengths do not match")
 	if len(wantAuthors) == len(haveAuthors) {
 		for i := range len(wantAuthors) {
-			if wantAuthors[i] != haveAuthors[i] {
-				t.Errorf("return author at position %d not the same:\nWant %s\nHave:%s", i, wantAuthors[i], haveAuthors[i])
-			}
+			assert.Equal(t, wantAuthors[i], haveAuthors[i], fmt.Sprintf("author at position %d is not the same", i))
 		}
-	} else {
-		t.Errorf("return authors length does not match, either change test to reflect this or inspect ArticleFromDOI() function for bugs:\nDefault Author Count: %d\nReturn Author Count: %d", len(wantAuthors), len(haveAuthors))
 	}
 
 	// title
-	if wantTitle != haveTitle {
-		t.Errorf("return title does not match default title:\nWant %s\nHave: %s", wantTitle, haveTitle)
-	}
+	assert.Equal(t, wantTitle, haveTitle, "title not the same")
 
 	// publisher
-	if wantPublisher != havePublisher {
-		t.Errorf("return publisher does not match with default publisher:\nWant: %s\nHave: %s", wantPublisher, havePublisher)
-	}
+	assert.Equal(t, wantPublisher, havePublisher, "publisher not the same")
 
 	// year
-	if wantYear != haveYear {
-		t.Errorf("return year does not match default year:\nWant: %s\nHave: %s", wantYear, haveYear)
-	}
+	assert.Equal(t, wantYear, haveYear, "year not the same")
 }
 
 func TestBookISBNInvalid(t *testing.T) {
 	isbn := "dueafbwieufhajcliheyfiuqss"
 	_, _, _, _, err := BookFromISBN(isbn)
-	if err != nil {
-		if err.Error() != "book not found" {
-			t.Error("returned error did not indicated that the book does not exist")
-		}
-	}
+	assert.EqualError(t, err, "book not found", "incorrect error")
 }
 
 // --------------------------------------------------//

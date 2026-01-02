@@ -2,6 +2,8 @@ package helper
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // Formatting
@@ -15,9 +17,7 @@ func TestArticleRequiredValues(t *testing.T) {
 	year     = 2002
 }`
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", false)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 }
 
 func TestArticleRequiredValuesBraces(t *testing.T) {
@@ -28,9 +28,7 @@ func TestArticleRequiredValuesBraces(t *testing.T) {
 	year     = {2002}
 }`
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", true)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 }
 
 func TestArticleOptionalValues(t *testing.T) {
@@ -47,9 +45,7 @@ func TestArticleOptionalValues(t *testing.T) {
 }`
 
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", false)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 }
 func TestArticleOptionalValuesBraces(t *testing.T) {
 	want := `@article{test,
@@ -65,9 +61,7 @@ func TestArticleOptionalValuesBraces(t *testing.T) {
 }`
 
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", true)
-	if want != have {
-		t.Errorf("formatting error:\nWant:\n%s\nHave:\n%s", want, have)
-	}
+	assert.Equal(t, want, have, "should be equal")
 }
 
 //--------------------------------------------------//

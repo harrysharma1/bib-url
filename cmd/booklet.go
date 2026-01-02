@@ -44,7 +44,7 @@ var bookletCmd = &cobra.Command{
 	number		 = "<1>",
 	series		 = "<Series>",
 	organisation = "<Organisation>",
-	month		 = <September>,
+	month		 = <jul>,
 	note		 = "<Note>"
 }
 
