@@ -33,11 +33,11 @@ var manualCmd = &cobra.Command{
 	title        = "<Title>",
 	year		 = <2002>,
 	author       = "<Lastname, Firstname>",
-	organisation = "<Organisation",
+	organisation = "<Organisation>",
 	address      = "<Address>",
 	edition		 = "<2nd>",
 	month		 = <jul>,
-	note		 = "<Note>
+	note		 = "<Note>"
 }
 
 Required:

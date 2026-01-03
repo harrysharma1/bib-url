@@ -31,7 +31,7 @@ var techreportCmd = &cobra.Command{
 @techreport{CitekeyTechreport,
 	title       = "<Title>",
 	author      = "<Lastname, Firstname>",
-	institution = "<Institution",
+	institution = "<Institution>",
 	address     = "<Address>",
 	number      = "<50>",
 	year        = <2002>,

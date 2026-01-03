@@ -17,7 +17,7 @@ func TestDefaultIfEmpty(t *testing.T) {
 func TestParseFields(t *testing.T) {
 	fields := []string{`author="John Doe"`}
 	haveMap := parseFields(fields)
-	assert.Equal(t, "\"John Doe\"", strings.Join(haveMap["author"], " and "), "fields should parse by splitting k:v by =")
+	assert.Equal(t, "John Doe", strings.Join(haveMap["author"], " and "), "fields should parse by splitting k:v by =")
 }
 
 func TestLargestFieldInt(t *testing.T) {

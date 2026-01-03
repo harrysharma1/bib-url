@@ -26,10 +26,10 @@ var unpublishedCmd = &cobra.Command{
 	Long: `This will generate an @unpublished bibtex entry e.g.
 	
 @unpublished{CitekeyUnpublished,
-	author = "<Lastname, Firstname>",
-	title  = "<Title>",
+	author      = "<Lastname, Firstname>",
+	title       = "<Title>",
 	institution = "<Institution>",
-	year   = <2002>
+	year        = <2002>
 }
 
 Required:

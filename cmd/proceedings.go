@@ -34,10 +34,10 @@ var proceedingsCmd = &cobra.Command{
 	title     = "<Title>",
 	year	  = <2002>,
 	editor	  = "<Lastname, Firstname>",
-	volume    = "10867",
+	volume    = "<1>",
 	number	  = "<50>",
-	series	  = "<Series>,
-	address   = "Cham, Switzerland",
+	series	  = "<Series>",
+	address   = "<Address>",
 	month	  = <jul>,
 	publisher = "<Publisher>"
 }

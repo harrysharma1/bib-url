@@ -54,6 +54,9 @@ func parseFields(fields []string) map[string][]string {
 		}
 		key := strings.TrimSpace(strings.ToLower(parts[0]))
 		val := strings.TrimSpace(parts[1])
+		val = strings.ReplaceAll(val, `"`, "")
+		val = strings.ReplaceAll(val, "{", "")
+		val = strings.ReplaceAll(val, "}", "")
 		ret_val[key] = append(ret_val[key], val)
 	}
 	return ret_val

@@ -22,7 +22,7 @@ var miscCmd = &cobra.Command{
 	Long: `This will generate an @misc bibtex entry e.g.
 	
 @misc{CitekeyMisc,
-	title        = "<Title",
+	title        = "<Title>",
 	author       = "<Lastname, Firstname>",
 	howpublished = "<How published>",
 	year         = <2002>,

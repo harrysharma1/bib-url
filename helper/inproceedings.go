@@ -42,7 +42,7 @@ func FormatInproceedingsBibtex(
 			return s
 		}
 		if field == "year" {
-			if _, err := strconv.Atoi(s); err != nil {
+			if _, err := strconv.Atoi(s); err == nil {
 				return s
 			}
 		}
