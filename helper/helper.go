@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"golang.design/x/clipboard"
 )
@@ -42,32 +41,4 @@ func defaultIfEmpty(val, def string) string {
 		return def
 	}
 	return val
-}
-
-func parseFields(fields []string) map[string][]string {
-	ret_val := make(map[string][]string)
-
-	for _, val := range fields {
-		parts := strings.SplitN(val, "=", 2)
-		if len(parts) != 2 {
-			continue
-		}
-		key := strings.TrimSpace(strings.ToLower(parts[0]))
-		val := strings.TrimSpace(parts[1])
-		val = strings.ReplaceAll(val, `"`, "")
-		val = strings.ReplaceAll(val, "{", "")
-		val = strings.ReplaceAll(val, "}", "")
-		ret_val[key] = append(ret_val[key], val)
-	}
-	return ret_val
-}
-
-func largestFieldInt(s []string) int {
-	ret_val := 0
-	for _, v := range s {
-		if len(v) > ret_val {
-			ret_val = len(v)
-		}
-	}
-	return ret_val
 }
