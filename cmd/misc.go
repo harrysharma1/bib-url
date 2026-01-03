@@ -11,8 +11,12 @@ import (
 )
 
 var (
-	miscCiteKey string
-	miscFields  []string
+	miscCiteKey      string
+	miscTitle        string
+	miscAuthors      []string
+	miscHowPublished string
+	miscYear         string
+	miscNote         string
 )
 
 // miscCmd represents the misc command
@@ -30,15 +34,23 @@ var miscCmd = &cobra.Command{
 }
 
 Required:
-	- !*
+	- title
+	- author
+	- howpublished
+	- year
+	- note
 Optional:
-	- *
+	- !*
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatMiscBibtex(
 			miscCiteKey,
-			miscFields,
+			miscTitle,
+			miscAuthors,
+			miscHowPublished,
+			miscYear,
+			miscNote,
 			braces)
 		if copy {
 			helper.Copy(bibtex)
@@ -65,5 +77,9 @@ func init() {
 	// is called directly, e.g.:
 	// miscCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	miscCmd.Flags().StringVarP(&miscCiteKey, "key", "k", "", "citation key for bibtex entry")
-	miscCmd.Flags().StringArrayVarP(&miscFields, "field", "f", []string{}, "custom fields for misc")
+	miscCmd.Flags().StringVarP(&miscTitle, "title", "t", "", "title of misc entry")
+	miscCmd.Flags().StringArrayVarP(&miscAuthors, "author", "a", []string{}, "author name(s) of misc entry")
+	miscCmd.Flags().StringVarP(&miscHowPublished, "howpublished", "p", "", "how misc entry was published")
+	miscCmd.Flags().StringVarP(&miscYear, "year", "y", "", "year misc entry was published")
+	miscCmd.Flags().StringVarP(&miscNote, "note", "n", "", "additional notes for misc entry")
 }

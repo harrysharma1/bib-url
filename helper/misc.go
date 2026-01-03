@@ -2,7 +2,6 @@ package helper
 
 import (
 	"fmt"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -11,58 +10,45 @@ import (
 
 func FormatMiscBibtex(
 	miscCiteKey string,
-	miscFields []string,
+	miscTitle string,
+	miscAuthors []string,
+	miscHowPublished string,
+	miscYear string,
+	miscNote string,
 	braces bool) string {
 	var sb strings.Builder
 	sb.WriteString("@misc{")
+
 	if miscCiteKey != "" {
 		sb.WriteString(miscCiteKey)
 	} else {
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	customFieldMap := parseFields(miscFields)
 	fields := []string{}
-	wrap := func(field string, s string) string {
+	wrap := func(s string) string {
 		if braces {
 			return "{" + s + "}"
 		}
 
-		if slices.Contains(months, s) {
+		if _, err := strconv.Atoi(s); err == nil {
 			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
 		}
 
 		return `"` + s + `"`
-
 	}
 
-	// Largest key
-	keys := []string{}
-	for key := range customFieldMap {
-		keys = append(keys, key)
+	// REQUIRED
+	fields = append(fields, fmt.Sprintf("\ttitle        = %s", wrap(defaultIfEmpty(miscTitle, "<Title>"))))
+	if len(miscAuthors) > 0 {
+		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap(strings.Join(miscAuthors, " and "))))
+	} else {
+		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("<Lastname, Firstname>")))
 	}
-	maxKeyLength := largestFieldInt(keys)
 
-	for key, val := range customFieldMap {
-		var tmpValue string
-		switch key {
-		case "author":
-			tmpValue = wrap(key, strings.Join(val, " and "))
-		case "year":
-			// Decided to pick first only
-			tmpValue = wrap(key, val[0])
-		default:
-			tmpValue = wrap(key, strings.Join(val, " "))
-		}
-		fields = append(fields,
-			fmt.Sprintf("\t%-*s = %s", maxKeyLength, key, tmpValue),
-		)
-	}
+	fields = append(fields, fmt.Sprintf("\thowpublished = %s", wrap(defaultIfEmpty(miscHowPublished, "<How Published>"))))
+	fields = append(fields, fmt.Sprintf("\tyear         = %s", wrap(defaultIfEmpty(miscYear, "<2002>"))))
+	fields = append(fields, fmt.Sprintf("\tnote         = %s", wrap(defaultIfEmpty(miscNote, "<Note>"))))
 
 	sb.WriteString(strings.Join(fields, ",\n"))
 	sb.WriteString("\n}")
