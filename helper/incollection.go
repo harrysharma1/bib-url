@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -35,58 +32,43 @@ func FormatIncollectionBibtex(
 	}
 	sb.WriteString(",\n")
 
-	fields := []string{}
-
-	wrap := func(field string, s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-		if slices.Contains(months, s) {
-			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
-		}
-		return `"` + s + `"`
-	}
+	fields := []Field{}
 
 	// REQUIRED
 	if len(incollectionAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor    = %s", wrap("author", strings.Join(incollectionAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(incollectionAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor    = %s", wrap("author", "<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
-	fields = append(fields, fmt.Sprintf("\ttitle     = %s", wrap("title", defaultIfEmpty(incollectionTitle, "<Title>"))))
-	fields = append(fields, fmt.Sprintf("\tbooktitle = %s", wrap("booktitle", defaultIfEmpty(incollectionBookTitle, "<Book Title>"))))
-	fields = append(fields, fmt.Sprintf("\tpublisher = %s", wrap("publisher", defaultIfEmpty(incollectionPublisher, "<Publisher>"))))
-	fields = append(fields, fmt.Sprintf("\tyear      = %s", wrap("year", defaultIfEmpty(incollectionYear, "<2002>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(incollectionTitle, "<Title>")})
+	fields = append(fields, Field{"booktitle", defaultIfEmpty(incollectionBookTitle, "<Book Title>")})
+	fields = append(fields, Field{"publisher", defaultIfEmpty(incollectionPublisher, "<Publisher>")})
+	fields = append(fields, Field{"year", defaultIfEmpty(incollectionYear, "<2002>")})
 
 	// OPTIONAL
 	if len(incollectionEditors) > 0 {
-		fields = append(fields, fmt.Sprintf("\teditor    = %s", wrap("editor", strings.Join(incollectionEditors, " and "))))
+		fields = append(fields, Field{"editor", strings.Join(incollectionEditors, " and ")})
 	}
 	if incollectionVolume != "" {
-		fields = append(fields, fmt.Sprintf("\tvolume    = %s", wrap("volume", incollectionVolume)))
+		fields = append(fields, Field{"volume", incollectionVolume})
 	}
 	if incollectionNumber != "" {
-		fields = append(fields, fmt.Sprintf("\tnumber    = %s", wrap("number", incollectionNumber)))
+		fields = append(fields, Field{"number", incollectionNumber})
 	}
 	if incollectionSeries != "" {
-		fields = append(fields, fmt.Sprintf("\tseries    = %s", wrap("series", incollectionSeries)))
+		fields = append(fields, Field{"series", incollectionSeries})
 	}
 	if incollectionPages != "" {
-		fields = append(fields, fmt.Sprintf("\tpages     = %s", wrap("pages", incollectionPages)))
+		fields = append(fields, Field{"pages", incollectionPages})
 	}
 	if incollectionAddress != "" {
-		fields = append(fields, fmt.Sprintf("\taddress   = %s", wrap("address", incollectionAddress)))
+		fields = append(fields, Field{"address", incollectionAddress})
 	}
 	if incollectionMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth     = %s", wrap("month", incollectionMonth)))
+		fields = append(fields, Field{"month", incollectionMonth})
 	}
 
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

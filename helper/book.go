@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -31,34 +29,20 @@ func FormatBookBibtex(
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	fields := []string{}
-
-	wrap := func(s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-		if slices.Contains(months, s) {
-			return s
-		}
-		if _, err := strconv.Atoi(s); err == nil {
-			return s
-		}
-		return `"` + s + `"`
-
-	}
+	fields := []Field{}
 
 	// REQUIRED
 	if len(bookAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor    = %s", wrap(strings.Join(bookAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(bookAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor    = %s", wrap("<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
-	fields = append(fields, fmt.Sprintf("\ttitle     = %s", wrap(defaultIfEmpty(bookTitle, "<Title>"))))
-	fields = append(fields, fmt.Sprintf("\tpublisher = %s", wrap(defaultIfEmpty(bookPublisher, "<Publisher>"))))
-	fields = append(fields, fmt.Sprintf("\taddress   = %s", wrap(defaultIfEmpty(bookAddress, "<Address>"))))
-	fields = append(fields, fmt.Sprintf("\tyear      = %s", wrap(defaultIfEmpty(bookYear, "<Year>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(bookTitle, "<Title>")})
+	fields = append(fields, Field{"publisher", defaultIfEmpty(bookPublisher, "<Publisher>")})
+	fields = append(fields, Field{"address", defaultIfEmpty(bookAddress, "<Address>")})
+	fields = append(fields, Field{"year", defaultIfEmpty(bookYear, "<2002>")})
 
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 
 	return sb.String()

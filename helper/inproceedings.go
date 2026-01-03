@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -33,61 +30,47 @@ func FormatInproceedingsBibtex(
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	fields := []string{}
-	wrap := func(field string, s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-		if slices.Contains(months, s) {
-			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
-		}
-		return `"` + s + `"`
-	}
+	fields := []Field{}
 
 	// REQUIRED
 	if len(inproceedingsAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("author", strings.Join(inproceedingsAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(inproceedingsAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("author", "<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
-	fields = append(fields, fmt.Sprintf("\ttitle        = %s", wrap("title", defaultIfEmpty(inproceedingsTitle, "<Title>"))))
-	fields = append(fields, fmt.Sprintf("\tbooktitle    = %s", wrap("booktitle", defaultIfEmpty(inproceedingsBooktTitle, "<Book Title>"))))
-	fields = append(fields, fmt.Sprintf("\tyear         = %s", wrap("year", defaultIfEmpty(inproceedingsYear, "<2002>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(inproceedingsTitle, "<Title>")})
+	fields = append(fields, Field{"booktitle", defaultIfEmpty(inproceedingsBooktTitle, "Book Title")})
+	fields = append(fields, Field{"year", defaultIfEmpty(inproceedingsYear, "<2002>")})
 
 	// OPTIONAL
 	if len(inproceedingsEditors) > 0 {
-		fields = append(fields, fmt.Sprintf("\teditor       = %s", wrap("editor", strings.Join(inproceedingsEditors, " and "))))
+		fields = append(fields, Field{"editor", strings.Join(inproceedingsEditors, " and ")})
 	}
 	if inproceedingsVolume != "" {
-		fields = append(fields, fmt.Sprintf("\tvolume       = %s", wrap("volume", inproceedingsVolume)))
+		fields = append(fields, Field{"volume", inproceedingsVolume})
 	}
 	if inproceedingsNumber != "" {
-		fields = append(fields, fmt.Sprintf("\tnumber       = %s", wrap("number", inproceedingsNumber)))
+		fields = append(fields, Field{"number", inproceedingsNumber})
 	}
 	if inproceedingsSeries != "" {
-		fields = append(fields, fmt.Sprintf("\tseries       = %s", wrap("series", inproceedingsSeries)))
+		fields = append(fields, Field{"series", inproceedingsSeries})
 	}
 	if inproceedingsPages != "" {
-		fields = append(fields, fmt.Sprintf("\tpages        = %s", wrap("pages", inproceedingsPages)))
+		fields = append(fields, Field{"pages", inproceedingsPages})
 	}
 	if inproceedingsAddress != "" {
-		fields = append(fields, fmt.Sprintf("\taddress      = %s", wrap("address", inproceedingsAddress)))
+		fields = append(fields, Field{"address", inproceedingsAddress})
 	}
 	if inprocceddingsMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth        = %s", wrap("month", inprocceddingsMonth)))
+		fields = append(fields, Field{"month", inprocceddingsMonth})
 	}
 	if inproceedingsOrganisation != "" {
-		fields = append(fields, fmt.Sprintf("\torganisation = %s", wrap("organisation", inproceedingsOrganisation)))
+		fields = append(fields, Field{"organisation", inproceedingsOrganisation})
 	}
 	if inproceedingsPublisher != "" {
-		fields = append(fields, fmt.Sprintf("\tpublisher    = %s", wrap("publisher", inproceedingsPublisher)))
+		fields = append(fields, Field{"publisher", inproceedingsPublisher})
 	}
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

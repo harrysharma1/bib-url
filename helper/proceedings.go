@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -33,50 +30,34 @@ func FormatProceedingsBibtex(
 	}
 	sb.WriteString(",\n")
 
-	fields := []string{}
-	wrap := func(field string, s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-
-		if slices.Contains(months, s) {
-			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
-		}
-
-		return `"` + s + `"`
-	}
+	fields := []Field{}
 
 	// REQUIRED
-	fields = append(fields, fmt.Sprintf("\ttitle     = %s", wrap("title", defaultIfEmpty(proceedingsTitle, "<Title>"))))
-	fields = append(fields, fmt.Sprintf("\tyear      = %s", wrap("year", defaultIfEmpty(proceedingsYear, "<2002>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(proceedingsTitle, "<Title>")})
+	fields = append(fields, Field{"year", defaultIfEmpty(proceedingsYear, "<2002>")})
 	// OPTIONAL
 	if len(proceedingsEditors) > 0 {
-		fields = append(fields, fmt.Sprintf("\teditor    = %s", wrap("editor", strings.Join(proceedingsEditors, " and "))))
+		fields = append(fields, Field{"editor", strings.Join(proceedingsEditors, " and ")})
 	}
 	if proceedingsVolume != "" {
-		fields = append(fields, fmt.Sprintf("\tvolume    = %s", wrap("volume", proceedingsVolume)))
+		fields = append(fields, Field{"volume", proceedingsVolume})
 	}
 	if proceedingsNumber != "" {
-		fields = append(fields, fmt.Sprintf("\tnumber    = %s", wrap("number", proceedingsNumber)))
+		fields = append(fields, Field{"number", proceedingsNumber})
 	}
 	if proceedingsSeries != "" {
-		fields = append(fields, fmt.Sprintf("\tseries    = %s", wrap("series", proceedingsSeries)))
+		fields = append(fields, Field{"series", proceedingsSeries})
 	}
 	if proceedingsAddress != "" {
-		fields = append(fields, fmt.Sprintf("\taddress   = %s", wrap("address", proceedingsAddress)))
+		fields = append(fields, Field{"address", proceedingsAddress})
 	}
 	if proceedingsMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth     = %s", wrap("month", proceedingsMonth)))
+		fields = append(fields, Field{"month", proceedingsMonth})
 	}
 	if proceedingsPublisher != "" {
-		fields = append(fields, fmt.Sprintf("\tpublisher = %s", wrap("publisher", proceedingsPublisher)))
+		fields = append(fields, Field{"publisher", proceedingsPublisher})
 	}
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

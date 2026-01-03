@@ -11,10 +11,10 @@ import (
 
 func TestArticleRequiredValues(t *testing.T) {
 	want := `@article{test,
-	author   = "John Doe",
-	title    = "Test Title",
-	journal  = "Test Journal",
-	year     = 2002
+	author  = "John Doe",
+	title   = "Test Title",
+	journal = "Test Journal",
+	year    = 2002
 }`
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", false)
 	assert.Equal(t, want, have, "should be equal")
@@ -22,10 +22,10 @@ func TestArticleRequiredValues(t *testing.T) {
 
 func TestArticleRequiredValuesBraces(t *testing.T) {
 	want := `@article{test,
-	author   = {John Doe},
-	title    = {Test Title},
-	journal  = {Test Journal},
-	year     = {2002}
+	author  = {John Doe},
+	title   = {Test Title},
+	journal = {Test Journal},
+	year    = {2002}
 }`
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "", "", "", "", "", true)
 	assert.Equal(t, want, have, "should be equal")
@@ -33,15 +33,15 @@ func TestArticleRequiredValuesBraces(t *testing.T) {
 
 func TestArticleOptionalValues(t *testing.T) {
 	want := `@article{test,
-	author   = "John Doe",
-	title    = "Test Title",
-	journal  = "Test Journal",
-	year     = 2002,
-	volume   = "50",
-	number   = "1",
-	pages    = "1--10",
-	month    = jul,
-	note     = "Test Note"
+	author  = "John Doe",
+	title   = "Test Title",
+	journal = "Test Journal",
+	year    = 2002,
+	volume  = "50",
+	number  = "1",
+	pages   = "1--10",
+	month   = jul,
+	note    = "Test Note"
 }`
 
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", false)
@@ -49,15 +49,15 @@ func TestArticleOptionalValues(t *testing.T) {
 }
 func TestArticleOptionalValuesBraces(t *testing.T) {
 	want := `@article{test,
-	author   = {John Doe},
-	title    = {Test Title},
-	journal  = {Test Journal},
-	year     = {2002},
-	volume   = {50},
-	number   = {1},
-	pages    = {1--10},
-	month    = {jul},
-	note     = {Test Note}
+	author  = {John Doe},
+	title   = {Test Title},
+	journal = {Test Journal},
+	year    = {2002},
+	volume  = {50},
+	number  = {1},
+	pages   = {1--10},
+	month   = {jul},
+	note    = {Test Note}
 }`
 
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", true)

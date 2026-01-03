@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -36,57 +34,40 @@ func FormatArticleBibtex(
 	}
 	sb.WriteString(",\n")
 
-	fields := []string{}
-
-	wrap := func(field string, s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-		if slices.Contains(months, s) {
-			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
-		}
-		return `"` + s + `"`
-
-	}
+	fields := []Field{}
 
 	// REQUIRED
 	if len(articleAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor   = %s", wrap("author", strings.Join(articleAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(articleAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor   = %s", wrap("author", "<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
-	fields = append(fields, fmt.Sprintf("\ttitle    = %s", wrap("title", defaultIfEmpty(articleTitle, "<Title>"))))
-
-	fields = append(fields, fmt.Sprintf("\tjournal  = %s", wrap("journal", defaultIfEmpty(articleJournal, "<Journal>"))))
-
-	fields = append(fields, fmt.Sprintf("\tyear     = %s", wrap("year", defaultIfEmpty(articleYear, "<2002>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(articleTitle, "<Title>")})
+	fields = append(fields, Field{"journal", (defaultIfEmpty(articleJournal, "<Journal>"))})
+	fields = append(fields, Field{"year", defaultIfEmpty(articleYear, "<2002>")})
 
 	// OPTIONAL
 	if articleVolume != "" {
-		fields = append(fields, fmt.Sprintf("\tvolume   = %s", wrap("volume", articleVolume)))
+		fields = append(fields, Field{"volume", articleVolume})
 	}
 
 	if articleNumber != "" {
-		fields = append(fields, fmt.Sprintf("\tnumber   = %s", wrap("number", articleNumber)))
+		fields = append(fields, Field{"number", articleNumber})
 	}
 
 	if articlePages != "" {
-		fields = append(fields, fmt.Sprintf("\tpages    = %s", wrap("pages", articlePages)))
+		fields = append(fields, Field{"pages", articlePages})
 	}
 
 	if articleMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth    = %s", wrap("month", articleMonth)))
+		fields = append(fields, Field{"month", articleMonth})
 	}
 
 	if articleNote != "" {
-		fields = append(fields, fmt.Sprintf("\tnote     = %s", wrap("note", articleNote)))
+		fields = append(fields, Field{"note", articleNote})
 	}
-	sb.WriteString(strings.Join(fields, ",\n"))
+
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

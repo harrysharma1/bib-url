@@ -10,10 +10,10 @@ import (
 // --------------------------------------------------//
 func TestMastersthesisRequiredValues(t *testing.T) {
 	want := `@mastersthesis{test,
-	author  = "John Doe",
-	title   = "Test Title",
-	school  = "Test School",
-	year    = 2002
+	author = "John Doe",
+	title  = "Test Title",
+	school = "Test School",
+	year   = 2002
 }`
 	have := FormatMastersThesisBibtex(
 		"test",
@@ -31,10 +31,10 @@ func TestMastersthesisRequiredValues(t *testing.T) {
 
 func TestMastersthesisRequiredValuesBraces(t *testing.T) {
 	want := `@mastersthesis{test,
-	author  = {John Doe},
-	title   = {Test Title},
-	school  = {Test School},
-	year    = {2002}
+	author = {John Doe},
+	title  = {Test Title},
+	school = {Test School},
+	year   = {2002}
 }`
 	have := FormatMastersThesisBibtex(
 		"test",

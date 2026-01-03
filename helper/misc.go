@@ -1,8 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -25,32 +23,21 @@ func FormatMiscBibtex(
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	fields := []string{}
-	wrap := func(s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-
-		if _, err := strconv.Atoi(s); err == nil {
-			return s
-		}
-
-		return `"` + s + `"`
-	}
+	fields := []Field{}
 
 	// REQUIRED
-	fields = append(fields, fmt.Sprintf("\ttitle        = %s", wrap(defaultIfEmpty(miscTitle, "<Title>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(miscTitle, "<Title>")})
 	if len(miscAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap(strings.Join(miscAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(miscAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
 
-	fields = append(fields, fmt.Sprintf("\thowpublished = %s", wrap(defaultIfEmpty(miscHowPublished, "<How Published>"))))
-	fields = append(fields, fmt.Sprintf("\tyear         = %s", wrap(defaultIfEmpty(miscYear, "<2002>"))))
-	fields = append(fields, fmt.Sprintf("\tnote         = %s", wrap(defaultIfEmpty(miscNote, "<Note>"))))
+	fields = append(fields, Field{"howpublished", defaultIfEmpty(miscHowPublished, "<How Published>")})
+	fields = append(fields, Field{"year", defaultIfEmpty(miscYear, "<2002>")})
+	fields = append(fields, Field{"note", defaultIfEmpty(miscNote, "<Note>")})
 
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

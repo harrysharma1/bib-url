@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -29,47 +26,33 @@ func FormatPhDThesisBibtex(
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	fields := []string{}
-	wrap := func(s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-
-		if slices.Contains(months, s) {
-			return s
-		}
-
-		if _, err := strconv.Atoi(s); err == nil {
-			return s
-		}
-
-		return `"` + s + `"`
-	}
+	fields := []Field{}
 
 	// REQUIRED
 	if len(phdthesisAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor  = %s", wrap(strings.Join(phdthesisAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(phdthesisAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor  = %s", wrap("<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 
 	}
-	fields = append(fields, fmt.Sprintf("\ttitle   = %s", wrap(defaultIfEmpty(phdthesisTitle, "<Title>"))))
-	fields = append(fields, fmt.Sprintf("\tschool  = %s", wrap(defaultIfEmpty(phdthesisSchool, "<School>"))))
-	fields = append(fields, fmt.Sprintf("\tyear    = %s", wrap(defaultIfEmpty(phdthesisYear, "<2002>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(phdthesisTitle, "<Title>")})
+	fields = append(fields, Field{"school", defaultIfEmpty(phdthesisSchool, "<School>")})
+	fields = append(fields, Field{"year", defaultIfEmpty(phdthesisYear, "<2002>")})
+
 	// OPTIONAL
 	if phdthesisType != "" {
-		fields = append(fields, fmt.Sprintf("\ttype    = %s", wrap(phdthesisType)))
+		fields = append(fields, Field{"type", phdthesisType})
 	}
 	if phdthesisAddress != "" {
-		fields = append(fields, fmt.Sprintf("\taddress = %s", wrap(phdthesisAddress)))
+		fields = append(fields, Field{"address", phdthesisAddress})
 	}
 	if phdthesisMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth   = %s", wrap(phdthesisMonth)))
+		fields = append(fields, Field{"month", phdthesisMonth})
 	}
 	if phdthesisNote != "" {
-		fields = append(fields, fmt.Sprintf("\tnote    = %s", wrap(phdthesisNote)))
+		fields = append(fields, Field{"note", phdthesisNote})
 	}
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 	return sb.String()
 }

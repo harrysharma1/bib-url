@@ -10,10 +10,10 @@ import (
 // --------------------------------------------------//
 func TestInproceedingsRequiredValues(t *testing.T) {
 	want := `@inproceedings{test,
-	author       = "John Doe",
-	title        = "Test Title",
-	booktitle    = "Test Booktitle",
-	year         = 2002
+	author    = "John Doe",
+	title     = "Test Title",
+	booktitle = "Test Booktitle",
+	year      = 2002
 }`
 	have := FormatInproceedingsBibtex(
 		"test",
@@ -35,10 +35,10 @@ func TestInproceedingsRequiredValues(t *testing.T) {
 }
 func TestInproceedingsRequiredValuesBraces(t *testing.T) {
 	want := `@inproceedings{test,
-	author       = {John Doe},
-	title        = {Test Title},
-	booktitle    = {Test Booktitle},
-	year         = {2002}
+	author    = {John Doe},
+	title     = {Test Title},
+	booktitle = {Test Booktitle},
+	year      = {2002}
 }`
 	have := FormatInproceedingsBibtex(
 		"test",

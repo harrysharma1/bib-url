@@ -10,8 +10,8 @@ import (
 // --------------------------------------------------//
 func TestProceedingsRequiredValues(t *testing.T) {
 	want := `@proceedings{test,
-	title     = "Test Title",
-	year      = 2002
+	title = "Test Title",
+	year  = 2002
 }`
 	have := FormatProceedingsBibtex(
 		"test",
@@ -30,8 +30,8 @@ func TestProceedingsRequiredValues(t *testing.T) {
 
 func TestProceedingsRequiredValuesBraces(t *testing.T) {
 	want := `@proceedings{test,
-	title     = {Test Title},
-	year      = {2002}
+	title = {Test Title},
+	year  = {2002}
 }`
 	have := FormatProceedingsBibtex(
 		"test",

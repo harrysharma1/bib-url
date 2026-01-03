@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -33,58 +30,44 @@ func FormatBookletBibtex(
 		sb.WriteString(uuid.NewString())
 	}
 	sb.WriteString(",\n")
-	fields := []string{}
+	fields := []Field{}
 
-	wrap := func(field string, s string) string {
-		if braces {
-			return "{" + s + "}"
-		}
-		if slices.Contains(months, s) {
-			return s
-		}
-		if field == "year" {
-			if _, err := strconv.Atoi(s); err == nil {
-				return s
-			}
-		}
-		return `"` + s + `"`
-
-	}
 	// REQUIRED
-	fields = append(fields, fmt.Sprintf("\ttitle        = %s", wrap("title", defaultIfEmpty(bookletTitle, "<Title>"))))
+	fields = append(fields, Field{"title", defaultIfEmpty(bookletTitle, "<Title>")})
 	if len(bookletAuthors) > 0 {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("author,", strings.Join(bookletAuthors, " and "))))
+		fields = append(fields, Field{"author", strings.Join(bookletAuthors, " and ")})
 	} else {
-		fields = append(fields, fmt.Sprintf("\tauthor       = %s", wrap("author", "<Lastname, Firstname>")))
+		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
-	fields = append(fields, fmt.Sprintf("\thowpublished = %s", wrap("howpublished", defaultIfEmpty(bookletHowPublished, "<How Published>"))))
-	fields = append(fields, fmt.Sprintf("\taddress      = %s", wrap("address", defaultIfEmpty(bookletAddress, "<Address>"))))
-	fields = append(fields, fmt.Sprintf("\tyear         = %s", wrap("year", defaultIfEmpty(bookletYear, "2002"))))
+	fields = append(fields, Field{"howpublished", defaultIfEmpty(bookletHowPublished, "<How Published>")})
+	fields = append(fields, Field{"address", defaultIfEmpty(bookletAddress, "<Address>")})
+	// DO NOT WRAP
+	fields = append(fields, Field{"year", defaultIfEmpty(bookletYear, "<2002>")})
 
 	// OPTIONAL
 	if len(bookletEditors) > 0 {
-		fields = append(fields, fmt.Sprintf("\teditor       = %s", wrap("editor", strings.Join(bookletEditors, " and "))))
+		fields = append(fields, Field{"editor", strings.Join(bookletEditors, " and ")})
 	}
 	if bookletVolume != "" {
-		fields = append(fields, fmt.Sprintf("\tvolume       = %s", wrap("volume", bookletVolume)))
+		fields = append(fields, Field{"volume", bookletVolume})
 	}
 	if bookletNumber != "" {
-		fields = append(fields, fmt.Sprintf("\tnumber       = %s", wrap("number", bookletNumber)))
+		fields = append(fields, Field{"number", bookletNumber})
 	}
 	if bookletSeries != "" {
-		fields = append(fields, fmt.Sprintf("\tseries       = %s", wrap("series", bookletSeries)))
+		fields = append(fields, Field{"series", bookletSeries})
 	}
 	if bookletOrganisation != "" {
-		fields = append(fields, fmt.Sprintf("\torganisation = %s", wrap("organisation", bookletOrganisation)))
+		fields = append(fields, Field{"organisation", bookletOrganisation})
 	}
 	if bookletMonth != "" {
-		fields = append(fields, fmt.Sprintf("\tmonth        = %s", wrap("month", bookletMonth)))
+		fields = append(fields, Field{"month", bookletMonth})
 	}
 	if bookletNote != "" {
-		fields = append(fields, fmt.Sprintf("\tnote         = %s", wrap("note", bookletNote)))
+		fields = append(fields, Field{"note", bookletNote})
 	}
 
-	sb.WriteString(strings.Join(fields, ",\n"))
+	sb.WriteString(strings.Join(formatFields(fields, braces), ",\n"))
 	sb.WriteString("\n}")
 
 	return sb.String()

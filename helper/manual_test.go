@@ -10,8 +10,8 @@ import (
 // --------------------------------------------------//
 func TestManualRequiredValues(t *testing.T) {
 	want := `@manual{test,
-	title        = "Test Title",
-	year         = 2002
+	title = "Test Title",
+	year  = 2002
 }`
 	have := FormatManualBibtex(
 		"test",
@@ -29,8 +29,8 @@ func TestManualRequiredValues(t *testing.T) {
 
 func TestManualRequiredValuesBraces(t *testing.T) {
 	want := `@manual{test,
-	title        = {Test Title},
-	year         = {2002}
+	title = {Test Title},
+	year  = {2002}
 }`
 	have := FormatManualBibtex(
 		"test",
