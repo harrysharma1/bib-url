@@ -79,46 +79,23 @@ func TestArticleDOIValid(t *testing.T) {
 
 	haveAuthors, haveTitle, haveJournal, haveYear, haveVolume, haveNumber, err := ArticleFromDOI(doi)
 
-	if err != nil {
-		t.Errorf("error ocurred in ArticleFromDOI() function call: %e", err)
-	}
+	assert.Nil(t, err, "error occurred in ArticleFromDOI()")
 
 	// authors
-	if len(wantAuthors) == len(haveAuthors) {
-		for i := range len(wantAuthors) {
-			if wantAuthors[i] != haveAuthors[i] {
-				t.Errorf("return author at position %d not the same:\nWant %s\nHave:%s", i, wantAuthors[i], haveAuthors[i])
-			}
-		}
-	} else {
-		t.Errorf("return authors length does not match, either change test to reflect this or inspect ArticleFromDOI() function for bugs:\nDefault Author Count: %d\nReturn Author Count: %d", len(wantAuthors), len(haveAuthors))
-	}
+	assert.Equal(t, len(wantAuthors), len(haveAuthors), "not same length")
+	assert.Equal(t, wantAuthors, haveAuthors, "not in same order")
 
 	// title
-	if wantTitle != haveTitle {
-		t.Errorf("return title does not match default title:\nWant %s\nHave: %s", wantTitle, haveTitle)
-	}
-
+	assert.Equal(t, wantTitle, haveTitle, "titles not equal")
 	// journal
-	if wantJournal != haveJournal {
-		t.Errorf("return journal does not match default journal:\nWant %s\nHave: %s", wantJournal, haveJournal)
-	}
 
+	assert.Equal(t, wantJournal, haveJournal, "journals not equal")
 	// year
-	if wantYear != haveYear {
-		t.Errorf("return year does not match default year:\nWant %s\nHave: %s", wantYear, haveYear)
-	}
-
+	assert.Equal(t, wantYear, haveYear, "years are not equal")
 	// volume
-	if wantVolume != haveVolume {
-		t.Errorf("return volume does not match default volume:\nWant %s\nHave: %s", wantVolume, haveVolume)
-	}
-
+	assert.Equal(t, wantVolume, haveVolume, "volumes not same")
 	// number
-	if wantNumber != haveNumber {
-		t.Errorf("return volume does not match default volume:\nWant %s\nHave: %s", wantNumber, haveNumber)
-	}
-
+	assert.Equal(t, wantNumber, haveNumber, "numbers not the same")
 }
 
 func TestArticleDOIInvalid(t *testing.T) {
