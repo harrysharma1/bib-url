@@ -11,7 +11,7 @@ import (
 func TestMiscRequiredValues(t *testing.T) {
 	want := `@misc{test,
 	title        = "Test Title",
-	author       = "John Doe",
+	author       = "Doe, John",
 	howpublished = "\url{https://harrysharma.co.uk}",
 	year         = 2002,
 	note         = "Test Note"
@@ -31,7 +31,7 @@ func TestMiscRequiredValues(t *testing.T) {
 func TestMiscRequiredValuesBraces(t *testing.T) {
 	want := `@misc{test,
 	title        = {Test Title},
-	author       = {John Doe},
+	author       = {Doe, John},
 	howpublished = {\url{https://harrysharma.co.uk}},
 	year         = {2002},
 	note         = {Test Note}

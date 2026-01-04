@@ -37,7 +37,7 @@ func FormatProceedingsBibtex(
 	fields = append(fields, Field{"year", defaultIfEmpty(proceedingsYear, "<2002>")})
 	// OPTIONAL
 	if len(proceedingsEditors) > 0 {
-		fields = append(fields, Field{"editor", strings.Join(proceedingsEditors, " and ")})
+		fields = append(fields, Field{"editor", formatEditors(proceedingsEditors)})
 	}
 	if proceedingsVolume != "" {
 		fields = append(fields, Field{"volume", proceedingsVolume})

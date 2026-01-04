@@ -11,7 +11,7 @@ import (
 func TestBookletRequiredValues(t *testing.T) {
 	want := `@booklet{test,
 	title        = "Test Title",
-	author       = "John Doe",
+	author       = "Doe, John",
 	howpublished = "Test How Published",
 	address      = "Test Avenue",
 	year         = 2002
@@ -36,7 +36,7 @@ func TestBookletRequiredValues(t *testing.T) {
 func TestBookletRequiredValuesBraces(t *testing.T) {
 	want := `@booklet{test,
 	title        = {Test Title},
-	author       = {John Doe},
+	author       = {Doe, John},
 	howpublished = {Test How Published},
 	address      = {Test Avenue},
 	year         = {2002}
@@ -61,11 +61,11 @@ func TestBookletRequiredValuesBraces(t *testing.T) {
 func TestBookletOptionalValues(t *testing.T) {
 	want := `@booklet{test,
 	title        = "Test Title",
-	author       = "John Doe",
+	author       = "Doe, John",
 	howpublished = "Test How Published",
 	address      = "Test Avenue",
 	year         = 2002,
-	editor       = "Jane Doe",
+	editor       = "Doe, Jane",
 	volume       = "50",
 	number       = "1",
 	series       = "Test Series",
@@ -93,11 +93,11 @@ func TestBookletOptionalValues(t *testing.T) {
 func TestBookletOptionalValuesBraces(t *testing.T) {
 	want := `@booklet{test,
 	title        = {Test Title},
-	author       = {John Doe},
+	author       = {Doe, John},
 	howpublished = {Test How Published},
 	address      = {Test Avenue},
 	year         = {2002},
-	editor       = {Jane Doe},
+	editor       = {Doe, Jane},
 	volume       = {50},
 	number       = {1},
 	series       = {Test Series},

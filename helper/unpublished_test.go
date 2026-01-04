@@ -10,7 +10,7 @@ import (
 // --------------------------------------------------//
 func TestUnpublishedRequiredValues(t *testing.T) {
 	want := `@unpublished{test,
-	author      = "Jane Doe",
+	author      = "Doe, Jane",
 	title       = "Test Title",
 	institution = "Test Institution",
 	year        = 2002
@@ -27,7 +27,7 @@ func TestUnpublishedRequiredValues(t *testing.T) {
 
 func TestUnpublishedRequiredValuesBraces(t *testing.T) {
 	want := `@unpublished{test,
-	author      = {Jane Doe},
+	author      = {Doe, Jane},
 	title       = {Test Title},
 	institution = {Test Institution},
 	year        = {2002}

@@ -11,7 +11,7 @@ import (
 
 func TestArticleRequiredValues(t *testing.T) {
 	want := `@article{test,
-	author  = "John Doe",
+	author  = "Doe, John",
 	title   = "Test Title",
 	journal = "Test Journal",
 	year    = 2002
@@ -22,7 +22,7 @@ func TestArticleRequiredValues(t *testing.T) {
 
 func TestArticleRequiredValuesBraces(t *testing.T) {
 	want := `@article{test,
-	author  = {John Doe},
+	author  = {Doe, John},
 	title   = {Test Title},
 	journal = {Test Journal},
 	year    = {2002}
@@ -33,7 +33,7 @@ func TestArticleRequiredValuesBraces(t *testing.T) {
 
 func TestArticleOptionalValues(t *testing.T) {
 	want := `@article{test,
-	author  = "John Doe",
+	author  = "Doe, John",
 	title   = "Test Title",
 	journal = "Test Journal",
 	year    = 2002,
@@ -49,7 +49,7 @@ func TestArticleOptionalValues(t *testing.T) {
 }
 func TestArticleOptionalValuesBraces(t *testing.T) {
 	want := `@article{test,
-	author  = {John Doe},
+	author  = {Doe, John},
 	title   = {Test Title},
 	journal = {Test Journal},
 	year    = {2002},

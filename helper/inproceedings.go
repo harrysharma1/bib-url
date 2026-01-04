@@ -34,7 +34,7 @@ func FormatInproceedingsBibtex(
 
 	// REQUIRED
 	if len(inproceedingsAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(inproceedingsAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(inproceedingsAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
@@ -44,7 +44,7 @@ func FormatInproceedingsBibtex(
 
 	// OPTIONAL
 	if len(inproceedingsEditors) > 0 {
-		fields = append(fields, Field{"editor", strings.Join(inproceedingsEditors, " and ")})
+		fields = append(fields, Field{"editor", formatEditors(inproceedingsEditors)})
 	}
 	if inproceedingsVolume != "" {
 		fields = append(fields, Field{"volume", inproceedingsVolume})

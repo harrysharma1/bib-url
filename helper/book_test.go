@@ -11,7 +11,7 @@ import (
 // --------------------------------------------------//
 func TestBookRequiredValues(t *testing.T) {
 	want := `@book{test,
-	author    = "Frank Herbert",
+	author    = "Herbert, Frank",
 	title     = "Dune",
 	publisher = "Chilton Books",
 	address   = "Sparkford, Yeovil, Somerset",
@@ -24,7 +24,7 @@ func TestBookRequiredValues(t *testing.T) {
 
 func TestBookRequiredValuesBraces(t *testing.T) {
 	want := `@book{test,
-	author    = {Frank Herbert},
+	author    = {Herbert, Frank},
 	title     = {Dune},
 	publisher = {Chilton Books},
 	address   = {Sparkford, Yeovil, Somerset},

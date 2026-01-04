@@ -10,7 +10,7 @@ import (
 // --------------------------------------------------//
 func TestPhDThesisRequiredValues(t *testing.T) {
 	want := `@phdthesis{test,
-	author = "John Doe",
+	author = "Doe, John",
 	title  = "Test Title",
 	school = "Test School",
 	year   = 2002
@@ -31,7 +31,7 @@ func TestPhDThesisRequiredValues(t *testing.T) {
 
 func TestPhDThesisRequiredValuesBraces(t *testing.T) {
 	want := `@phdthesis{test,
-	author = {John Doe},
+	author = {Doe, John},
 	title  = {Test Title},
 	school = {Test School},
 	year   = {2002}
@@ -52,7 +52,7 @@ func TestPhDThesisRequiredValuesBraces(t *testing.T) {
 
 func TestPhDThesisOptionalValues(t *testing.T) {
 	want := `@phdthesis{test,
-	author  = "John Doe",
+	author  = "Doe, John",
 	title   = "Test Title",
 	school  = "Test School",
 	year    = 2002,
@@ -77,7 +77,7 @@ func TestPhDThesisOptionalValues(t *testing.T) {
 
 func TestPhDThesisOptionalValuesBraces(t *testing.T) {
 	want := `@phdthesis{test,
-	author  = {John Doe},
+	author  = {Doe, John},
 	title   = {Test Title},
 	school  = {Test School},
 	year    = {2002},

@@ -10,7 +10,7 @@ import (
 // --------------------------------------------------//
 func TestIncollectionRequiredValues(t *testing.T) {
 	want := `@incollection{test,
-	author    = "John Doe",
+	author    = "Doe, John",
 	title     = "Test Title",
 	booktitle = "Test Booktitle",
 	publisher = "Test Publisher",
@@ -36,7 +36,7 @@ func TestIncollectionRequiredValues(t *testing.T) {
 
 func TestIncollectionRequiredValuesBraces(t *testing.T) {
 	want := `@incollection{test,
-	author    = {John Doe},
+	author    = {Doe, John},
 	title     = {Test Title},
 	booktitle = {Test Booktitle},
 	publisher = {Test Publisher},
@@ -62,12 +62,12 @@ func TestIncollectionRequiredValuesBraces(t *testing.T) {
 
 func TestIncollectionOptionalValues(t *testing.T) {
 	want := `@incollection{test,
-	author    = "John Doe",
+	author    = "Doe, John",
 	title     = "Test Title",
 	booktitle = "Test Booktitle",
 	publisher = "Test Publisher",
 	year      = 2002,
-	editor    = "Jane Doe",
+	editor    = "Doe, Jane",
 	volume    = "1",
 	number    = "50",
 	series    = "Test Series",
@@ -95,12 +95,12 @@ func TestIncollectionOptionalValues(t *testing.T) {
 }
 func TestIncollectionOptionalValuesBraces(t *testing.T) {
 	want := `@incollection{test,
-	author    = {John Doe},
+	author    = {Doe, John},
 	title     = {Test Title},
 	booktitle = {Test Booktitle},
 	publisher = {Test Publisher},
 	year      = {2002},
-	editor    = {Jane Doe},
+	editor    = {Doe, Jane},
 	volume    = {1},
 	number    = {50},
 	series    = {Test Series},

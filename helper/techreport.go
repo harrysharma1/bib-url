@@ -30,7 +30,7 @@ func FormatTechReportBibtex(
 	// REQUIRED
 	fields = append(fields, Field{"title", defaultIfEmpty(techreportTitle, "<Title>")})
 	if len(techreportAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(techreportAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(techreportAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}

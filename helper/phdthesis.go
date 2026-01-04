@@ -30,7 +30,7 @@ func FormatPhDThesisBibtex(
 
 	// REQUIRED
 	if len(phdthesisAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(phdthesisAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(phdthesisAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 

@@ -33,7 +33,7 @@ func FormatManualBibtex(
 	fields = append(fields, Field{"year", defaultIfEmpty(manualYear, "<2002>")})
 	// OPTIONAL
 	if len(manualAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(manualAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(manualAuthors)})
 	}
 
 	if manualOrganisation != "" {

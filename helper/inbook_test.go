@@ -10,7 +10,7 @@ import (
 // --------------------------------------------------//
 func TestInbookRequiredValues(t *testing.T) {
 	want := `@inbook{test,
-	author    = "John Doe",
+	author    = "Doe, John",
 	title     = "Test Title",
 	booktitle = "Test Booktitle",
 	publisher = "Test Publisher",
@@ -38,7 +38,7 @@ func TestInbookRequiredValues(t *testing.T) {
 
 func TestInbookRequiredValuesBraces(t *testing.T) {
 	want := `@inbook{test,
-	author    = {John Doe},
+	author    = {Doe, John},
 	title     = {Test Title},
 	booktitle = {Test Booktitle},
 	publisher = {Test Publisher},
@@ -66,12 +66,12 @@ func TestInbookRequiredValuesBraces(t *testing.T) {
 
 func TestInbookOptionalValues(t *testing.T) {
 	want := `@inbook{test,
-	author    = "John Doe",
+	author    = "Doe, John",
 	title     = "Test Title",
 	booktitle = "Test Booktitle",
 	publisher = "Test Publisher",
 	year      = 2002,
-	editor    = "Jane Doe",
+	editor    = "Doe, Jane",
 	volume    = "50",
 	number    = "1",
 	series    = "Test Series",
@@ -103,12 +103,12 @@ func TestInbookOptionalValues(t *testing.T) {
 }
 func TestInbookOptionalValuesBraces(t *testing.T) {
 	want := `@inbook{test,
-	author    = {John Doe},
+	author    = {Doe, John},
 	title     = {Test Title},
 	booktitle = {Test Booktitle},
 	publisher = {Test Publisher},
 	year      = {2002},
-	editor    = {Jane Doe},
+	editor    = {Doe, Jane},
 	volume    = {50},
 	number    = {1},
 	series    = {Test Series},

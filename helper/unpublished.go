@@ -26,7 +26,7 @@ func FormatUnpublishedBibtex(
 
 	// REQUIRED
 	if len(unpublishedAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(unpublishedAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(unpublishedAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}

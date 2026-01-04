@@ -33,7 +33,7 @@ func FormatBookBibtex(
 
 	// REQUIRED
 	if len(bookAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(bookAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(bookAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}

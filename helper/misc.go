@@ -28,7 +28,7 @@ func FormatMiscBibtex(
 	// REQUIRED
 	fields = append(fields, Field{"title", defaultIfEmpty(miscTitle, "<Title>")})
 	if len(miscAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(miscAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(miscAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}

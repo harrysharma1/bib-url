@@ -11,7 +11,7 @@ import (
 func TestTechReportRequiredValues(t *testing.T) {
 	want := `@techreport{test,
 	title       = "Test Title",
-	author      = "Jane Doe",
+	author      = "Doe, Jane",
 	institution = "Test Institution",
 	address     = "Test Address",
 	number      = "50",
@@ -34,7 +34,7 @@ func TestTechReportRequiredValues(t *testing.T) {
 func TestTechReportRequiredValuesBraces(t *testing.T) {
 	want := `@techreport{test,
 	title       = {Test Title},
-	author      = {Jane Doe},
+	author      = {Doe, Jane},
 	institution = {Test Institution},
 	address     = {Test Address},
 	number      = {50},

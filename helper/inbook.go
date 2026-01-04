@@ -37,7 +37,7 @@ func FormatInbookBibtex(
 
 	// REQUIRED
 	if len(inbookAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(inbookAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(inbookAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
@@ -48,7 +48,7 @@ func FormatInbookBibtex(
 
 	// OPTIONAL
 	if len(inbookEditors) > 0 {
-		fields = append(fields, Field{"editor", strings.Join(inbookEditors, " and ")})
+		fields = append(fields, Field{"editor", formatEditors(inbookEditors)})
 	}
 	if inbookVolume != "" {
 		fields = append(fields, Field{"volume", inbookVolume})

@@ -35,7 +35,7 @@ func FormatBookletBibtex(
 	// REQUIRED
 	fields = append(fields, Field{"title", defaultIfEmpty(bookletTitle, "<Title>")})
 	if len(bookletAuthors) > 0 {
-		fields = append(fields, Field{"author", strings.Join(bookletAuthors, " and ")})
+		fields = append(fields, Field{"author", formatAuthors(bookletAuthors)})
 	} else {
 		fields = append(fields, Field{"author", "<Lastname, Firstname>"})
 	}
@@ -46,7 +46,7 @@ func FormatBookletBibtex(
 
 	// OPTIONAL
 	if len(bookletEditors) > 0 {
-		fields = append(fields, Field{"editor", strings.Join(bookletEditors, " and ")})
+		fields = append(fields, Field{"editor", formatEditors(bookletEditors)})
 	}
 	if bookletVolume != "" {
 		fields = append(fields, Field{"volume", bookletVolume})

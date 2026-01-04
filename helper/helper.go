@@ -108,7 +108,7 @@ func toBibtexName(name string) string {
 	first := parts[:len(parts)-1]
 	last := parts[len(parts)-1]
 
-	return last + "," + strings.Join(first, " ")
+	return last + ", " + strings.Join(first, " ")
 
 }
 func formatAuthors(authors []string) string {
@@ -117,4 +117,12 @@ func formatAuthors(authors []string) string {
 		formattedAuthors = append(formattedAuthors, toBibtexName(author))
 	}
 	return strings.Join(formattedAuthors, " and ")
+}
+
+func formatEditors(editors []string) string {
+	formattedEditor := []string{}
+	for _, editor := range editors {
+		formattedEditor = append(formattedEditor, toBibtexName(editor))
+	}
+	return strings.Join(formattedEditor, " and ")
 }

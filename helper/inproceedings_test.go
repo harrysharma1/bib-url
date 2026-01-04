@@ -10,7 +10,7 @@ import (
 // --------------------------------------------------//
 func TestInproceedingsRequiredValues(t *testing.T) {
 	want := `@inproceedings{test,
-	author    = "John Doe",
+	author    = "Doe, John",
 	title     = "Test Title",
 	booktitle = "Test Booktitle",
 	year      = 2002
@@ -35,7 +35,7 @@ func TestInproceedingsRequiredValues(t *testing.T) {
 }
 func TestInproceedingsRequiredValuesBraces(t *testing.T) {
 	want := `@inproceedings{test,
-	author    = {John Doe},
+	author    = {Doe, John},
 	title     = {Test Title},
 	booktitle = {Test Booktitle},
 	year      = {2002}
@@ -62,11 +62,11 @@ func TestInproceedingsRequiredValuesBraces(t *testing.T) {
 
 func TestInproceedingsOptionalValues(t *testing.T) {
 	want := `@inproceedings{test,
-	author       = "John Doe",
+	author       = "Doe, John",
 	title        = "Test Title",
 	booktitle    = "Test Booktitle",
 	year         = 2002,
-	editor       = "Jane Doe and John Doe",
+	editor       = "Doe, Jane and Doe, John",
 	volume       = "1",
 	number       = "50",
 	series       = "Test Series",
@@ -97,11 +97,11 @@ func TestInproceedingsOptionalValues(t *testing.T) {
 
 func TestInproceedingsOptionalValuesBraces(t *testing.T) {
 	want := `@inproceedings{test,
-	author       = {John Doe},
+	author       = {Doe, John},
 	title        = {Test Title},
 	booktitle    = {Test Booktitle},
 	year         = {2002},
-	editor       = {Jane Doe and John Doe},
+	editor       = {Doe, Jane and Doe, John},
 	volume       = {1},
 	number       = {50},
 	series       = {Test Series},
