@@ -97,3 +97,24 @@ func formatFields(fields []Field, braces bool) []string {
 	return formattedFields
 
 }
+func toBibtexName(name string) string {
+	if strings.Contains(name, ",") {
+		return name
+	}
+	parts := strings.Fields(name)
+	if len(parts) < 2 {
+		return name
+	}
+	first := parts[:len(parts)-1]
+	last := parts[len(parts)-1]
+
+	return last + "," + strings.Join(first, " ")
+
+}
+func formatAuthors(authors []string) string {
+	formattedAuthors := []string{}
+	for _, author := range authors {
+		formattedAuthors = append(formattedAuthors, toBibtexName(author))
+	}
+	return strings.Join(formattedAuthors, " and ")
+}
