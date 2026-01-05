@@ -5,19 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	unpublishedUrl         string
-	unpublishedCiteKey     string
-	unpublishedAuthors     []string
-	unpublishedtTitle      string
-	unpublishedInstitution string
-	unpublishedYear        string
-)
+var unpublished models.Unpublished
 
 // unpublishedCmd represents the unpublished command
 var unpublishedCmd = &cobra.Command{
@@ -43,11 +37,11 @@ Optional:
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatUnpublishedBibtex(
-			unpublishedCiteKey,
-			unpublishedAuthors,
-			unpublishedtTitle,
-			unpublishedInstitution,
-			unpublishedYear,
+			unpublished.CiteKey,
+			unpublished.Authors,
+			unpublished.Title,
+			unpublished.Institution,
+			unpublished.Year,
 			braces)
 
 		if copy {
@@ -74,10 +68,9 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// unpublishedCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	unpublishedCmd.Flags().StringVarP(&unpublishedUrl, "url", "u", "", "url for online unpublished work to auto-generate entry")
-	unpublishedCmd.Flags().StringVarP(&unpublishedCiteKey, "key", "k", "", "citation key for bibtex entry")
-	unpublishedCmd.Flags().StringArrayVarP(&unpublishedAuthors, "author", "a", []string{}, "author name(s) for unpublished work")
-	unpublishedCmd.Flags().StringVarP(&unpublishedtTitle, "title", "t", "", "title of unpublished work")
-	unpublishedCmd.Flags().StringVarP(&unpublishedInstitution, "institution", "i", "", "institution that holds this unpublished work")
-	unpublishedCmd.Flags().StringVarP(&unpublishedYear, "year", "y", "", "year unpublished work was created")
+	unpublishedCmd.Flags().StringVarP(&unpublished.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	unpublishedCmd.Flags().StringArrayVarP(&unpublished.Authors, "author", "a", []string{}, "author name(s) for unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublished.Title, "title", "t", "", "title of unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublished.Institution, "institution", "i", "", "institution that holds this unpublished work")
+	unpublishedCmd.Flags().StringVarP(&unpublished.Year, "year", "y", "", "year unpublished work was created")
 }

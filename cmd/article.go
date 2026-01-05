@@ -5,24 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	articleDOI     string
-	articleCiteKey string
-	articleAuthors []string
-	articleTitle   string
-	articleJournal string
-	articleYear    string
-	articleVolume  string
-	articleNumber  string
-	articlePages   string
-	articleMonth   string
-	articleNote    string
-)
+var article models.Article
 
 // articleCmd represents the article command
 var articleCmd = &cobra.Command{
@@ -58,39 +47,50 @@ Optional:
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 
-		if articleDOI != "" {
-			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := helper.ArticleFromDOI(articleDOI)
+		if article.Doi != "" {
+			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := helper.ArticleFromDOI(article.Doi)
 			if err != nil {
 				return err
 			}
 
-			if len(articleAuthors) == 0 {
-				articleAuthors = doiAuthors
+			if len(article.Authors) == 0 {
+				article.Authors = doiAuthors
 			} else {
-				articleAuthors = append(articleAuthors, doiAuthors...)
+				article.Authors = append(article.Authors, doiAuthors...)
 			}
 
-			if articleTitle == "" {
-				articleTitle = doiTitle
+			if article.Title == "" {
+				article.Title = doiTitle
 			}
 
-			if articleJournal == "" {
-				articleJournal = doiJournal
+			if article.Journal == "" {
+				article.Journal = doiJournal
 			}
 
-			if articleYear == "" {
-				articleYear = doiYear
+			if article.Year == "" {
+				article.Year = doiYear
 			}
 
 			if doiVolume == "" {
-				articleVolume = doiVolume
+				article.Volume = doiVolume
 			}
 
 			if doiNumber == "" {
-				articleNumber = doiNumber
+				article.Number = doiNumber
 			}
 		}
-		var bibtex = helper.FormatArticleBibtex(articleCiteKey, articleAuthors, articleTitle, articleJournal, articleYear, articleVolume, articleNumber, articlePages, articleMonth, articleNote, braces)
+		var bibtex = helper.FormatArticleBibtex(
+			article.CiteKey,
+			article.Authors,
+			article.Title,
+			article.Journal,
+			article.Year,
+			article.Volume,
+			article.Number,
+			article.Pages,
+			article.Month,
+			article.Note,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -119,15 +119,15 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// articleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	articleCmd.Flags().StringVarP(&articleDOI, "doi", "d", "", "doi identifier for online article to auto-generate entry")
-	articleCmd.Flags().StringVarP(&articleCiteKey, "key", "k", "", "citation key for bibtex entry")
-	articleCmd.Flags().StringArrayVarP(&articleAuthors, "author", "a", []string{}, "author name(s) for article")
-	articleCmd.Flags().StringVarP(&articleTitle, "title", "t", "", "title of article")
-	articleCmd.Flags().StringVarP(&articleJournal, "journal", "j", "", "journal the article was published in")
-	articleCmd.Flags().StringVarP(&articleYear, "year", "y", "", "year the article was published in")
-	articleCmd.Flags().StringVarP(&articleVolume, "volume", "v", "", "volume of journal")
-	articleCmd.Flags().StringVarP(&articleNumber, "number", "i", "", "issue of journal")
-	articleCmd.Flags().StringVarP(&articlePages, "pages", "p", "", "pages within the journal")
-	articleCmd.Flags().StringVarP(&articleMonth, "month", "m", "", "month the article was published")
-	articleCmd.Flags().StringVarP(&articleNote, "note", "n", "", "additional notes for article")
+	articleCmd.Flags().StringVarP(&article.Doi, "doi", "d", "", "doi identifier for online article to auto-generate entry")
+	articleCmd.Flags().StringVarP(&article.Doi, "key", "k", "", "citation key for bibtex entry")
+	articleCmd.Flags().StringArrayVarP(&article.Authors, "author", "a", []string{}, "author name(s) for article")
+	articleCmd.Flags().StringVarP(&article.Title, "title", "t", "", "title of article")
+	articleCmd.Flags().StringVarP(&article.Journal, "journal", "j", "", "journal the article was published in")
+	articleCmd.Flags().StringVarP(&article.Year, "year", "y", "", "year the article was published in")
+	articleCmd.Flags().StringVarP(&article.Volume, "volume", "v", "", "volume of journal")
+	articleCmd.Flags().StringVarP(&article.Number, "number", "i", "", "issue of journal")
+	articleCmd.Flags().StringVarP(&article.Pages, "pages", "p", "", "pages within the journal")
+	articleCmd.Flags().StringVarP(&article.Number, "month", "m", "", "month the article was published")
+	articleCmd.Flags().StringVarP(&article.Note, "note", "n", "", "additional notes for article")
 }

@@ -5,20 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	bookISBN      string
-	bookCiteKey   string
-	bookAuthors   []string
-	bookTitle     string
-	bookPublisher string
-	bookAddress   string
-	bookYear      string
-)
+var book models.Book
 
 // bookCmd represents the book command
 var bookCmd = &cobra.Command{
@@ -45,32 +38,39 @@ Required:
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 
-		if bookISBN != "" {
-			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := helper.BookFromISBN(bookISBN)
+		if book.ISBN != "" {
+			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := helper.BookFromISBN(book.ISBN)
 			if err != nil {
 				return err
 			}
 
-			if len(bookAuthors) == 0 {
-				bookAuthors = isbnAuthors
+			if len(book.Authors) == 0 {
+				book.Authors = isbnAuthors
 			} else {
-				bookAuthors = append(bookAuthors, isbnAuthors...)
+				book.Authors = append(book.Authors, isbnAuthors...)
 			}
 
-			if bookTitle == "" {
-				bookTitle = isbnTitle
+			if book.Title == "" {
+				book.Title = isbnTitle
 			}
 
-			if bookPublisher == "" {
-				bookPublisher = isbnPublisher
+			if book.Publisher == "" {
+				book.Publisher = isbnPublisher
 			}
 
-			if bookYear == "" {
-				bookYear = isbnYear
+			if book.Year == "" {
+				book.Year = isbnYear
 			}
 
 		}
-		var bibtex = helper.FormatBookBibtex(bookCiteKey, bookAuthors, bookTitle, bookPublisher, bookAddress, bookYear, braces)
+		var bibtex = helper.FormatBookBibtex(
+			book.CiteKey,
+			book.Authors,
+			book.Title,
+			book.Publisher,
+			book.Address,
+			book.Year,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -99,12 +99,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bookCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	bookCmd.Flags().StringVarP(&bookISBN, "isbn", "i", "", "isbn for online book to auto-generate entry")
-	bookCmd.Flags().StringVarP(&bookCiteKey, "key", "k", "", "citation key for bibtex entry")
-	bookCmd.Flags().StringArrayVarP(&bookAuthors, "author", "a", []string{}, "author name(s) for book")
-	bookCmd.Flags().StringVarP(&bookTitle, "title", "t", "", "title of book")
-	bookCmd.Flags().StringVarP(&bookPublisher, "publisher", "p", "", "publisher that released the book")
-	bookCmd.Flags().StringVarP(&bookAddress, "address", "l", "", "address of publisher")
-	bookCmd.Flags().StringVarP(&bookYear, "year", "y", "", "year the book was published")
+	bookCmd.Flags().StringVarP(&book.ISBN, "isbn", "i", "", "isbn for online book to auto-generate entry")
+	bookCmd.Flags().StringVarP(&book.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	bookCmd.Flags().StringArrayVarP(&book.Authors, "author", "a", []string{}, "author name(s) for book")
+	bookCmd.Flags().StringVarP(&book.Title, "title", "t", "", "title of book")
+	bookCmd.Flags().StringVarP(&book.Publisher, "publisher", "p", "", "publisher that released the book")
+	bookCmd.Flags().StringVarP(&book.Address, "address", "l", "", "address of publisher")
+	bookCmd.Flags().StringVarP(&book.Year, "year", "y", "", "year the book was published")
 
 }

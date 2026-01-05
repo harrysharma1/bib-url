@@ -5,24 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	proceedingsUrl       string
-	proceedingsCiteKey   string
-	proceedingsTitle     string
-	proceedingsYear      string
-	proceedingsEditors   []string
-	proceedingsVolume    string
-	proceedingsNumber    string
-	proceedingsSeries    string
-	proceedingsAddress   string
-	proceedingsMonth     string
-	proceedingsPublisher string
-)
+var proceedings models.Proceedings
 
 // proceedingsCmd represents the proceedings command
 var proceedingsCmd = &cobra.Command{
@@ -57,16 +46,16 @@ Optional:
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatProceedingsBibtex(
-			proceedingsCiteKey,
-			proceedingsTitle,
-			proceedingsYear,
-			proceedingsEditors,
-			proceedingsVolume,
-			proceedingsNumber,
-			proceedingsSeries,
-			proceedingsAddress,
-			proceedingsMonth,
-			proceedingsPublisher,
+			proceedings.CiteKey,
+			proceedings.Title,
+			proceedings.Year,
+			proceedings.Editors,
+			proceedings.Volume,
+			proceedings.Number,
+			proceedings.Series,
+			proceedings.Address,
+			proceedings.Month,
+			proceedings.Publisher,
 			braces)
 		if copy {
 			helper.Copy(bibtex)
@@ -93,15 +82,14 @@ func init() {
 	// is called directly, e.g.:
 	// proceedingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	proceedingsCmd.Flags().StringVarP(&proceedingsUrl, "url", "u", "", "url for online proceedings to auto-generate entry")
-	proceedingsCmd.Flags().StringVarP(&proceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
-	proceedingsCmd.Flags().StringVarP(&proceedingsTitle, "title", "t", "", "title of proceedings")
-	proceedingsCmd.Flags().StringVarP(&proceedingsYear, "year", "y", "", "year proceedings was published")
-	proceedingsCmd.Flags().StringArrayVarP(&proceedingsEditors, "editors", "e", []string{}, "editor name(s) for proceedings")
-	proceedingsCmd.Flags().StringVarP(&proceedingsVolume, "volume", "v", "", "volume of proceedings")
-	proceedingsCmd.Flags().StringVarP(&proceedingsNumber, "number", "i", "", "number of proceedings")
-	proceedingsCmd.Flags().StringVarP(&proceedingsSeries, "series", "s", "", "series where proceedings was published")
-	proceedingsCmd.Flags().StringVarP(&proceedingsAddress, "address", "l", "", "location of publisher")
-	proceedingsCmd.Flags().StringVarP(&proceedingsMonth, "month", "m", "", "month proceedings was published")
-	proceedingsCmd.Flags().StringVarP(&proceedingsPublisher, "publisher", "p", "", "the group that published proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedings.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Title, "title", "t", "", "title of proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Year, "year", "y", "", "year proceedings was published")
+	proceedingsCmd.Flags().StringArrayVarP(&proceedings.Editors, "editors", "e", []string{}, "editor name(s) for proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Volume, "volume", "v", "", "volume of proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Number, "number", "i", "", "number of proceedings")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Series, "series", "s", "", "series where proceedings was published")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Address, "address", "l", "", "location of publisher")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Month, "month", "m", "", "month proceedings was published")
+	proceedingsCmd.Flags().StringVarP(&proceedings.Publisher, "publisher", "p", "", "the group that published proceedings")
 }

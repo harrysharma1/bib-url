@@ -5,27 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	incollectionUrl       string
-	incollectionCiteKey   string
-	incollectionAuthors   []string
-	incollectionTitle     string
-	incollectionBookTitle string
-	incollectionPublisher string
-	incollectionYear      string
-	incollectionEditors   []string
-	incollectionVolume    string
-	incollectionNumber    string
-	incollectionSeries    string
-	incollectionPages     string
-	incollectionAddress   string
-	incollectionMonth     string
-)
+var incollection models.Incollection
 
 // incollectionCmd represents the incollection command
 var incollectionCmd = &cobra.Command{
@@ -66,19 +52,19 @@ Optional:
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatIncollectionBibtex(
-			incollectionCiteKey,
-			incollectionAuthors,
-			incollectionTitle,
-			incollectionBookTitle,
-			incollectionPublisher,
-			incollectionYear,
-			incollectionEditors,
-			incollectionVolume,
-			incollectionNumber,
-			incollectionSeries,
-			incollectionPages,
-			incollectionAddress,
-			incollectionMonth,
+			incollection.CiteKey,
+			incollection.Authors,
+			incollection.Title,
+			incollection.BookTitle,
+			incollection.Publisher,
+			incollection.Year,
+			incollection.Editors,
+			incollection.Volume,
+			incollection.Number,
+			incollection.Series,
+			incollection.Pages,
+			incollection.Address,
+			incollection.Month,
 			braces)
 
 		if copy {
@@ -105,18 +91,17 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// incollectionCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	incollectionCmd.Flags().StringVarP(&incollectionUrl, "url", "u", "", "url for online incollection to auto-generate entry")
-	incollectionCmd.Flags().StringVarP(&incollectionCiteKey, "key", "k", "", "citation key for bibtex entry")
-	incollectionCmd.Flags().StringArrayVarP(&incollectionAuthors, "author", "a", []string{}, "author name(s) for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionTitle, "title", "t", "", "title for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionBookTitle, "booktitle", "b", "", "book title for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionPublisher, "publisher", "p", "", "publisher of incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionYear, "year", "y", "", "year the incollection was released")
-	incollectionCmd.Flags().StringArrayVarP(&incollectionEditors, "editor", "e", []string{}, "editor name(s) for incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionVolume, "volume", "v", "", "volume of incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionNumber, "number", "i", "", "number of incollection")
-	incollectionCmd.Flags().StringVarP(&incollectionSeries, "series", "s", "", "series incollection was published in")
-	incollectionCmd.Flags().StringVarP(&incollectionPages, "pages", "f", "", "pages where citation is")
-	incollectionCmd.Flags().StringVarP(&incollectionAddress, "address", "l", "", "address of publisher")
-	incollectionCmd.Flags().StringVarP(&incollectionMonth, "month", "m", "", "month the incollection was released")
+	incollectionCmd.Flags().StringVarP(&incollection.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	incollectionCmd.Flags().StringArrayVarP(&incollection.Authors, "author", "a", []string{}, "author name(s) for incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Title, "title", "t", "", "title for incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.BookTitle, "booktitle", "b", "", "book title for incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Publisher, "publisher", "p", "", "publisher of incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Year, "year", "y", "", "year the incollection was released")
+	incollectionCmd.Flags().StringArrayVarP(&incollection.Editors, "editor", "e", []string{}, "editor name(s) for incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Volume, "volume", "v", "", "volume of incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Number, "number", "i", "", "number of incollection")
+	incollectionCmd.Flags().StringVarP(&incollection.Series, "series", "s", "", "series incollection was published in")
+	incollectionCmd.Flags().StringVarP(&incollection.Pages, "pages", "f", "", "pages where citation is")
+	incollectionCmd.Flags().StringVarP(&incollection.Address, "address", "l", "", "address of publisher")
+	incollectionCmd.Flags().StringVarP(&incollection.Month, "month", "m", "", "month the incollection was released")
 }

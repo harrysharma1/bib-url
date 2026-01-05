@@ -5,27 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	bookletUrl          string
-	bookletCiteKey      string
-	bookletTitle        string
-	bookletAuthors      []string
-	bookletHowPublished string
-	bookletAddress      string
-	bookletYear         string
-	bookletEditors      []string
-	bookletVolume       string
-	bookletNumber       string
-	bookletSeries       string
-	bookletOrganisation string
-	bookletMonth        string
-	bookletNote         string
-)
+var booklet models.Booklet
 
 // bookletCmd represents the booklet command
 var bookletCmd = &cobra.Command{
@@ -65,7 +51,21 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatBookletBibtex(bookletCiteKey, bookletTitle, bookletAuthors, bookAddress, bookletHowPublished, bookletYear, bookletEditors, bookletVolume, bookletNumber, bookletSeries, bookletOrganisation, bookletMonth, bookletNote, braces)
+		var bibtex = helper.FormatBookletBibtex(
+			booklet.CiteKey,
+			booklet.Title,
+			booklet.Authors,
+			booklet.Address,
+			booklet.HowPublished,
+			booklet.Year,
+			booklet.Editors,
+			booklet.Volume,
+			booklet.Number,
+			booklet.Series,
+			booklet.Organisation,
+			booklet.Month,
+			booklet.Note,
+			braces)
 
 		if copy {
 			helper.Copy(bibtex)
@@ -92,17 +92,16 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bookletCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	bookletCmd.Flags().StringVarP(&bookletUrl, "url", "u", "", "url for online booklet to auto-generate entry")
-	bookletCmd.Flags().StringVarP(&bookletCiteKey, "key", "k", "", "citation key for bibtex entry")
-	bookletCmd.Flags().StringVarP(&bookletTitle, "title", "t", "", "title of booklet")
-	bookletCmd.Flags().StringArrayVarP(&bookletAuthors, "author", "a", []string{}, "author name(s) for booklet")
-	bookletCmd.Flags().StringVarP(&bookletHowPublished, "published", "p", "", "how the booklet was published")
-	bookletCmd.Flags().StringVarP(&bookletYear, "year", "y", "", "year the booklet was released")
-	bookletCmd.Flags().StringArrayVarP(&bookletEditors, "editor", "e", []string{}, "editor name(s) for booklet")
-	bookletCmd.Flags().StringVarP(&bookletVolume, "volume", "v", "", "volume of booklet")
-	bookletCmd.Flags().StringVarP(&bookletNumber, "number", "i", "", "number of booklet")
-	bookletCmd.Flags().StringVarP(&bookletSeries, "series", "s", "", "series the booklet is in")
-	bookletCmd.Flags().StringVarP(&bookletOrganisation, "organisation", "o", "", "organisation that published booklet")
-	bookletCmd.Flags().StringVarP(&bookletMonth, "month", "m", "", "month the booklet was released")
-	bookletCmd.Flags().StringVarP(&bookletNote, "note", "n", "", "additional notes for booklet")
+	bookletCmd.Flags().StringVarP(&booklet.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	bookletCmd.Flags().StringVarP(&booklet.Title, "title", "t", "", "title of booklet")
+	bookletCmd.Flags().StringArrayVarP(&booklet.Authors, "author", "a", []string{}, "author name(s) for booklet")
+	bookletCmd.Flags().StringVarP(&booklet.HowPublished, "published", "p", "", "how the booklet was published")
+	bookletCmd.Flags().StringVarP(&booklet.Year, "year", "y", "", "year the booklet was released")
+	bookletCmd.Flags().StringArrayVarP(&booklet.Editors, "editor", "e", []string{}, "editor name(s) for booklet")
+	bookletCmd.Flags().StringVarP(&booklet.Volume, "volume", "v", "", "volume of booklet")
+	bookletCmd.Flags().StringVarP(&booklet.Number, "number", "i", "", "number of booklet")
+	bookletCmd.Flags().StringVarP(&booklet.Series, "series", "s", "", "series the booklet is in")
+	bookletCmd.Flags().StringVarP(&booklet.Organisation, "organisation", "o", "", "organisation that published booklet")
+	bookletCmd.Flags().StringVarP(&booklet.Month, "month", "m", "", "month the booklet was released")
+	bookletCmd.Flags().StringVarP(&booklet.Note, "note", "n", "", "additional notes for booklet")
 }

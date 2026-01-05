@@ -5,23 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	phdthesisUrl     string
-	phdthesisCiteKey string
-	phdthesisAuthors []string
-	phdthesisTitle   string
-	phdthesisSchool  string
-	phdthesisYear    string
-	phdthesisType    string
-	phdthesisAddress string
-	phdthesisMonth   string
-	phdthesisNote    string
-)
+var phdthesis models.Phdthesis
 
 // phdthesisCmd represents the phdthesis command
 var phdthesisCmd = &cobra.Command{
@@ -54,15 +44,15 @@ Optional
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatPhDThesisBibtex(
-			phdthesisCiteKey,
-			phdthesisAuthors,
-			phdthesisTitle,
-			phdthesisSchool,
-			phdthesisYear,
-			phdthesisType,
-			phdthesisAddress,
-			phdthesisMonth,
-			phdthesisNote,
+			phdthesis.CiteKey,
+			phdthesis.Authors,
+			phdthesis.Title,
+			phdthesis.School,
+			phdthesis.Year,
+			phdthesis.Type,
+			phdthesis.Address,
+			phdthesis.Month,
+			phdthesis.Note,
 			braces)
 		if copy {
 			helper.Copy(bibtex)
@@ -88,14 +78,13 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// phdthesisCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	phdthesisCmd.Flags().StringVarP(&phdthesisUrl, "url", "u", "", "url for online PhD thesis to auto-generate entry")
-	phdthesisCmd.Flags().StringVarP(&phdthesisCiteKey, "key", "k", "", "citation key for bibtex entry")
-	phdthesisCmd.Flags().StringArrayVarP(&phdthesisAuthors, "author", "a", []string{}, "author name(s) for PhD thesis")
-	phdthesisCmd.Flags().StringVarP(&phdthesisTitle, "title", "t", "", "title of PhD thesis")
-	phdthesisCmd.Flags().StringVarP(&phdthesisSchool, "school", "s", "", "school where PhD thesis was published")
-	phdthesisCmd.Flags().StringVarP(&phdthesisYear, "year", "y", "", "year PhD thesis was published")
-	phdthesisCmd.Flags().StringVarP(&phdthesisType, "type", "g", "", "type of PhD thesis")
-	phdthesisCmd.Flags().StringVarP(&phdthesisAddress, "address", "l", "", "location of school")
-	phdthesisCmd.Flags().StringVarP(&phdthesisMonth, "month", "m", "", "month PhD thesis was published")
-	phdthesisCmd.Flags().StringVarP(&phdthesisNote, "note", "n", "", "additional notes for PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	phdthesisCmd.Flags().StringArrayVarP(&phdthesis.Authors, "author", "a", []string{}, "author name(s) for PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Title, "title", "t", "", "title of PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.School, "school", "s", "", "school where PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Year, "year", "y", "", "year PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Type, "type", "g", "", "type of PhD thesis")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Address, "address", "l", "", "location of school")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Month, "month", "m", "", "month PhD thesis was published")
+	phdthesisCmd.Flags().StringVarP(&phdthesis.Note, "note", "n", "", "additional notes for PhD thesis")
 }

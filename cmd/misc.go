@@ -5,19 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	miscCiteKey      string
-	miscTitle        string
-	miscAuthors      []string
-	miscHowPublished string
-	miscYear         string
-	miscNote         string
-)
+var misc models.Misc
 
 // miscCmd represents the misc command
 var miscCmd = &cobra.Command{
@@ -45,12 +39,12 @@ Optional:
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatMiscBibtex(
-			miscCiteKey,
-			miscTitle,
-			miscAuthors,
-			miscHowPublished,
-			miscYear,
-			miscNote,
+			misc.CiteKey,
+			misc.Title,
+			misc.Authors,
+			misc.HowPublished,
+			misc.Year,
+			misc.Note,
 			braces)
 		if copy {
 			helper.Copy(bibtex)
@@ -76,10 +70,10 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// miscCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	miscCmd.Flags().StringVarP(&miscCiteKey, "key", "k", "", "citation key for bibtex entry")
-	miscCmd.Flags().StringVarP(&miscTitle, "title", "t", "", "title of misc entry")
-	miscCmd.Flags().StringArrayVarP(&miscAuthors, "author", "a", []string{}, "author name(s) of misc entry")
-	miscCmd.Flags().StringVarP(&miscHowPublished, "howpublished", "p", "", "how misc entry was published")
-	miscCmd.Flags().StringVarP(&miscYear, "year", "y", "", "year misc entry was published")
-	miscCmd.Flags().StringVarP(&miscNote, "note", "n", "", "additional notes for misc entry")
+	miscCmd.Flags().StringVarP(&misc.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	miscCmd.Flags().StringVarP(&misc.Title, "title", "t", "", "title of misc entry")
+	miscCmd.Flags().StringArrayVarP(&misc.Authors, "author", "a", []string{}, "author name(s) of misc entry")
+	miscCmd.Flags().StringVarP(&misc.HowPublished, "howpublished", "p", "", "how misc entry was published")
+	miscCmd.Flags().StringVarP(&misc.Year, "year", "y", "", "year misc entry was published")
+	miscCmd.Flags().StringVarP(&misc.Note, "note", "n", "", "additional notes for misc entry")
 }

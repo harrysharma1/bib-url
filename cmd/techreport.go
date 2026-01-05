@@ -5,22 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	techreportUrl         string
-	techreportCiteKey     string
-	techreportTitle       string
-	techreportAuthors     []string
-	techreportInstitution string
-	techreportAddress     string
-	techreportNumber      string
-	techreportYear        string
-	techreportMonth       string
-)
+var techreport models.Techreport
 
 // techreportCmd represents the techreport command
 var techreportCmd = &cobra.Command{
@@ -52,14 +43,14 @@ Optional:
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatTechReportBibtex(
-			techreportCiteKey,
-			techreportTitle,
-			techreportAuthors,
-			techreportInstitution,
-			techreportAddress,
-			techreportNumber,
-			techreportYear,
-			techreportMonth,
+			techreport.CiteKey,
+			techreport.Title,
+			techreport.Authors,
+			techreport.Institution,
+			techreport.Address,
+			techreport.Number,
+			techreport.Year,
+			techreport.Month,
 			braces)
 
 		if copy {
@@ -86,13 +77,12 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// techreportCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	techreportCmd.Flags().StringVarP(&techreportUrl, "url", "u", "", "url for tech report to auto-generate entry")
-	techreportCmd.Flags().StringVarP(&techreportCiteKey, "key", "k", "", "citation key for bibtex entry")
-	techreportCmd.Flags().StringVarP(&techreportTitle, "title", "t", "", "title of tech report")
-	techreportCmd.Flags().StringArrayVarP(&techreportAuthors, "author", "a", []string{}, "author name(s) for tech report")
-	techreportCmd.Flags().StringVarP(&techreportInstitution, "institution", "i", "", "institution that publishes tech report")
-	techreportCmd.Flags().StringVarP(&techreportAddress, "address", "l", "", "address of institution")
-	techreportCmd.Flags().StringVarP(&techreportNumber, "number", "n", "", "tech report identifier")
-	techreportCmd.Flags().StringVarP(&techreportYear, "year", "y", "", "year the tech report was released")
-	techreportCmd.Flags().StringVarP(&techreportMonth, "month", "m", "", "month the tech report was released")
+	techreportCmd.Flags().StringVarP(&techreport.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	techreportCmd.Flags().StringVarP(&techreport.Title, "title", "t", "", "title of tech report")
+	techreportCmd.Flags().StringArrayVarP(&techreport.Authors, "author", "a", []string{}, "author name(s) for tech report")
+	techreportCmd.Flags().StringVarP(&techreport.Institution, "institution", "i", "", "institution that publishes tech report")
+	techreportCmd.Flags().StringVarP(&techreport.Address, "address", "l", "", "address of institution")
+	techreportCmd.Flags().StringVarP(&techreport.Number, "number", "n", "", "tech report identifier")
+	techreportCmd.Flags().StringVarP(&techreport.Year, "year", "y", "", "year the tech report was released")
+	techreportCmd.Flags().StringVarP(&techreport.Month, "month", "m", "", "month the tech report was released")
 }

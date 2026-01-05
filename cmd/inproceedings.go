@@ -5,28 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	inproceedingsUrl          string
-	inproceedingsCiteKey      string
-	inproceedingsAuthors      []string
-	inproceedingsTitle        string
-	inproceedingsBooktTitle   string
-	inproceedingsYear         string
-	inproceedingsEditors      []string
-	inproceedingsVolume       string
-	inproceedingsNumber       string
-	inproceedingsSeries       string
-	inproceedingsPages        string
-	inproceedingsAddress      string
-	inprocceddingsMonth       string
-	inproceedingsOrganisation string
-	inproceedingsPublisher    string
-)
+var inproceedings models.Inproceedings
 
 // inproceedingsCmd represents the inproceedings command
 var inproceedingsCmd = &cobra.Command{
@@ -69,20 +54,20 @@ Optional:
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatInproceedingsBibtex(
-			inproceedingsCiteKey,
-			inproceedingsAuthors,
-			inproceedingsTitle,
-			inproceedingsBooktTitle,
-			inproceedingsYear,
-			inproceedingsEditors,
-			inproceedingsVolume,
-			inproceedingsNumber,
-			inproceedingsSeries,
-			inproceedingsPages,
-			inproceedingsAddress,
-			inprocceddingsMonth,
-			inproceedingsOrganisation,
-			inproceedingsPublisher,
+			inproceedings.CiteKey,
+			inproceedings.Authors,
+			inproceedings.Title,
+			inproceedings.BooktTitle,
+			inproceedings.Year,
+			inproceedings.Editors,
+			inproceedings.Volume,
+			inproceedings.Number,
+			inproceedings.Series,
+			inproceedings.Pages,
+			inproceedings.Address,
+			inproceedings.Month,
+			inproceedings.Organisation,
+			inproceedings.Publisher,
 			braces)
 
 		if copy {
@@ -109,19 +94,18 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// inproceedingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsUrl, "url", "u", "", "url for online inproceedings to auto-generate entry")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsCiteKey, "key", "k", "", "citation key for bibtex entry")
-	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsAuthors, "author", "a", []string{}, "author name(s) for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsTitle, "title", "t", "", "title for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsBooktTitle, "booktitle", "b", "", "book title for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsYear, "year", "y", "", "year the inproceedings was released")
-	inproceedingsCmd.Flags().StringArrayVarP(&inproceedingsEditors, "editor", "e", []string{}, "editor name(s) for inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsVolume, "volume", "v", "", "volume of inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsNumber, "number", "i", "", "number of inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsSeries, "series", "s", "", "series of inproceedings.")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsPages, "pages", "f", "", "pages where citation is")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsAddress, "address", "l", "", "address of publisher")
-	inproceedingsCmd.Flags().StringVarP(&inprocceddingsMonth, "month", "m", "", "month the inproceedings was released")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsOrganisation, "organisation", "o", "", "organisation that released inproceedings")
-	inproceedingsCmd.Flags().StringVarP(&inproceedingsPublisher, "publisher", "p", "", "publisher of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	inproceedingsCmd.Flags().StringArrayVarP(&inproceedings.Authors, "author", "a", []string{}, "author name(s) for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Title, "title", "t", "", "title for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.BooktTitle, "booktitle", "b", "", "book title for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Year, "year", "y", "", "year the inproceedings was released")
+	inproceedingsCmd.Flags().StringArrayVarP(&inproceedings.Editors, "editor", "e", []string{}, "editor name(s) for inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Volume, "volume", "v", "", "volume of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Number, "number", "i", "", "number of inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Series, "series", "s", "", "series of inproceedings.")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Pages, "pages", "f", "", "pages where citation is")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Address, "address", "l", "", "address of publisher")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Month, "month", "m", "", "month the inproceedings was released")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Organisation, "organisation", "o", "", "organisation that released inproceedings")
+	inproceedingsCmd.Flags().StringVarP(&inproceedings.Publisher, "publisher", "p", "", "publisher of inproceedings")
 }

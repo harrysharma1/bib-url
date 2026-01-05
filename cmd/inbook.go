@@ -5,29 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	inbookUrl       string
-	inbookCiteKey   string
-	inbookAuthors   []string
-	inbookTitle     string
-	inbookBookTitle string
-	inbookPublisher string
-	inbookYear      string
-	inbookEditors   []string
-	inbookVolume    string
-	inbookNumber    string
-	inbookSeries    string
-	inbookAddress   string
-	inbookEdition   string
-	inboookMonth    string
-	inbookPages     string
-	inbookNote      string
-)
+var inbook models.Inbook
 
 // inbookCmd represents the inbook command
 var inbookCmd = &cobra.Command{
@@ -72,21 +56,21 @@ Optional:
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatInbookBibtex(
-			inbookCiteKey,
-			inbookAuthors,
-			inbookTitle,
-			inbookBookTitle,
-			inbookPublisher,
-			inbookYear,
-			inbookEditors,
-			inbookVolume,
-			inbookNumber,
-			inbookSeries,
-			inbookAddress,
-			inbookEdition,
-			inboookMonth,
-			inbookPages,
-			inbookNote,
+			inbook.CiteKey,
+			inbook.Authors,
+			inbook.Title,
+			inbook.BookTitle,
+			inbook.Publisher,
+			inbook.Year,
+			inbook.Editors,
+			inbook.Volume,
+			inbook.Number,
+			inbook.Series,
+			inbook.Address,
+			inbook.Edition,
+			inbook.Month,
+			inbook.Pages,
+			inbook.Note,
 			braces)
 
 		if copy {
@@ -113,20 +97,19 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// inbookCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	inbookCmd.Flags().StringVarP(&inbookUrl, "url", "u", "", "url for online inbook to auto-generate entry")
-	inbookCmd.Flags().StringVarP(&inbookCiteKey, "key", "k", "", "citation key for bibtex entry")
-	inbookCmd.Flags().StringArrayVarP(&inbookAuthors, "author", "a", []string{}, "author name(s) for inbook")
-	inbookCmd.Flags().StringVarP(&inbookTitle, "title", "t", "", "title of inbook")
-	inbookCmd.Flags().StringVarP(&inbookBookTitle, "booktitle", "b", "", "book title of inbook")
-	inbookCmd.Flags().StringVarP(&inbookPublisher, "publisher", "p", "", "who published the inbook")
-	inbookCmd.Flags().StringVarP(&inbookYear, "year", "y", "", "year the inbook was released")
-	inbookCmd.Flags().StringArrayVarP(&inbookEditors, "editor", "e", []string{}, "editor name(s) for inbook")
-	inbookCmd.Flags().StringVarP(&inbookVolume, "volume", "v", "", "volume of inbook")
-	inbookCmd.Flags().StringVarP(&inbookNumber, "number", "i", "", "number of inbook")
-	inbookCmd.Flags().StringVarP(&inbookSeries, "series", "s", "", "series where inbook was published")
-	inbookCmd.Flags().StringVarP(&inbookAddress, "address", "l", "", "address of publisher")
-	inbookCmd.Flags().StringVarP(&inbookEdition, "edition", "r", "", "edition of publication inbook was published in")
-	inbookCmd.Flags().StringVarP(&inboookMonth, "month", "m", "", "month the inbook was released")
-	inbookCmd.Flags().StringVarP(&inbookPages, "pages", "f", "", "pages within the inbook")
-	inbookCmd.Flags().StringVarP(&inbookNote, "note", "n", "", "additional notes for inbook")
+	inbookCmd.Flags().StringVarP(&inbook.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	inbookCmd.Flags().StringArrayVarP(&inbook.Authors, "author", "a", []string{}, "author name(s) for inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Title, "title", "t", "", "title of inbook")
+	inbookCmd.Flags().StringVarP(&inbook.BookTitle, "booktitle", "b", "", "book title of inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Publisher, "publisher", "p", "", "who published the inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Year, "year", "y", "", "year the inbook was released")
+	inbookCmd.Flags().StringArrayVarP(&inbook.Editors, "editor", "e", []string{}, "editor name(s) for inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Volume, "volume", "v", "", "volume of inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Number, "number", "i", "", "number of inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Series, "series", "s", "", "series where inbook was published")
+	inbookCmd.Flags().StringVarP(&inbook.Address, "address", "l", "", "address of publisher")
+	inbookCmd.Flags().StringVarP(&inbook.Edition, "edition", "r", "", "edition of publication inbook was published in")
+	inbookCmd.Flags().StringVarP(&inbook.Month, "month", "m", "", "month the inbook was released")
+	inbookCmd.Flags().StringVarP(&inbook.Pages, "pages", "f", "", "pages within the inbook")
+	inbookCmd.Flags().StringVarP(&inbook.Note, "note", "n", "", "additional notes for inbook")
 }

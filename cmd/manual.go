@@ -5,23 +5,13 @@ package cmd
 
 import (
 	"bibcli/helper"
+	"bibcli/models"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var (
-	manualUrl          string
-	manualCiteKey      string
-	manualTitle        string
-	manualYear         string
-	manualAuthors      []string
-	manualOrganisation string
-	manualAddress      string
-	manualEdition      string
-	manualMonth        string
-	manualNote         string
-)
+var manual models.Manual
 
 // manualCmd represents the manual command
 var manualCmd = &cobra.Command{
@@ -54,15 +44,15 @@ Optional:
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var bibtex = helper.FormatManualBibtex(
-			manualCiteKey,
-			manualTitle,
-			manualYear,
-			manualAuthors,
-			manualOrganisation,
-			manualAddress,
-			manualEdition,
-			manualMonth,
-			manualNote,
+			manual.CiteKey,
+			manual.Title,
+			manual.Year,
+			manual.Authors,
+			manual.Organisation,
+			manual.Address,
+			manual.Edition,
+			manual.Month,
+			manual.Note,
 			braces)
 		if copy {
 			helper.Copy(bibtex)
@@ -88,14 +78,13 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// manualCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	manualCmd.Flags().StringVarP(&manualUrl, "url", "u", "", "url for online manual to auto-generate entry")
-	manualCmd.Flags().StringVarP(&manualCiteKey, "key", "k", "", "citation key for bibtex entry")
-	manualCmd.Flags().StringVarP(&manualTitle, "title", "t", "", "title for manual")
-	manualCmd.Flags().StringVarP(&manualYear, "year", "y", "", "year the manual was released")
-	manualCmd.Flags().StringArrayVarP(&manualAuthors, "author", "a", []string{}, "author name(s) for manual")
-	manualCmd.Flags().StringVarP(&manualOrganisation, "organisation", "o", "", "organisation that released the manual")
-	manualCmd.Flags().StringVarP(&manualAddress, "address", "l", "", "address of organisation")
-	manualCmd.Flags().StringVarP(&manualEdition, "edition", "e", "", "edition of manual publication")
-	manualCmd.Flags().StringVarP(&manualMonth, "month", "m", "", "month the manual was released")
-	manualCmd.Flags().StringVarP(&manualNote, "note", "n", "", "additional notes for manual")
+	manualCmd.Flags().StringVarP(&manual.CiteKey, "key", "k", "", "citation key for bibtex entry")
+	manualCmd.Flags().StringVarP(&manual.Title, "title", "t", "", "title for manual")
+	manualCmd.Flags().StringVarP(&manual.Year, "year", "y", "", "year the manual was released")
+	manualCmd.Flags().StringArrayVarP(&manual.Authors, "author", "a", []string{}, "author name(s) for manual")
+	manualCmd.Flags().StringVarP(&manual.Organisation, "organisation", "o", "", "organisation that released the manual")
+	manualCmd.Flags().StringVarP(&manual.Address, "address", "l", "", "address of organisation")
+	manualCmd.Flags().StringVarP(&manual.Edition, "edition", "e", "", "edition of manual publication")
+	manualCmd.Flags().StringVarP(&manual.Month, "month", "m", "", "month the manual was released")
+	manualCmd.Flags().StringVarP(&manual.Note, "note", "n", "", "additional notes for manual")
 }
