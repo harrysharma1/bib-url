@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/format"
 	"bibcli/helper"
 	"bibcli/models"
 	"fmt"
@@ -51,7 +52,7 @@ Optional:
 <>: indicates that it is a example value and should be changed.
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var bibtex = helper.FormatIncollectionBibtex(
+		var bibtex = format.FormatIncollectionBibtex(
 			incollection.CiteKey,
 			incollection.Authors,
 			incollection.Title,

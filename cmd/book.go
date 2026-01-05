@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/format"
 	"bibcli/helper"
 	"bibcli/models"
 	"fmt"
@@ -39,7 +40,7 @@ Required:
 		var err error
 
 		if book.ISBN != "" {
-			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := helper.BookFromISBN(book.ISBN)
+			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := format.BookFromISBN(book.ISBN)
 			if err != nil {
 				return err
 			}
@@ -63,7 +64,7 @@ Required:
 			}
 
 		}
-		var bibtex = helper.FormatBookBibtex(
+		var bibtex = format.FormatBookBibtex(
 			book.CiteKey,
 			book.Authors,
 			book.Title,

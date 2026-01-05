@@ -1,4 +1,4 @@
-package helper
+package format
 
 import (
 	"testing"
@@ -8,14 +8,14 @@ import (
 
 // Formatting
 // --------------------------------------------------//
-func TestPhDThesisRequiredValues(t *testing.T) {
-	want := `@phdthesis{test,
+func TestMastersthesisRequiredValues(t *testing.T) {
+	want := `@mastersthesis{test,
 	author = "Doe, John",
 	title  = "Test Title",
 	school = "Test School",
 	year   = 2002
 }`
-	have := FormatPhDThesisBibtex(
+	have := FormatMastersThesisBibtex(
 		"test",
 		[]string{"John Doe"},
 		"Test Title",
@@ -29,14 +29,14 @@ func TestPhDThesisRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
-func TestPhDThesisRequiredValuesBraces(t *testing.T) {
-	want := `@phdthesis{test,
+func TestMastersthesisRequiredValuesBraces(t *testing.T) {
+	want := `@mastersthesis{test,
 	author = {Doe, John},
 	title  = {Test Title},
 	school = {Test School},
 	year   = {2002}
 }`
-	have := FormatPhDThesisBibtex(
+	have := FormatMastersThesisBibtex(
 		"test",
 		[]string{"John Doe"},
 		"Test Title",
@@ -50,8 +50,8 @@ func TestPhDThesisRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
-func TestPhDThesisOptionalValues(t *testing.T) {
-	want := `@phdthesis{test,
+func TestMastersthesisOptionalValues(t *testing.T) {
+	want := `@mastersthesis{test,
 	author  = "Doe, John",
 	title   = "Test Title",
 	school  = "Test School",
@@ -61,7 +61,7 @@ func TestPhDThesisOptionalValues(t *testing.T) {
 	month   = jul,
 	note    = "Test Note"
 }`
-	have := FormatPhDThesisBibtex(
+	have := FormatMastersThesisBibtex(
 		"test",
 		[]string{"John Doe"},
 		"Test Title",
@@ -75,8 +75,8 @@ func TestPhDThesisOptionalValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
-func TestPhDThesisOptionalValuesBraces(t *testing.T) {
-	want := `@phdthesis{test,
+func TestMastersthesisOptionalValuesBraces(t *testing.T) {
+	want := `@mastersthesis{test,
 	author  = {Doe, John},
 	title   = {Test Title},
 	school  = {Test School},
@@ -86,7 +86,7 @@ func TestPhDThesisOptionalValuesBraces(t *testing.T) {
 	month   = {jul},
 	note    = {Test Note}
 }`
-	have := FormatPhDThesisBibtex(
+	have := FormatMastersThesisBibtex(
 		"test",
 		[]string{"John Doe"},
 		"Test Title",

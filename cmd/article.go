@@ -4,7 +4,9 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bibcli/format"
 	"bibcli/helper"
+
 	"bibcli/models"
 	"fmt"
 
@@ -48,7 +50,7 @@ Optional:
 		var err error
 
 		if article.Doi != "" {
-			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := helper.ArticleFromDOI(article.Doi)
+			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := format.ArticleFromDOI(article.Doi)
 			if err != nil {
 				return err
 			}
@@ -79,7 +81,7 @@ Optional:
 				article.Number = doiNumber
 			}
 		}
-		var bibtex = helper.FormatArticleBibtex(
+		var bibtex = format.FormatArticleBibtex(
 			article.CiteKey,
 			article.Authors,
 			article.Title,
