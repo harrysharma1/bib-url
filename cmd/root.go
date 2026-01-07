@@ -4,7 +4,6 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -36,11 +35,12 @@ func Execute() {
 	}
 }
 
-func GenerateDocs() {
+func GenerateDocs() error {
 	err := doc.GenMarkdownTree(rootCmd, "./docs")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 func init() {

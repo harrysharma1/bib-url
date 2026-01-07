@@ -39,7 +39,7 @@ Required:
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 
-		if book.ISBN != "" {
+		if cmd.Flags().Changed("isbn") {
 			isbnAuthors, isbnTitle, isbnPublisher, isbnYear, err := format.BookFromISBN(book.ISBN)
 			if err != nil {
 				return err

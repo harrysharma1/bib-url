@@ -49,7 +49,7 @@ Optional:
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 
-		if article.Doi != "" {
+		if cmd.Flags().Changed("doi") {
 			doiAuthors, doiTitle, doiJournal, doiYear, doiVolume, doiNumber, err := format.ArticleFromDOI(article.Doi)
 			if err != nil {
 				return err
