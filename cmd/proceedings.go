@@ -86,7 +86,7 @@ func init() {
 	proceedingsCmd.Flags().StringVarP(&proceedings.CiteKey, "key", "k", "", "citation key for bibtex entry")
 	proceedingsCmd.Flags().StringVarP(&proceedings.Title, "title", "t", "", "title of proceedings")
 	proceedingsCmd.Flags().StringVarP(&proceedings.Year, "year", "y", "", "year proceedings was published")
-	proceedingsCmd.Flags().StringArrayVarP(&proceedings.Editors, "editors", "e", []string{}, "editor name(s) for proceedings")
+	proceedingsCmd.Flags().StringArrayVarP(&proceedings.Editors, "editor", "e", []string{}, "editor name(s) for proceedings")
 	proceedingsCmd.Flags().StringVarP(&proceedings.Volume, "volume", "v", "", "volume of proceedings")
 	proceedingsCmd.Flags().StringVarP(&proceedings.Number, "number", "i", "", "number of proceedings")
 	proceedingsCmd.Flags().StringVarP(&proceedings.Series, "series", "s", "", "series where proceedings was published")
