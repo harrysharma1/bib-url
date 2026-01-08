@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bibcli/models"
 	"io"
 	"os"
 	"testing"
@@ -57,6 +58,7 @@ func initPersistentFlagMocks(t *testing.T) []PersistentFlagsMock {
 		initBookletMock(t),
 		initInbookMock(t),
 		initIncollectionMock(t),
+		initInproceedingsMock(t),
 	}
 	return retVal
 }
@@ -67,6 +69,19 @@ func resetGlobalState(t *testing.T) {
 	copy = false
 	save = ""
 	braces = false
+	article = models.Article{}
+	book = models.Book{}
+	booklet = models.Booklet{}
+	inbook = models.Inbook{}
+	incollection = models.Incollection{}
+	inproceedings = models.Inproceedings{}
+	manual = models.Manual{}
+	mastersthesis = models.Mastersthesis{}
+	misc = models.Misc{}
+	phdthesis = models.Phdthesis{}
+	proceedings = models.Proceedings{}
+	techreport = models.Techreport{}
+	unpublished = models.Unpublished{}
 }
 
 // Helper: capturing stdout to test printing

@@ -33,7 +33,7 @@ var inproceedingsCmd = &cobra.Command{
 	address      = "<Address>",
 	month        = <jul>,
 	organisation = "<Organisation>",
-	publisher    = "<Publusher>",
+	publisher    = "<Publisher>",
 }
 
 Required:
