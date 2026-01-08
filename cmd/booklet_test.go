@@ -1,5 +1,10 @@
 package cmd
 
+import (
+	"fmt"
+	"testing"
+)
+
 var bookletExpectedFlags = map[string]string{
 	"author":       "a",
 	"editor":       "e",
@@ -13,3 +18,106 @@ var bookletExpectedFlags = map[string]string{
 	"title":        "t",
 	"volume":       "v",
 	"year":         "y"}
+
+func initBookletMock(t *testing.T) PersistentFlagsMock {
+	t.Helper()
+	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
+	mock := PersistentFlagsMock{
+		BracesArgs: []string{
+			"booklet",
+			"--braces",
+			"--key", "test",
+			"--title", "Test Title",
+			"--author", "John Doe",
+			"--howpublished", "https://example.com",
+			"--address", "Test Avenue",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--volume", "1",
+			"--number", "12",
+			"--series", "Test Series",
+			"--organisation", "Test Organisation",
+			"--month", "sep",
+			"--note", "Test Note",
+		},
+		BracesContains: []string{
+			"@booklet",
+			"{Test Title}",
+			"{Doe, John}",
+			"{https://example.com}",
+			"{Test Avenue}",
+			"{2002}",
+			"{Doe, Jane}",
+			"{1}",
+			"{12}",
+			"{Test Series}",
+			"{Test Organisation}",
+			"{sep}",
+			"{Test Note}"},
+		CopyArgs: []string{
+			"booklet",
+			"--copy",
+			"--key", "test",
+			"--title", "Test Title",
+			"--author", "John Doe",
+			"--howpublished", "https://example.com",
+			"--address", "Test Avenue",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--volume", "1",
+			"--number", "12",
+			"--series", "Test Series",
+			"--organisation", "Test Organisation",
+			"--month", "sep",
+			"--note", "Test Note",
+		},
+		CopyContains: []string{
+			"copied bibtex entry to cliplboard!!!",
+			"@booklet",
+			"Test Title",
+			"Doe, John",
+			"https://example.com",
+			"Test Avenue",
+			"2002",
+			"Doe, Jane",
+			"1",
+			"12",
+			"Test Series",
+			"Test Organisation",
+			"sep",
+			"Test Note"},
+		SaveArgs: []string{
+			"booklet",
+			"--save", path,
+			"--key", "test",
+			"--title", "Test Title",
+			"--author", "John Doe",
+			"--howpublished", "https://example.com",
+			"--address", "Test Avenue",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--volume", "1",
+			"--number", "12",
+			"--series", "Test Series",
+			"--organisation", "Test Organisation",
+			"--month", "sep",
+			"--note", "Test Note",
+		},
+		SaveContains: []string{
+			"@booklet",
+			"Test Title",
+			"Doe, John",
+			"https://example.com",
+			"Test Avenue",
+			"2002",
+			"Doe, Jane",
+			"1",
+			"12",
+			"Test Series",
+			"Test Organisation",
+			"sep",
+			"Test Note"},
+		TempDirPath: path,
+	}
+	return mock
+}
