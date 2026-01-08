@@ -1,5 +1,10 @@
 package cmd
 
+import (
+	"fmt"
+	"testing"
+)
+
 var incollectionExpectedFlags = map[string]string{
 	"address":   "l",
 	"author":    "a",
@@ -14,3 +19,103 @@ var incollectionExpectedFlags = map[string]string{
 	"title":     "t",
 	"volume":    "v",
 	"year":      "y"}
+
+func initIncollectionMock(t *testing.T) PersistentFlagsMock {
+	t.Helper()
+	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
+	mock := PersistentFlagsMock{
+		BracesArgs: []string{
+			"incollection",
+			"--braces",
+			"--key", "test",
+			"--author", "John Doe",
+			"--title", "Test Title",
+			"--booktitle", "Test Title",
+			"--publisher", "Test Publisher",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--editor", "John Doe",
+			"--volume", "2",
+			"--number", "21",
+			"--series", "Test Series",
+			"--pages", "1--10",
+			"--address", "Test Avenue",
+			"--month", "jan"},
+		BracesContains: []string{
+			"@incollection",
+			"{Doe, John}",
+			"{Test Title}",
+			"{Test Publisher}",
+			"{2002}",
+			"{Doe, Jane and Doe, John}",
+			"{2}",
+			"{21}",
+			"{Test Series}",
+			"{1--10}",
+			"{Test Avenue}",
+			"{jan}"},
+		CopyArgs: []string{
+			"incollection",
+			"--copy",
+			"--key", "test",
+			"--author", "John Doe",
+			"--title", "Test Title",
+			"--booktitle", "Test Title",
+			"--publisher", "Test Publisher",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--editor", "John Doe",
+			"--volume", "2",
+			"--number", "21",
+			"--series", "Test Series",
+			"--pages", "1--10",
+			"--address", "Test Avenue",
+			"--month", "jan"},
+		CopyContains: []string{
+			"copied bibtex entry to cliplboard!!!",
+			"@incollection",
+			"Doe, John",
+			"Test Title",
+			"Test Publisher",
+			"2002",
+			"Doe, Jane and Doe, John",
+			"2",
+			"21",
+			"Test Series",
+			"1--10",
+			"Test Avenue",
+			"jan"},
+		SaveArgs: []string{
+			"incollection",
+			"--save", path,
+			"--key", "test",
+			"--author", "John Doe",
+			"--title", "Test Title",
+			"--booktitle", "Test Title",
+			"--publisher", "Test Publisher",
+			"--year", "2002",
+			"--editor", "Jane Doe",
+			"--editor", "John Doe",
+			"--volume", "2",
+			"--number", "21",
+			"--series", "Test Series",
+			"--pages", "1--10",
+			"--address", "Test Avenue",
+			"--month", "jan"},
+		SaveContains: []string{
+			"@incollection",
+			"Doe, John",
+			"Test Title",
+			"Test Publisher",
+			"2002",
+			"Doe, Jane and Doe, John",
+			"2",
+			"21",
+			"Test Series",
+			"1--10",
+			"Test Avenue",
+			"jan"},
+		TempDirPath: path,
+	}
+	return mock
+}
