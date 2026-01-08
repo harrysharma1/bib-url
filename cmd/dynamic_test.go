@@ -59,6 +59,7 @@ func initPersistentFlagMocks(t *testing.T) []PersistentFlagsMock {
 		initInbookMock(t),
 		initIncollectionMock(t),
 		initInproceedingsMock(t),
+		initManualMock(t),
 	}
 	return retVal
 }
