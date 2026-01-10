@@ -16,7 +16,7 @@ var manualExpectedFlags = map[string]string{
 	"title":        "t",
 	"year":         "y"}
 
-func initManualMock(t *testing.T) PersistentFlagsMock {
+func initManualPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

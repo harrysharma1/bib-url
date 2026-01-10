@@ -12,7 +12,7 @@ var unpublishedExpectedFlags = map[string]string{
 	"title":       "t",
 	"year":        "y"}
 
-func initUnpublishedMock(t *testing.T) PersistentFlagsMock {
+func initUnpublishedPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

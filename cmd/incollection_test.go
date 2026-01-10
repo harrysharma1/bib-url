@@ -20,7 +20,7 @@ var incollectionExpectedFlags = map[string]string{
 	"volume":    "v",
 	"year":      "y"}
 
-func initIncollectionMock(t *testing.T) PersistentFlagsMock {
+func initIncollectionPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

@@ -13,7 +13,7 @@ var miscExpectedFlags = map[string]string{
 	"title":        "t",
 	"year":         "y"}
 
-func initMiscMock(t *testing.T) PersistentFlagsMock {
+func initMiscPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

@@ -22,7 +22,7 @@ var articleExpectedFlags = map[string]string{
 	"year":    "y",
 }
 
-func initArticleMock(t *testing.T) PersistentFlagsMock {
+func initArticlePersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

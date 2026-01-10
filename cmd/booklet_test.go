@@ -20,7 +20,7 @@ var bookletExpectedFlags = map[string]string{
 	"volume":       "v",
 	"year":         "y"}
 
-func initBookletMock(t *testing.T) PersistentFlagsMock {
+func initBookletPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

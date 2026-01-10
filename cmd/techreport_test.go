@@ -15,7 +15,7 @@ var techreportExpectedFlags = map[string]string{
 	"title":       "t",
 	"year":        "y"}
 
-func initTechReportMock(t *testing.T) PersistentFlagsMock {
+func initTechReportPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

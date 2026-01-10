@@ -16,7 +16,7 @@ var phdthesisExpectedFlags = map[string]string{
 	"type":    "g",
 	"year":    "y"}
 
-func initPhDthesisMock(t *testing.T) PersistentFlagsMock {
+func initPhDthesisPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{

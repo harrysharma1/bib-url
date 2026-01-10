@@ -53,19 +53,19 @@ func initCommands(t *testing.T) []struct {
 func initPersistentFlagMocks(t *testing.T) []PersistentFlagsMock {
 	t.Helper()
 	retVal := []PersistentFlagsMock{
-		initArticleMock(t),
-		initBookMock(t),
-		initBookletMock(t),
-		initInbookMock(t),
-		initIncollectionMock(t),
-		initInproceedingsMock(t),
-		initManualMock(t),
-		initMastersthesisMock(t),
-		initMiscMock(t),
-		initPhDthesisMock(t),
-		initProceedingsMock(t),
-		initTechReportMock(t),
-		initUnpublishedMock(t),
+		initArticlePersistentFlagMock(t),
+		initBookPersistentFlagMock(t),
+		initBookletPersistentFlagMock(t),
+		initInbookPersistentFlagMock(t),
+		initIncollectionPersistentFlagMock(t),
+		initInproceedingsPersistentFlagMock(t),
+		initManualPersistentFlagMock(t),
+		initMastersthesisPersistentFlagMock(t),
+		initMiscPersistentFlagMock(t),
+		initPhDthesisPersistentFlagMock(t),
+		initProceedingsPersistentFlagMock(t),
+		initTechReportPersistentFlagMock(t),
+		initUnpublishedPersistentFlagMock(t),
 	}
 	return retVal
 }

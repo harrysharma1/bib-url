@@ -21,7 +21,7 @@ var inproceedingsExpectedFlags = map[string]string{
 	"volume":       "v",
 	"year":         "y"}
 
-func initInproceedingsMock(t *testing.T) PersistentFlagsMock {
+func initInproceedingsPersistentFlagMock(t *testing.T) PersistentFlagsMock {
 	t.Helper()
 	path := fmt.Sprintf("%s/reference.bib", t.TempDir())
 	mock := PersistentFlagsMock{
