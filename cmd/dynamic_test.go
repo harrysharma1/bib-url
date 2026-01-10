@@ -61,6 +61,11 @@ func initPersistentFlagMocks(t *testing.T) []PersistentFlagsMock {
 		initInproceedingsMock(t),
 		initManualMock(t),
 		initMastersthesisMock(t),
+		initMiscMock(t),
+		initPhDthesisMock(t),
+		initProceedingsMock(t),
+		initTechReportMock(t),
+		initUnpublishedMock(t),
 	}
 	return retVal
 }
