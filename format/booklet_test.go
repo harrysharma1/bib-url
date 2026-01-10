@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @booklet subcommand output for required values only
 func TestBookletRequiredValues(t *testing.T) {
 	want := `@booklet{test,
 	title        = "Test Title",
@@ -33,6 +35,8 @@ func TestBookletRequiredValues(t *testing.T) {
 		false)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @booklet subcommand output for required values only (with braces)
 func TestBookletRequiredValuesBraces(t *testing.T) {
 	want := `@booklet{test,
 	title        = {Test Title},
@@ -58,6 +62,8 @@ func TestBookletRequiredValuesBraces(t *testing.T) {
 		true)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @booklet subcommand output for optional values
 func TestBookletOptionalValues(t *testing.T) {
 	want := `@booklet{test,
 	title        = "Test Title",
@@ -90,6 +96,8 @@ func TestBookletOptionalValues(t *testing.T) {
 		false)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @booklet subcommand output for optional values (with braces)
 func TestBookletOptionalValuesBraces(t *testing.T) {
 	want := `@booklet{test,
 	title        = {Test Title},

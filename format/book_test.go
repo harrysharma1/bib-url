@@ -9,6 +9,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @book subcommand output for required values only
 func TestBookRequiredValues(t *testing.T) {
 	want := `@book{test,
 	author    = "Herbert, Frank",
@@ -22,6 +24,7 @@ func TestBookRequiredValues(t *testing.T) {
 
 }
 
+// Test @book subcommand output for required values only (with braces)
 func TestBookRequiredValuesBraces(t *testing.T) {
 	want := `@book{test,
 	author    = {Herbert, Frank},
@@ -39,6 +42,8 @@ func TestBookRequiredValuesBraces(t *testing.T) {
 
 // ISBN
 // --------------------------------------------------//
+
+// Test auto generated @book subcommand with ISBN identifier (valid)
 func TestBookISBNValid(t *testing.T) {
 	isbn := "0340960191"
 	wantAuthors := []string{"Frank Herbert"}
@@ -66,6 +71,7 @@ func TestBookISBNValid(t *testing.T) {
 	assert.Equal(t, wantYear, haveYear, "year not the same")
 }
 
+// Test auto generated @book subcommand with ISBN identifier (invalid)
 func TestBookISBNInvalid(t *testing.T) {
 	isbn := "dueafbwieufhajcliheyfiuqss"
 	_, _, _, _, err := BookFromISBN(isbn)

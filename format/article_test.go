@@ -9,6 +9,7 @@ import (
 // Formatting
 // --------------------------------------------------//
 
+// Test @article subcommand output for required values only
 func TestArticleRequiredValues(t *testing.T) {
 	want := `@article{test,
 	author  = "Doe, John",
@@ -20,6 +21,7 @@ func TestArticleRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @article subcommand output for required values only (with braces)
 func TestArticleRequiredValuesBraces(t *testing.T) {
 	want := `@article{test,
 	author  = {Doe, John},
@@ -31,6 +33,7 @@ func TestArticleRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @article subcommand output for optional values
 func TestArticleOptionalValues(t *testing.T) {
 	want := `@article{test,
 	author  = "Doe, John",
@@ -47,6 +50,8 @@ func TestArticleOptionalValues(t *testing.T) {
 	have := FormatArticleBibtex("test", []string{"John Doe"}, "Test Title", "Test Journal", "2002", "50", "1", "1--10", "jul", "Test Note", false)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @article subcommand output for optional values (with braces)
 func TestArticleOptionalValuesBraces(t *testing.T) {
 	want := `@article{test,
 	author  = {Doe, John},
@@ -68,6 +73,8 @@ func TestArticleOptionalValuesBraces(t *testing.T) {
 
 // DOI
 // --------------------------------------------------//
+
+// Test auto generated @article subcommand with DOI identifier (valid)
 func TestArticleDOIValid(t *testing.T) {
 	doi := "10.3390/electronics10212707"
 	wantAuthors := []string{"Fatiha Djebbar"}
@@ -98,6 +105,7 @@ func TestArticleDOIValid(t *testing.T) {
 	assert.Equal(t, wantNumber, haveNumber, "numbers not the same")
 }
 
+// Test auto generated @article subcommand with DOI identifier (invalid)
 func TestArticleDOIInvalid(t *testing.T) {
 	doi := "cafbawiefkhapoucwoefhewkjfnfs"
 	_, _, _, _, _, _, err := ArticleFromDOI(doi)

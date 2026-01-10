@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @booklet bibtex respsonse
 func FormatBookletBibtex(
 	bookletCiteKey string,
 	bookletTitle string,

@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @book bibtex respsonse
 func FormatBookBibtex(
 	bookCiteKey string,
 	bookAuthors []string,
@@ -48,6 +49,7 @@ func FormatBookBibtex(
 	return sb.String()
 }
 
+// API call to OpenLibrary for auto-generation of @book
 func BookFromISBN(isbn string) ([]string, string, string, string, error) {
 	var (
 		authors   []string

@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @article bibtex response
 func FormatArticleBibtex(
 	articleCiteKey string,
 	articleAuthors []string,
@@ -72,6 +73,7 @@ func FormatArticleBibtex(
 	return sb.String()
 }
 
+// API call to Crossref for auto-generation of @article
 func ArticleFromDOI(doi string) ([]string, string, string, string, string, string, error) {
 	var (
 		authors []string
