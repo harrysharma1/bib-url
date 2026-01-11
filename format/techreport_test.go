@@ -33,6 +33,7 @@ func TestTechReportRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @techreport subcommand output for required values only (with braces)
 func TestTechReportRequiredValuesBraces(t *testing.T) {
 	want := `@techreport{test,
 	title       = {Test Title},
