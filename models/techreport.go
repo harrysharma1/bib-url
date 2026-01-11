@@ -1,5 +1,6 @@
 package models
 
+// Struct of @techreport
 type Techreport struct {
 	CiteKey     string
 	Title       string

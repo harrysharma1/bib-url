@@ -1,5 +1,6 @@
 package models
 
+// Struct of @inbook
 type Inbook struct {
 	CiteKey   string
 	Authors   []string

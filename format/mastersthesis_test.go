@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @mastersthesis subcommand output for required values only
 func TestMastersthesisRequiredValues(t *testing.T) {
 	want := `@mastersthesis{test,
 	author = "Doe, John",
@@ -29,6 +31,7 @@ func TestMastersthesisRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @mastersthesis subcommand output for required values only (with braces)
 func TestMastersthesisRequiredValuesBraces(t *testing.T) {
 	want := `@mastersthesis{test,
 	author = {Doe, John},
@@ -50,6 +53,7 @@ func TestMastersthesisRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @mastersthesis subcommand ouptut for optional values
 func TestMastersthesisOptionalValues(t *testing.T) {
 	want := `@mastersthesis{test,
 	author  = "Doe, John",
@@ -75,6 +79,7 @@ func TestMastersthesisOptionalValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @mastersthesis subcommand ouptut for optional values (with braces)
 func TestMastersthesisOptionalValuesBraces(t *testing.T) {
 	want := `@mastersthesis{test,
 	author  = {Doe, John},

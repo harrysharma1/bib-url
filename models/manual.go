@@ -1,5 +1,6 @@
 package models
 
+// Struct of @manual
 type Manual struct {
 	CiteKey      string
 	Title        string

@@ -1,5 +1,6 @@
 package models
 
+// Struct of @misc
 type Misc struct {
 	CiteKey      string
 	Title        string

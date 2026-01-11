@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @proceedings bibtex response
 func FormatProceedingsBibtex(
 	proceedingsCiteKey string,
 	proceedingsTitle string,

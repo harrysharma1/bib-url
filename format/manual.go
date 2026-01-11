@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @manual bibtex response
 func FormatManualBibtex(
 	manualCiteKey string,
 	manualTitle string,

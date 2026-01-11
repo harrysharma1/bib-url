@@ -1,5 +1,6 @@
 package models
 
+// Struct of @incollection
 type Incollection struct {
 	CiteKey   string
 	Authors   []string

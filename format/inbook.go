@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as on @inbook bibtex response
 func FormatInbookBibtex(
 	inbookCiteKey string,
 	inbookAuthors []string,

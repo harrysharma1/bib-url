@@ -1,5 +1,6 @@
 package models
 
+// Struct of @proceedings
 type Proceedings struct {
 	CiteKey   string
 	Title     string

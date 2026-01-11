@@ -1,5 +1,6 @@
 package models
 
+// Struct of @unpublished
 type Unpublished struct {
 	CiteKey     string
 	Authors     []string

@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @incollection subcommand for required values only
 func TestIncollectionRequiredValues(t *testing.T) {
 	want := `@incollection{test,
 	author    = "Doe, John",
@@ -34,6 +36,7 @@ func TestIncollectionRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @incollection subcommand output for required values only (with braces)
 func TestIncollectionRequiredValuesBraces(t *testing.T) {
 	want := `@incollection{test,
 	author    = {Doe, John},
@@ -60,6 +63,7 @@ func TestIncollectionRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @incollection output for optional values
 func TestIncollectionOptionalValues(t *testing.T) {
 	want := `@incollection{test,
 	author    = "Doe, John",
@@ -93,6 +97,8 @@ func TestIncollectionOptionalValues(t *testing.T) {
 		false)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @incollection subcommand output for optional values (with braces)
 func TestIncollectionOptionalValuesBraces(t *testing.T) {
 	want := `@incollection{test,
 	author    = {Doe, John},

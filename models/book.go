@@ -1,5 +1,6 @@
 package models
 
+// Struct of @book
 type Book struct {
 	ISBN      string
 	CiteKey   string

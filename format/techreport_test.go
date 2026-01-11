@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @techreport subcommand output for required values only
 func TestTechReportRequiredValues(t *testing.T) {
 	want := `@techreport{test,
 	title       = "Test Title",

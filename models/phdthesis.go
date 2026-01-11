@@ -1,5 +1,6 @@
 package models
 
+// Struct of @phdthesis
 type Phdthesis struct {
 	CiteKey string
 	Authors []string

@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @mastersthesis bibtex response
 func FormatMastersThesisBibtex(
 	mastersthesisCiteKey string,
 	mastersthesisAuthors []string,

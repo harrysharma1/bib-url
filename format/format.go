@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Fields for bibtex formatting/generation
 type Field struct {
 	key string
 	val string
@@ -14,6 +15,7 @@ type Field struct {
 
 var months = []string{"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"}
 
+// Returns a default value if an empty string is passed to this function
 func defaultIfEmpty(val, def string) string {
 	if val == "" {
 		return def
@@ -21,6 +23,7 @@ func defaultIfEmpty(val, def string) string {
 	return val
 }
 
+// Returns a string wrapped in {} or "" or nothing based on braces
 func wrap(s string, braces bool) string {
 	if braces {
 		return "{" + s + "}"
@@ -32,6 +35,7 @@ func wrap(s string, braces bool) string {
 
 }
 
+// Returns length of largest key in a list of fields
 func getMaxKeyLength(fields []Field) int {
 	maxKeyLength := 0
 
@@ -44,6 +48,7 @@ func getMaxKeyLength(fields []Field) int {
 	return maxKeyLength
 }
 
+// Returns a list of formatted strings based on a list of Fields and braces
 func formatFields(fields []Field, braces bool) []string {
 	formattedFields := make([]string, len(fields))
 	maxKeyLength := getMaxKeyLength(fields)
@@ -67,6 +72,8 @@ func formatFields(fields []Field, braces bool) []string {
 	return formattedFields
 
 }
+
+// Return formatted author string
 func toBibtexName(name string) string {
 	if strings.Contains(name, ",") {
 		return name
@@ -79,8 +86,9 @@ func toBibtexName(name string) string {
 	last := parts[len(parts)-1]
 
 	return last + ", " + strings.Join(first, " ")
-
 }
+
+// Return a single string delimited by `and` with formatted author names
 func formatAuthors(authors []string) string {
 	formattedAuthors := []string{}
 	for _, author := range authors {
@@ -89,6 +97,7 @@ func formatAuthors(authors []string) string {
 	return strings.Join(formattedAuthors, " and ")
 }
 
+// Return a single string delimited by `and` with formatted editor names
 func formatEditors(editors []string) string {
 	formattedEditor := []string{}
 	for _, editor := range editors {

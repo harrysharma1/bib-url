@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @inbook subcommand output for required values only
 func TestInbookRequiredValues(t *testing.T) {
 	want := `@inbook{test,
 	author    = "Doe, John",
@@ -36,6 +38,7 @@ func TestInbookRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @inbook subcommand output for required values only (with braces)
 func TestInbookRequiredValuesBraces(t *testing.T) {
 	want := `@inbook{test,
 	author    = {Doe, John},
@@ -64,6 +67,7 @@ func TestInbookRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @inbook subcommand output for optional values
 func TestInbookOptionalValues(t *testing.T) {
 	want := `@inbook{test,
 	author    = "Doe, John",
@@ -101,6 +105,8 @@ func TestInbookOptionalValues(t *testing.T) {
 		false)
 	assert.Equal(t, want, have, "should be equal")
 }
+
+// Test @inbook subcommand output for optional values (with braces)
 func TestInbookOptionalValuesBraces(t *testing.T) {
 	want := `@inbook{test,
 	author    = {Doe, John},

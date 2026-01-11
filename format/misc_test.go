@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @misc subcommand output for required values only
 func TestMiscRequiredValues(t *testing.T) {
 	want := `@misc{test,
 	title        = "Test Title",
@@ -28,6 +30,7 @@ func TestMiscRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @misc subcommand output for required values only (with braces)
 func TestMiscRequiredValuesBraces(t *testing.T) {
 	want := `@misc{test,
 	title        = {Test Title},

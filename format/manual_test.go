@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @manual subcommand output for required values only
 func TestManualRequiredValues(t *testing.T) {
 	want := `@manual{test,
 	title = "Test Title",
@@ -27,6 +29,7 @@ func TestManualRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "shouuld be equal")
 }
 
+// Test @manual subcommand output for required values only (with braces)
 func TestManualRequiredValuesBraces(t *testing.T) {
 	want := `@manual{test,
 	title = {Test Title},
@@ -46,6 +49,7 @@ func TestManualRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @manual subcommand output for optional values
 func TestManualOptionalValues(t *testing.T) {
 	want := `@manual{test,
 	title        = "Test Title",
@@ -71,6 +75,7 @@ func TestManualOptionalValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @manual subcommand output for optional values (with braces)
 func TestManualOptionalValuesBraces(t *testing.T) {
 	want := `@manual{test,
 	title        = {Test Title},

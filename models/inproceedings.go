@@ -1,5 +1,6 @@
 package models
 
+// Struct of @inproceedings
 type Inproceedings struct {
 	CiteKey      string
 	Authors      []string

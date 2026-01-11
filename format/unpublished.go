@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @unpublished bibtex response
 func FormatUnpublishedBibtex(
 	unpublishedCiteKey string,
 	unpublishedAuthors []string,

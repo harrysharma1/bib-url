@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @misc bibtex response
 func FormatMiscBibtex(
 	miscCiteKey string,
 	miscTitle string,

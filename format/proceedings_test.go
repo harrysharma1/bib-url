@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @proceedings subcommand output for required values only
 func TestProceedingsRequiredValues(t *testing.T) {
 	want := `@proceedings{test,
 	title = "Test Title",
@@ -28,6 +30,7 @@ func TestProceedingsRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @proceedings subcommand output for required values only (with braces)
 func TestProceedingsRequiredValuesBraces(t *testing.T) {
 	want := `@proceedings{test,
 	title = {Test Title},
@@ -48,6 +51,7 @@ func TestProceedingsRequiredValuesBraces(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @proceedings subcommand output for optional values
 func TestProceedingsOptionalValues(t *testing.T) {
 	want := `@proceedings{test,
 	title     = "Test Title",
@@ -75,6 +79,7 @@ func TestProceedingsOptionalValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @proceedings subcommand output for optional values (with braces)
 func TestProceedingsOpionalValuesBraces(t *testing.T) {
 	want := `@proceedings{test,
 	title     = {Test Title},

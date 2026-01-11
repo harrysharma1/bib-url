@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// Test defaultIfEmpty() function return value
 func TestDefaultIfEmpty(t *testing.T) {
 	def := "DEFAULT VALUE"
 	val := "ACTUAL VALUE"
@@ -19,6 +20,7 @@ func TestDefaultIfEmpty(t *testing.T) {
 	assert.Equal(t, wantFull, haveFull, "function should return provided value")
 }
 
+// Test wrap() function correctly wraps string
 func TestWrap(t *testing.T) {
 	wantBraces := "{test}"
 	wantMonth := "jul"
@@ -35,6 +37,7 @@ func TestWrap(t *testing.T) {
 
 }
 
+// Test getMaxKeyLength() to make sure it returns length of largest key
 func TestGetMaxKeyLength(t *testing.T) {
 	sameSizeStrSlice := []Field{{"a", ""}, {"b", ""}, {"c", ""}}
 	definitiveMaxSizeStrSlice := []Field{{"ab", ""}, {"c", ""}, {"d", ""}}
@@ -46,6 +49,7 @@ func TestGetMaxKeyLength(t *testing.T) {
 	assert.Equal(t, wantMaxSize, haveMaxSize, "the key size should be 2")
 }
 
+// Test formatFields() to make sure any passed field values are correctly formatted with correct number of spaces (speechmark)
 func TestFormatFields(t *testing.T) {
 	want := []string{
 		fmt.Sprintf("\tauthor  = %s", wrap(toBibtexName("John Doe"), false)),
@@ -72,6 +76,7 @@ func TestFormatFields(t *testing.T) {
 	assert.Equal(t, want, have, "formatted fields different")
 }
 
+// Test formatFields() to make sure any passed field values are correctly formatted with correct number of spaces (braces)
 func TestFormatFieldsBraces(t *testing.T) {
 	want := []string{
 		fmt.Sprintf("\tauthor  = %s", wrap(toBibtexName("John Doe"), true)),

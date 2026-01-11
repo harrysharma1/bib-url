@@ -1,5 +1,6 @@
 package models
 
+// Struct of @booklet
 type Booklet struct {
 	CiteKey      string
 	Title        string

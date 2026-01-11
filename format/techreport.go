@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @techreport bibtex response
 func FormatTechReportBibtex(
 	techreportCiteKey string,
 	techreportTitle string,

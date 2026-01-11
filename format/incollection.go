@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Formats passed values as an @incollection bibtex response
 func FormatIncollectionBibtex(
 	incollectionCiteKey string,
 	incollectionAuthors []string,

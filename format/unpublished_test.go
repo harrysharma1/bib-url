@@ -8,6 +8,8 @@ import (
 
 // Formatting
 // --------------------------------------------------//
+
+// Test @unpublished subcommand output for required values only
 func TestUnpublishedRequiredValues(t *testing.T) {
 	want := `@unpublished{test,
 	author      = "Doe, Jane",
@@ -25,6 +27,7 @@ func TestUnpublishedRequiredValues(t *testing.T) {
 	assert.Equal(t, want, have, "should be equal")
 }
 
+// Test @unpublished subcommand output for required values only (with braces)
 func TestUnpublishedRequiredValuesBraces(t *testing.T) {
 	want := `@unpublished{test,
 	author      = {Doe, Jane},

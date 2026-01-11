@@ -1,5 +1,6 @@
 package models
 
+// Struct of @article
 type Article struct {
 	Doi     string
 	CiteKey string
