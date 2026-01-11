@@ -92,7 +92,9 @@ func BookFromISBN(isbn string) ([]string, string, string, string, error) {
 	}
 
 	title += bookInfo.FullTitle
-	publisher += bookInfo.Publishers[0]
+	if len(bookInfo.Publishers) > 0 {
+		publisher += bookInfo.Publishers[0]
+	}
 	if !strings.Contains(bookInfo.PublishDate, ",") {
 		year += bookInfo.PublishDate
 	} else {
